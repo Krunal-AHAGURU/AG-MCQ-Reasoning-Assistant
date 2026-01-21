@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AG MCQ Reasoning Assistant | Mentor Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .math-display {
+            font-size: 1.05rem;
+            color: #1e293b;
+        }
+        
+        .option-correct {
+            border-color: #10b981 !important;
+            background-color: rgba(16, 185, 129, 0.05);
+        }
+        
+        .option-incorrect {
+            border-color: #ef4444 !important;
+        }
+        
+        .explanation-correct {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        }
+        
+        .explanation-incorrect {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        }
+        
+        .question-card {
+            scroll-margin-top: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .question-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .active-nav {
+            background-color: #4f46e5;
+            color: white;
+        }
+        
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .print-only {
+            display: none;
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            .print-only {
+                display: block !important;
+            }
+            
+            .question-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            body {
+                padding: 0;
+                margin: 0;
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="sticky-nav bg-white shadow-sm border-b border-gray-200 no-print">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="bg-indigo-600 text-white p-2 rounded-lg mr-4">
+                        <i class="fas fa-chalkboard-teacher text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">AG MCQ Reasoning Assistant</h1>
+                        <p class="text-gray-600 text-sm">Mentor & Teacher Dashboard</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="print-btn" class="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors">
+                        <i class="fas fa-print mr-2"></i>Print
+                    </button>
+                    <button id="export-btn" class="px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+                        <i class="fas fa-file-export mr-2"></i>Export
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-8">
+        <!-- Dashboard Overview -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8 no-print">
+            <div class="bg-white rounded-xl shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-indigo-100 text-indigo-600 rounded-lg mr-4">
+                        <i class="fas fa-question-circle text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-gray-900" id="total-questions">10</div>
+                        <div class="text-gray-600">Total Questions</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-emerald-100 text-emerald-600 rounded-lg mr-4">
+                        <i class="fas fa-check-circle text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-gray-900">All</div>
+                        <div class="text-gray-600">With Explanations</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-amber-100 text-amber-600 rounded-lg mr-4">
+                        <i class="fas fa-calculator text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-gray-900">8</div>
+                        <div class="text-gray-600">Math Questions</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-purple-100 text-purple-600 rounded-lg mr-4">
+                        <i class="fas fa-shapes text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-gray-900">2</div>
+                        <div class="text-gray-600">Geometry Questions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Print Header -->
+        <div class="print-only bg-white p-6 mb-8 rounded-xl shadow">
+            <div class="text-center">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">AG MCQ Reasoning Assistant</h1>
+                <h2 class="text-xl text-gray-600 mb-2">Mentor & Teacher Reference Material</h2>
+                <div class="border-t border-gray-300 pt-4 text-sm text-gray-500">
+                    Generated on: <span id="print-date"></span> | Total Questions: 10
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="no-print mb-8">
+            <div class="bg-white rounded-xl shadow p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Quick Navigation</h2>
+                <div class="flex flex-wrap gap-2" id="question-nav">
+                    <!-- Navigation buttons will be generated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Questions Container -->
+        <div id="questions-container">
+            <!-- Questions will be dynamically generated here -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-6 mt-8 no-print">
+        <div class="container mx-auto px-6">
+            <div class="text-center text-gray-600">
+                <p>© 2023 AG MCQ Reasoning Assistant. For mentor and teacher use only.</p>
+                <p class="text-sm mt-2">This material contains detailed explanations for MCQ questions with step-by-step reasoning.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Sample MCQ Data
+        const mcqData = [
+          {
+            "Q-No": "1",
+            "Qn": "Write the zeroes of the polynomial $2x^2-6x-7$",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "4, 7",
+            "Option B": "2, -4",
+            "Option C": "(1, 7) ",
+            "Option D": " (3, -2)",
+            "Correct Ans": "D",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Substituting 4 or 7 does not make polynomial zero; values are guessed, not solved roots." },
+              "B": { "correctFlag": false, "explanation": "These values do not satisfy 2x²−6x−7=0 on substitution." },
+              "C": { "correctFlag": false, "explanation": "1 and 7 are not roots; polynomial value is nonzero for both." },
+              "D": { "correctFlag": true, "explanation": "Using quadratic formula gives x=(6±√92)/4 = 3, −2." }
+            }
+          },
+          {
+            "Q-No": "2",
+            "Qn": "Solve the equations $\\frac{1}{2x}-\\frac{1}{y}= -1,\\; \\frac{1}{x}+\\frac{1}{2y}=8$  ,x,y != 0    and find $6x+4y$",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "4",
+            "Option B": "6",
+            "Option C": "1",
+            "Option D": "2",
+            "Correct Ans": "D",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Incorrect algebra while solving simultaneous equations gives wrong x and y." },
+              "B": { "correctFlag": false, "explanation": "Value comes from calculation error after solving linear equations in 1/x and 1/y." },
+              "C": { "correctFlag": false, "explanation": "Wrong substitution of x and y into 6x+4y." },
+              "D": { "correctFlag": true, "explanation": "Solving equations gives x=1/2, y=−1; hence 6x+4y=2." }
+            }
+          },
+          {
+            "Q-No": "3",
+            "Qn": "\\(5\\tan \\theta +7(\\sec \\theta \\sin \\theta) = 24\\) find cot \\(\\theta\\)",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "1",
+            "Option B": "5/7",
+            "Option C": "7/5",
+            "Option D": "1/2",
+            "Correct Ans": "D",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Assumes tanθ=1 without simplifying secθ·sinθ term." },
+              "B": { "correctFlag": false, "explanation": "Interchanging tanθ and cotθ leads to wrong ratio." },
+              "C": { "correctFlag": false, "explanation": "This is reciprocal of tanθ, not obtained from equation." },
+              "D": { "correctFlag": true, "explanation": "Using secθ·sinθ=tanθ simplifies equation; tanθ=2, so cotθ=1/2." }
+            }
+          },
+          {
+            "Q-No": "4",
+            "Qn": "Find the value of  X  for which DE||AB in the given figure",
+            "Figure": "",
+            "Figure-meta-data": "",
+            "Option A": "x=2",
+            "Option B": "x=1",
+            "Option C": "x=6",
+            "Option D": "x=3",
+            "Correct Ans": "A",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": true, "explanation": "Using Basic Proportionality Theorem, corresponding sides are proportional only when x=2." },
+              "B": { "correctFlag": false, "explanation": "Does not satisfy required ratio of segments for parallel lines." },
+              "C": { "correctFlag": false, "explanation": "Gives unequal ratios, violating DE ∥ AB condition." },
+              "D": { "correctFlag": false, "explanation": "Fails to maintain proportional division of sides." }
+            }
+          },
+          {
+            "Q-No": "5",
+            "Qn": "From a point on the ground   50m away from the foot of a tower, the angle of elevation of the top of the tower is  45 degree . The angle of elevation of the top of the flag post which is on the top of the tower is 60 degree . Find the length of the flag post",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "$50(\\sqrt3+1)$",
+            "Option B": "$100(\\sqrt3+1)$",
+            "Option C": "$100(\\sqrt3-1)$",
+            "Option D": "$50(\\sqrt3-1)$",
+            "Correct Ans": "D",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Adds heights instead of taking difference between tower and total height." },
+              "B": { "correctFlag": false, "explanation": "Incorrect base distance used in trigonometric calculation." },
+              "C": { "correctFlag": false, "explanation": "Magnitude doubled wrongly; base distance is only 50 m." },
+              "D": { "correctFlag": true, "explanation": "Height difference: 50tan60°−50tan45°=50(√3−1)." }
+            }
+          },
+          {
+            "Q-No": "6",
+            "Qn": "Find the area of the shaded region, enclosed between two concentric circles of radii   7cm and   14 cm where $\\angle AOC=90^\\circ$. ( use pi = 22/7 )",
+            "Figure": "",
+            "Figure-meta-data": "",
+            "Option A": "115.5 cmÂ²",
+            "Option B": "116.5 cmÂ²",
+            "Option C": "77 cmÂ²",
+            "Option D": "75 cmÂ²",
+            "Correct Ans": "A",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": true, "explanation": "Area = 90° sector difference = (1/4)π(14²−7²)=115.5 cm²." },
+              "B": { "correctFlag": false, "explanation": "Numerical calculation error while subtracting areas." },
+              "C": { "correctFlag": false, "explanation": "Considers only inner sector, not shaded region." },
+              "D": { "correctFlag": false, "explanation": "Ignores sector angle; uses full circle wrongly." }
+            }
+          },
+          {
+            "Q-No": "7",
+            "Qn": "if cos A + cos^2 A = 1,then sin^2 A + sin^4 A is ",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "0",
+            "Option B": "1",
+            "Option C": "2",
+            "Option D": "None of thease",
+            "Correct Ans": "B",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Sum of squares of sine cannot be zero for real angle." },
+              "B": { "correctFlag": true, "explanation": "From given, cosA=0 or 1; corresponding sin²A+sin⁴A equals 1." },
+              "C": { "correctFlag": false, "explanation": "Maximum possible value is less than 2." },
+              "D": { "correctFlag": false, "explanation": "Correct value exists, so option invalid." }
+            }
+          },
+          {
+            "Q-No": "8",
+            "Qn": "In a right triangle ABC, right angled at B , the ratio of AB to AC is 1:root2  find the value of  5 tan A / 1 + tan^2 A",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "1",
+            "Option B": "5/2",
+            "Option C": "0",
+            "Option D": "3/2",
+            "Correct Ans": "B",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Incorrect simplification of trigonometric identity." },
+              "B": { "correctFlag": true, "explanation": "AB/AC=cosA=1/√2 ⇒ tanA=1; expression becomes 5/2." },
+              "C": { "correctFlag": false, "explanation": "tanA is not zero for given triangle." },
+              "D": { "correctFlag": false, "explanation": "Arithmetic error after substituting tanA=1." }
+            }
+          },
+          {
+            "Q-No": "9",
+            "Qn": "Two concentric circles are of radii 6 cm and  rcm  respectively where  r > 6 . A chord of larger circle of length 16 cm touches the smaller circle. Find the value of  r .",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "11 cm",
+            "Option B": "10 cm",
+            "Option C": "14 cm",
+            "Option D": "12 cm ",
+            "Correct Ans": "B",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Incorrect use of chord-distance formula." },
+              "B": { "correctFlag": true, "explanation": "Using (r²−8²)=6² gives r=10 cm." },
+              "C": { "correctFlag": false, "explanation": "Distance from center miscalculated." },
+              "D": { "correctFlag": false, "explanation": "Assumes wrong half-chord length." }
+            }
+          },
+          {
+            "Q-No": "10",
+            "Qn": "A girl calculates that the probability of her winning the first prize in a lottery is 0.08. If 6000 tickets are sold, then how many tickets has she bought?",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "420",
+            "Option B": "460",
+            "Option C": "480",
+            "Option D": "440",
+            "Correct Ans": "C ",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Probability relation not applied correctly." },
+              "B": { "correctFlag": false, "explanation": "Multiplication error with total tickets." },
+              "C": { "correctFlag": true, "explanation": "Probability = tickets bought/6000 ⇒ tickets=0.08×6000=480." },
+              "D": { "correctFlag": false, "explanation": "Assumes incorrect probability fraction." }
+            }
+          }
+        ];
+
+        // DOM Elements
+        const questionsContainer = document.getElementById('questions-container');
+        const questionNav = document.getElementById('question-nav');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const printBtn = document.getElementById('print-btn');
+        const exportBtn = document.getElementById('export-btn');
+        const printDateEl = document.getElementById('print-date');
+
+        // Initialize
+        function init() {
+            // Set print date
+            const now = new Date();
+            printDateEl.textContent = now.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Set total questions
+            totalQuestionsEl.textContent = mcqData.length;
+            
+            // Generate navigation
+            generateNavigation();
+            
+            // Generate all questions
+            generateQuestions();
+            
+            // Initialize MathJax
+            if (window.MathJax) {
+                MathJax.typeset();
+            }
+        }
+
+        // Generate navigation buttons
+        function generateNavigation() {
+            questionNav.innerHTML = '';
+            
+            mcqData.forEach((question, index) => {
+                const button = document.createElement('button');
+                button.className = 'px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors';
+                button.textContent = `Q${question["Q-No"]}`;
+                
+                button.addEventListener('click', () => {
+                    // Scroll to the question
+                    const questionElement = document.getElementById(`question-${question["Q-No"]}`);
+                    if (questionElement) {
+                        questionElement.scrollIntoView({ behavior: 'smooth' });
+                        
+                        // Update active nav button
+                        document.querySelectorAll('#question-nav button').forEach(btn => {
+                            btn.classList.remove('active-nav');
+                            btn.classList.add('bg-gray-100', 'text-gray-700');
+                        });
+                        
+                        button.classList.remove('bg-gray-100', 'text-gray-700');
+                        button.classList.add('active-nav');
+                    }
+                });
+                
+                questionNav.appendChild(button);
+            });
+        }
+
+        // Generate all questions with explanations
+        function generateQuestions() {
+            questionsContainer.innerHTML = '';
+            
+            mcqData.forEach((question, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-card bg-white rounded-xl shadow mb-8 p-8';
+                questionElement.id = `question-${question["Q-No"]}`;
+                
+                // Question header
+                const headerHTML = `
+                    <div class="flex justify-between items-start mb-6 pb-4 border-b border-gray-200">
+                        <div>
+                            <div class="inline-flex items-center px-4 py-2 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium mb-3">
+                                <i class="fas fa-question mr-2"></i>
+                                Question ${question["Q-No"]}
+                            </div>
+                            <h2 class="text-2xl font-bold text-gray-900 math-display">${question.Qn}</h2>
+                        </div>
+                        <div class="px-4 py-2 bg-emerald-100 text-emerald-800 rounded-lg text-sm font-medium">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Correct Answer: <span class="font-bold">${question["Correct Ans"].trim()}</span>
+                        </div>
+                    </div>
+                `;
+                
+                // Options section
+                let optionsHTML = `
+                    <div class="mb-8">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-list-ul mr-2 text-indigo-600"></i>
+                            Options
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                `;
+                
+                const optionLetters = ['A', 'B', 'C', 'D'];
+                optionLetters.forEach(letter => {
+                    const optionKey = `Option ${letter}`;
+                    const optionText = question[optionKey];
+                    const isCorrect = question["Correct Ans"].trim() === letter;
+                    
+                    optionsHTML += `
+                        <div class="option p-4 rounded-xl border-2 ${isCorrect ? 'option-correct' : 'border-gray-200'}">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
+                                    isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-800'
+                                }">
+                                    ${letter}
+                                </div>
+                                <div class="flex-1 math-display">${optionText}</div>
+                                ${isCorrect ? 
+                                    '<div class="ml-2 text-emerald-600"><i class="fas fa-check-circle"></i></div>' : 
+                                    ''
+                                }
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                optionsHTML += `
+                        </div>
+                    </div>
+                `;
+                
+                // Explanation section
+                let explanationHTML = `
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-comment-dots mr-2 text-indigo-600"></i>
+                            Detailed Explanations
+                        </h3>
+                        <div class="space-y-4">
+                `;
+                
+                const explanationData = question["Explnation ( JSON )"];
+                optionLetters.forEach(letter => {
+                    const optionData = explanationData[letter];
+                    const isCorrect = optionData.correctFlag;
+                    
+                    explanationHTML += `
+                        <div class="explanation p-5 rounded-xl ${isCorrect ? 'explanation-correct' : 'explanation-incorrect'}">
+                            <div class="flex items-start mb-3">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center mr-4 ${
+                                    isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
+                                }">
+                                    <span class="font-bold">${letter}</span>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-bold ${isCorrect ? 'text-emerald-800' : 'text-red-800'}">
+                                                ${isCorrect ? 'Correct Answer' : 'Incorrect Option'}
+                                            </h4>
+                                            <div class="text-gray-700 mt-2">${optionData.explanation}</div>
+                                        </div>
+                                        <div class="px-3 py-1 rounded-full text-sm font-medium ${
+                                            isCorrect ? 'bg-emerald-200 text-emerald-800' : 'bg-red-200 text-red-800'
+                                        }">
+                                            ${isCorrect ? '✓ Correct' : '✗ Incorrect'}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                explanationHTML += `
+                        </div>
+                    </div>
+                `;
+                
+                // Teaching notes section
+                const teachingNotesHTML = `
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-chalkboard-teacher mr-2 text-indigo-600"></i>
+                            Teaching Notes
+                        </h3>
+                        <div class="bg-indigo-50 rounded-xl p-5">
+                            <div class="flex">
+                                <div class="flex-shrink-0 mr-4">
+                                    <i class="fas fa-lightbulb text-2xl text-indigo-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-indigo-800 mb-2">Key Concepts to Emphasize:</h4>
+                                    <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                                        <li>Focus on the reasoning behind why each option is correct/incorrect</li>
+                                        <li>Highlight common student misconceptions for each distractor</li>
+                                        <li>Connect this question to broader mathematical concepts</li>
+                                        <li>Suggest alternative approaches to solving this problem</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Combine all sections
+                questionElement.innerHTML = headerHTML + optionsHTML + explanationHTML + teachingNotesHTML;
+                questionsContainer.appendChild(questionElement);
+            });
+            
+            // Process MathJax after all questions are loaded
+            if (window.MathJax) {
+                setTimeout(() => MathJax.typeset(), 100);
+            }
+        }
+
+        // Event Listeners
+        printBtn.addEventListener('click', () => {
+            window.print();
+        });
+
+        exportBtn.addEventListener('click', () => {
+            // Create a printable version
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>AG MCQ Reasoning Assistant - Questions & Explanations</title>
+                    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"><\/script>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 40px; }
+                        .question { margin-bottom: 40px; page-break-inside: avoid; }
+                        .question-header { border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
+                        .options { margin: 20px 0; }
+                        .option { margin: 10px 0; padding: 10px; border-left: 4px solid #ddd; }
+                        .option.correct { border-color: #10b981; background-color: #f0fdf4; }
+                        .explanation { margin: 10px 0; padding: 15px; border-radius: 5px; }
+                        .explanation.correct { background-color: #f0fdf4; border: 1px solid #10b981; }
+                        .explanation.incorrect { background-color: #fef2f2; border: 1px solid #ef4444; }
+                        h1 { color: #1f2937; }
+                        h2 { color: #374151; }
+                        .header { text-align: center; margin-bottom: 40px; }
+                        .footer { margin-top: 40px; text-align: center; color: #6b7280; font-size: 12px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>AG MCQ Reasoning Assistant</h1>
+                        <h2>Questions with Detailed Explanations</h2>
+                        <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                    </div>
+            `);
+
+            // Add each question
+            mcqData.forEach(question => {
+                printWindow.document.write(`
+                    <div class="question">
+                        <div class="question-header">
+                            <h2>Question ${question["Q-No"]}: ${question.Qn}</h2>
+                            <p><strong>Correct Answer:</strong> ${question["Correct Ans"].trim()}</p>
+                        </div>
+                        
+                        <div class="options">
+                            <h3>Options:</h3>
+                            ${['A', 'B', 'C', 'D'].map(letter => {
+                                const isCorrect = question["Correct Ans"].trim() === letter;
+                                return `
+                                    <div class="option ${isCorrect ? 'correct' : ''}">
+                                        <strong>${letter}:</strong> ${question[`Option ${letter}`]}
+                                        ${isCorrect ? ' (Correct)' : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        
+                        <div class="explanations">
+                            <h3>Explanations:</h3>
+                            ${['A', 'B', 'C', 'D'].map(letter => {
+                                const exp = question["Explnation ( JSON )"][letter];
+                                return `
+                                    <div class="explanation ${exp.correctFlag ? 'correct' : 'incorrect'}">
+                                        <strong>${letter}:</strong> ${exp.explanation}
+                                        <br><em>${exp.correctFlag ? 'Correct Answer' : 'Incorrect Option'}</em>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        
+                        
+                    </div>
+                    <hr style="margin: 30px 0;">
+                `);
+            });
+
+            printWindow.document.write(`
+                    <div class="footer">
+                        <p>© 2023 AG MCQ Reasoning Assistant. For educational use only.</p>
+                    </div>
+                </body>
+                </html>
+            `);
+            
+            printWindow.document.close();
+        });
+
+        // Initialize the application
+        init();
+    </script>
+</body>
+</html>
