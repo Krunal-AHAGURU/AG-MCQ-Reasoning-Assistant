@@ -198,177 +198,433 @@
     <script>
         // Sample MCQ Data
         const mcqData = [
-          {
-            "Q-No": "1",
-            "Qn": "Write the zeroes of the polynomial $2x^2-6x-7$",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "4, 7",
-            "Option B": "2, -4",
-            "Option C": "(1, 7) ",
-            "Option D": " (3, -2)",
-            "Correct Ans": "D",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Substituting 4 or 7 does not make polynomial zero; values are guessed, not solved roots." },
-              "B": { "correctFlag": false, "explanation": "These values do not satisfy 2x²−6x−7=0 on substitution." },
-              "C": { "correctFlag": false, "explanation": "1 and 7 are not roots; polynomial value is nonzero for both." },
-              "D": { "correctFlag": true, "explanation": "Using quadratic formula gives x=(6±√92)/4 = 3, −2." }
-            }
-          },
-          {
-            "Q-No": "2",
-            "Qn": "Solve the equations $\\frac{1}{2x}-\\frac{1}{y}= -1,\\; \\frac{1}{x}+\\frac{1}{2y}=8$  ,x,y != 0    and find $6x+4y$",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "4",
-            "Option B": "6",
-            "Option C": "1",
-            "Option D": "2",
-            "Correct Ans": "D",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Incorrect algebra while solving simultaneous equations gives wrong x and y." },
-              "B": { "correctFlag": false, "explanation": "Value comes from calculation error after solving linear equations in 1/x and 1/y." },
-              "C": { "correctFlag": false, "explanation": "Wrong substitution of x and y into 6x+4y." },
-              "D": { "correctFlag": true, "explanation": "Solving equations gives x=1/2, y=−1; hence 6x+4y=2." }
-            }
-          },
-          {
-            "Q-No": "3",
-            "Qn": "\\(5\\tan \\theta +7(\\sec \\theta \\sin \\theta) = 24\\) find cot \\(\\theta\\)",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "1",
-            "Option B": "5/7",
-            "Option C": "7/5",
-            "Option D": "1/2",
-            "Correct Ans": "D",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Assumes tanθ=1 without simplifying secθ·sinθ term." },
-              "B": { "correctFlag": false, "explanation": "Interchanging tanθ and cotθ leads to wrong ratio." },
-              "C": { "correctFlag": false, "explanation": "This is reciprocal of tanθ, not obtained from equation." },
-              "D": { "correctFlag": true, "explanation": "Using secθ·sinθ=tanθ simplifies equation; tanθ=2, so cotθ=1/2." }
-            }
-          },
-          {
-            "Q-No": "4",
-            "Qn": "Find the value of  X  for which DE||AB in the given figure",
-            "Figure": "",
-            "Figure-meta-data": "",
-            "Option A": "x=2",
-            "Option B": "x=1",
-            "Option C": "x=6",
-            "Option D": "x=3",
-            "Correct Ans": "A",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": true, "explanation": "Using Basic Proportionality Theorem, corresponding sides are proportional only when x=2." },
-              "B": { "correctFlag": false, "explanation": "Does not satisfy required ratio of segments for parallel lines." },
-              "C": { "correctFlag": false, "explanation": "Gives unequal ratios, violating DE ∥ AB condition." },
-              "D": { "correctFlag": false, "explanation": "Fails to maintain proportional division of sides." }
-            }
-          },
-          {
-            "Q-No": "5",
-            "Qn": "From a point on the ground   50m away from the foot of a tower, the angle of elevation of the top of the tower is  45 degree . The angle of elevation of the top of the flag post which is on the top of the tower is 60 degree . Find the length of the flag post",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "$50(\\sqrt3+1)$",
-            "Option B": "$100(\\sqrt3+1)$",
-            "Option C": "$100(\\sqrt3-1)$",
-            "Option D": "$50(\\sqrt3-1)$",
-            "Correct Ans": "D",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Adds heights instead of taking difference between tower and total height." },
-              "B": { "correctFlag": false, "explanation": "Incorrect base distance used in trigonometric calculation." },
-              "C": { "correctFlag": false, "explanation": "Magnitude doubled wrongly; base distance is only 50 m." },
-              "D": { "correctFlag": true, "explanation": "Height difference: 50tan60°−50tan45°=50(√3−1)." }
-            }
-          },
-          {
-            "Q-No": "6",
-            "Qn": "Find the area of the shaded region, enclosed between two concentric circles of radii   7cm and   14 cm where $\\angle AOC=90^\\circ$. ( use pi = 22/7 )",
-            "Figure": "",
-            "Figure-meta-data": "",
-            "Option A": "115.5 cmÂ²",
-            "Option B": "116.5 cmÂ²",
-            "Option C": "77 cmÂ²",
-            "Option D": "75 cmÂ²",
-            "Correct Ans": "A",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": true, "explanation": "Area = 90° sector difference = (1/4)π(14²−7²)=115.5 cm²." },
-              "B": { "correctFlag": false, "explanation": "Numerical calculation error while subtracting areas." },
-              "C": { "correctFlag": false, "explanation": "Considers only inner sector, not shaded region." },
-              "D": { "correctFlag": false, "explanation": "Ignores sector angle; uses full circle wrongly." }
-            }
-          },
-          {
-            "Q-No": "7",
-            "Qn": "if cos A + cos^2 A = 1,then sin^2 A + sin^4 A is ",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "0",
-            "Option B": "1",
-            "Option C": "2",
-            "Option D": "None of thease",
-            "Correct Ans": "B",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Sum of squares of sine cannot be zero for real angle." },
-              "B": { "correctFlag": true, "explanation": "From given, cosA=0 or 1; corresponding sin²A+sin⁴A equals 1." },
-              "C": { "correctFlag": false, "explanation": "Maximum possible value is less than 2." },
-              "D": { "correctFlag": false, "explanation": "Correct value exists, so option invalid." }
-            }
-          },
-          {
-            "Q-No": "8",
-            "Qn": "In a right triangle ABC, right angled at B , the ratio of AB to AC is 1:root2  find the value of  5 tan A / 1 + tan^2 A",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "1",
-            "Option B": "5/2",
-            "Option C": "0",
-            "Option D": "3/2",
-            "Correct Ans": "B",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Incorrect simplification of trigonometric identity." },
-              "B": { "correctFlag": true, "explanation": "AB/AC=cosA=1/√2 ⇒ tanA=1; expression becomes 5/2." },
-              "C": { "correctFlag": false, "explanation": "tanA is not zero for given triangle." },
-              "D": { "correctFlag": false, "explanation": "Arithmetic error after substituting tanA=1." }
-            }
-          },
-          {
-            "Q-No": "9",
-            "Qn": "Two concentric circles are of radii 6 cm and  rcm  respectively where  r > 6 . A chord of larger circle of length 16 cm touches the smaller circle. Find the value of  r .",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "11 cm",
-            "Option B": "10 cm",
-            "Option C": "14 cm",
-            "Option D": "12 cm ",
-            "Correct Ans": "B",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Incorrect use of chord-distance formula." },
-              "B": { "correctFlag": true, "explanation": "Using (r²−8²)=6² gives r=10 cm." },
-              "C": { "correctFlag": false, "explanation": "Distance from center miscalculated." },
-              "D": { "correctFlag": false, "explanation": "Assumes wrong half-chord length." }
-            }
-          },
-          {
-            "Q-No": "10",
-            "Qn": "A girl calculates that the probability of her winning the first prize in a lottery is 0.08. If 6000 tickets are sold, then how many tickets has she bought?",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "420",
-            "Option B": "460",
-            "Option C": "480",
-            "Option D": "440",
-            "Correct Ans": "C ",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Probability relation not applied correctly." },
-              "B": { "correctFlag": false, "explanation": "Multiplication error with total tickets." },
-              "C": { "correctFlag": true, "explanation": "Probability = tickets bought/6000 ⇒ tickets=0.08×6000=480." },
-              "D": { "correctFlag": false, "explanation": "Assumes incorrect probability fraction." }
-            }
-          }
-        ];
+  {
+    "Q-No": "1",
+    "Qn": "Write the zeroes of the polynomial $2x^2-6x-7$",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "4, 7",
+    "Option B": "2, -4",
+    "Option C": "(1, 7) ",
+    "Option D": " (3, -2)",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Substituting 4 or 7 does not make the polynomial zero." },
+      "B": { "correctFlag": false, "explanation": "2 and −4 do not satisfy 2x²−6x−7=0." },
+      "C": { "correctFlag": false, "explanation": "Values are incorrect roots obtained without solving quadratic." },
+      "D": { "correctFlag": true, "explanation": "Solving quadratic gives roots x=3 and x=−2." }
+    }
+  },
+  {
+    "Q-No": "2",
+    "Qn": "Solve the equations $\\frac{1}{2x}-\\frac{1}{y}= -1,\\; \\frac{1}{x}+\\frac{1}{2y}=8$  ,x,y != 0    and find $6x+4y$",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "4",
+    "Option B": "6",
+    "Option C": "1",
+    "Option D": "2",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Wrong values of x and y obtained from equations." },
+      "B": { "correctFlag": false, "explanation": "Error in solving simultaneous equations." },
+      "C": { "correctFlag": false, "explanation": "Incorrect substitution into 6x+4y." },
+      "D": { "correctFlag": true, "explanation": "Solving gives x=1/2, y=−1, so 6x+4y=2." }
+    }
+  },
+  {
+    "Q-No": "3",
+    "Qn": "\\(5\\tan \\theta +7(\\sec \\theta \\sin \\theta) = 24\\) find cot \\(\\theta\\)",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "1",
+    "Option B": "5/7",
+    "Option C": "7/5",
+    "Option D": "1/2",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Assumes tanθ=1 without simplifying expression." },
+      "B": { "correctFlag": false, "explanation": "Confuses tanθ with cotθ." },
+      "C": { "correctFlag": false, "explanation": "Reciprocal taken incorrectly." },
+      "D": { "correctFlag": true, "explanation": "secθ·sinθ=tanθ ⇒ 12tanθ=24 ⇒ cotθ=1/2." }
+    }
+  },
+  {
+    "Q-No": "4",
+    "Qn": "Find the value of  X  for which DE||AB in the given figure",
+    "Figure": "",
+    "Figure-meta-data": "",
+    "Option A": "x=2",
+    "Option B": "x=1",
+    "Option C": "x=6",
+    "Option D": "x=3",
+    "Correct Ans": "A",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": true, "explanation": "Basic proportionality theorem holds only for x=2." },
+      "B": { "correctFlag": false, "explanation": "Segment ratios are not equal." },
+      "C": { "correctFlag": false, "explanation": "Parallel condition not satisfied." },
+      "D": { "correctFlag": false, "explanation": "Produces unequal corresponding sides." }
+    }
+  },
+  {
+    "Q-No": "5",
+    "Qn": "From a point on the ground   50m away from the foot of a tower, the angle of elevation of the top of the tower is  45 degree . The angle of elevation of the top of the flag post which is on the top of the tower is 60 degree . Find the length of the flag post",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "$50(\\sqrt3+1)$",
+    "Option B": "$100(\\sqrt3+1)$",
+    "Option C": "$100(\\sqrt3-1)$",
+    "Option D": "$50(\\sqrt3-1)$",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Adds heights instead of finding difference." },
+      "B": { "correctFlag": false, "explanation": "Uses wrong base distance." },
+      "C": { "correctFlag": false, "explanation": "Incorrect scaling of height." },
+      "D": { "correctFlag": true, "explanation": "Flag height =50(tan60°−tan45°)=50(√3−1)." }
+    }
+  },
+  {
+    "Q-No": "6",
+    "Qn": "Find the area of the shaded region, enclosed between two concentric circles of radii   7cm and   14 cm where $\\angle AOC=90^\\circ$. ( use pi = 22/7 )",
+    "Figure": "",
+    "Figure-meta-data": "",
+    "Option A": "115.5 cmÂ²",
+    "Option B": "116.5 cmÂ²",
+    "Option C": "77 cmÂ²",
+    "Option D": "75 cmÂ²",
+    "Correct Ans": "A",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": true, "explanation": "Shaded area=(1/4)π(14²−7²)=115.5 cm²." },
+      "B": { "correctFlag": false, "explanation": "Calculation mistake in subtraction." },
+      "C": { "correctFlag": false, "explanation": "Only inner sector considered." },
+      "D": { "correctFlag": false, "explanation": "Sector angle ignored." }
+    }
+  },
+  {
+    "Q-No": "7",
+    "Qn": "if cos A + cos^2 A = 1,then sin^2 A + sin^4 A is ",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "0",
+    "Option B": "1",
+    "Option C": "2",
+    "Option D": "None of thease",
+    "Correct Ans": "B",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Sin²A cannot be zero for given condition." },
+      "B": { "correctFlag": true, "explanation": "Using identity, expression evaluates to 1." },
+      "C": { "correctFlag": false, "explanation": "Value exceeds possible range." },
+      "D": { "correctFlag": false, "explanation": "Correct value exists." }
+    }
+  },
+  {
+    "Q-No": "8",
+    "Qn": "In a right triangle ABC, right angled at B , the ratio of AB to AC is 1:root2  find the value of  5 tan A / 1 + tan^2 A",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "1",
+    "Option B": "5/2",
+    "Option C": "0",
+    "Option D": "3/2",
+    "Correct Ans": "B",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Incorrect identity application." },
+      "B": { "correctFlag": true, "explanation": "cosA=1/√2 ⇒ tanA=1, so value=5/2." },
+      "C": { "correctFlag": false, "explanation": "tanA is not zero." },
+      "D": { "correctFlag": false, "explanation": "Arithmetic error after substitution." }
+    }
+  },
+  {
+    "Q-No": "9",
+    "Qn": "Two concentric circles are of radii 6 cm and  rcm  respectively where  r > 6 . A chord of larger circle of length 16 cm touches the smaller circle. Find the value of  r .",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "11 cm",
+    "Option B": "10 cm",
+    "Option C": "14 cm",
+    "Option D": "12 cm ",
+    "Correct Ans": "B",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Incorrect distance from center used." },
+      "B": { "correctFlag": true, "explanation": "Using r²−8²=6² gives r=10 cm." },
+      "C": { "correctFlag": false, "explanation": "Half-chord length misused." },
+      "D": { "correctFlag": false, "explanation": "Pythagoras not applied correctly." }
+    }
+  },
+  {
+    "Q-No": "10",
+    "Qn": "A girl calculates that the probability of her winning the first prize in a lottery is 0.08. If 6000 tickets are sold, then how many tickets has she bought?",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "420",
+    "Option B": "460",
+    "Option C": "480",
+    "Option D": "440",
+    "Correct Ans": "C ",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Probability formula misused." },
+      "B": { "correctFlag": false, "explanation": "Calculation error." },
+      "C": { "correctFlag": true, "explanation": "Tickets bought=0.08×6000=480." },
+      "D": { "correctFlag": false, "explanation": "Incorrect multiplication." }
+    }
+  },
+  {
+    "Q-No": "11",
+    "Qn": "The marks obtained by students in a test is given below. Find the mean mark",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "62.55",
+    "Option B": "56.72",
+    "Option C": "54.76",
+    "Option D": "59.35",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Incorrect class midpoint calculation." },
+      "B": { "correctFlag": false, "explanation": "Frequency multiplication error." },
+      "C": { "correctFlag": true, "explanation": "Using midpoints and frequencies gives mean 54.76." },
+      "D": { "correctFlag": false, "explanation": "Total frequency misused." }
+    }
+  },
+  {
+    "Q-No": "12",
+    "Qn": "The mean of the following distribution is 23. Find the missing frequencies f1 and f2",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "1,2",
+    "Option B": "1,1",
+    "Option C": "2,1",
+    "Option D": "2,3",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Does not satisfy mean condition." },
+      "B": { "correctFlag": false, "explanation": "Sum of frequencies incorrect." },
+      "C": { "correctFlag": true, "explanation": "Using mean formula gives f₁=2, f₂=1." },
+      "D": { "correctFlag": false, "explanation": "Mean deviates from 23." }
+    }
+  },
+  {
+    "Q-No": "13",
+    "Qn": "Two alarm clocks ring at intervals of 50s and 48s. When will they ring together again?",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "12.20 pm",
+    "Option B": "12.12 pm",
+    "Option C": "12.11 pm",
+    "Option D": "None of these",
+    "Correct Ans": "A",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": true, "explanation": "LCM of 50 and 48 is 2400s = 40 minutes." },
+      "B": { "correctFlag": false, "explanation": "LCM calculated incorrectly." },
+      "C": { "correctFlag": false, "explanation": "Time conversion error." },
+      "D": { "correctFlag": false, "explanation": "Correct time exists." }
+    }
+  },
+  {
+    "Q-No": "14",
+    "Qn": "If the HCF of 144 and 180 is expressed as 13m−3, find m",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "-3",
+    "Option B": "1",
+    "Option C": "2",
+    "Option D": "3",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "HCF value positive, m cannot be negative." },
+      "B": { "correctFlag": false, "explanation": "13m−3 not equal to HCF." },
+      "C": { "correctFlag": false, "explanation": "Incorrect substitution." },
+      "D": { "correctFlag": true, "explanation": "HCF=36 ⇒ 13m−3=36 ⇒ m=3." }
+    }
+  },
+  {
+    "Q-No": "15",
+    "Qn": "Find the points on the x-axis at distance 2√5 from (7,−4)",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "(5,0) (0,9 )",
+    "Option B": "(0,5) (0,9 )",
+    "Option C": "(5,0) (9,0 )",
+    "Option D": "(0,5)  (9,0 )",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Second point not on x-axis." },
+      "B": { "correctFlag": false, "explanation": "Both points lie on y-axis." },
+      "C": { "correctFlag": true, "explanation": "Distance formula gives x=5 and x=9 on x-axis." },
+      "D": { "correctFlag": false, "explanation": "One point not on x-axis." }
+    }
+  }
+,
+  {
+    "Q-No": "16",
+    "Qn": "Name the type of triangle PQR formed by the points \\(P(\\sqrt{2},sqrt{2}),Q(-sqrt{2},-sqrt{2}) and R(-sqrt{6},sqrt{6})",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "Right triangle",
+    "Option B": "Isosceles triangle",
+    "Option C": "Equilateral Triangle",
+    "Option D": "None of these",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Side lengths do not satisfy Pythagoras theorem." },
+      "B": { "correctFlag": false, "explanation": "All three sides are equal, not just two." },
+      "C": { "correctFlag": true, "explanation": "Distances PQ, QR and PR are equal, forming an equilateral triangle." },
+      "D": { "correctFlag": false, "explanation": "Triangle type is identifiable from equal sides." }
+    }
+  },
+  {
+    "Q-No": "17",
+    "Qn": "Which term of the A.P 3,15,27,39,.... is 132 more than the 54th term?",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "67th",
+    "Option B": "66th",
+    "Option C": "65th",
+    "Option D": "68th",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Term difference exceeds 132." },
+      "B": { "correctFlag": false, "explanation": "Gives increase less than 132." },
+      "C": { "correctFlag": true, "explanation": "Common difference 12 gives 11-term gap for increase of 132." },
+      "D": { "correctFlag": false, "explanation": "Extra terms added beyond required increase." }
+    }
+  },
+  {
+    "Q-No": "18",
+    "Qn": "If the sum of the first four terms of an A P is 26 and the sum of first 14 terms is 301, find the n th term",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "3n-2",
+    "Option B": "3n-1",
+    "Option C": "3n+1",
+    "Option D": "2n-1",
+    "Correct Ans": "B",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Gives incorrect first term when n=1." },
+      "B": { "correctFlag": true, "explanation": "Using sum formulas gives a=2, d=3, so Tn=3n−1." },
+      "C": { "correctFlag": false, "explanation": "Overestimates term value." },
+      "D": { "correctFlag": false, "explanation": "Common difference mismatch." }
+    }
+  },
+  {
+    "Q-No": "19",
+    "Qn": "An inverted cone of vertical height 14 cm and radius of base 7 cm contains water to a depth of 3 cm. Find the area of the interior surface of the cone not in contact with the water.",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "318cm^2",
+    "Option B": "326cm^2",
+    "Option C": "363cm^2",
+    "Option D": "314cm^2",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Uses incorrect slant height." },
+      "B": { "correctFlag": false, "explanation": "Calculation error after subtraction." },
+      "C": { "correctFlag": false, "explanation": "Includes wetted surface area." },
+      "D": { "correctFlag": true, "explanation": "Dry area = π(lR − lr) gives approximately 314 cm²." }
+    }
+  },
+  {
+    "Q-No": "20",
+    "Qn": "The diameter of a roller is 120 cm and its length is 84 cm. If it takes 500 complete revolutions to level a playground, determine the cost of levelling it.",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "Rs.625.50",
+    "Option B": "Rs.525.25",
+    "Option C": "Rs.475.20",
+    "Option D": "Rs.380.75",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Area covered overestimated." },
+      "B": { "correctFlag": false, "explanation": "Cost calculation incorrect." },
+      "C": { "correctFlag": true, "explanation": "Area = curved surface × revolutions, cost = area × rate." },
+      "D": { "correctFlag": false, "explanation": "Incorrect unit conversion." }
+    }
+  },
+  {
+    "Q-No": "21",
+    "Qn": "Sum of area of two squares is 970cm^2 . If the sum of their perimeters is 176cm . Find the sides of the two squares.",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "21 cm, 23 cm",
+    "Option B": "20 cm, 24 cm",
+    "Option C": "19 cm, 25 cm",
+    "Option D": "18 cm, 26 cm",
+    "Correct Ans": "A",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": true, "explanation": "Sides satisfy both area sum and perimeter sum equations." },
+      "B": { "correctFlag": false, "explanation": "Area sum does not match." },
+      "C": { "correctFlag": false, "explanation": "Perimeter sum incorrect." },
+      "D": { "correctFlag": false, "explanation": "Neither condition satisfied." }
+    }
+  },
+  {
+    "Q-No": "22",
+    "Qn": "Which of the following equations has no real roots?",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "x^2-4x+3root2=0",
+    "Option B": "x^2+4x-3root2=0",
+    "Option C": "x^2-4x-3root2=0",
+    "Option D": "3x^2+4root3x+4=0",
+    "Correct Ans": "A",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": true, "explanation": "Discriminant is negative, so no real roots." },
+      "B": { "correctFlag": false, "explanation": "Discriminant is positive." },
+      "C": { "correctFlag": false, "explanation": "Real roots exist." },
+      "D": { "correctFlag": false, "explanation": "Discriminant equals zero." }
+    }
+  },
+  {
+    "Q-No": "23",
+    "Qn": "A 5 m long ladder is placed leaning towards a vertical wall such that it reaches the wall at a point 4 m high.",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "0.8 m",
+    "Option B": "0.4 m",
+    "Option C": "1 m",
+    "Option D": "0.2 m",
+    "Correct Ans": "A",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": true, "explanation": "Using Pythagoras before and after movement gives upward shift 0.8 m." },
+      "B": { "correctFlag": false, "explanation": "Underestimates vertical change." },
+      "C": { "correctFlag": false, "explanation": "Exceeds possible height change." },
+      "D": { "correctFlag": false, "explanation": "Calculation error." }
+    }
+  },
+  {
+    "Q-No": "24",
+    "Qn": "In a ΔPQR, N is a point on PR such that QN ⟂ PR. If PN · NR = QN², find ∠PQR.",
+    "Figure": "none",
+    "Figure-meta-data": "none",
+    "Option A": "45Â°",
+    "Option B": "30Â°",
+    "Option C": "60Â°",
+    "Option D": "90Â°",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Condition does not satisfy 45° property." },
+      "B": { "correctFlag": false, "explanation": "Right angle condition ignored." },
+      "C": { "correctFlag": false, "explanation": "Product relation implies right angle." },
+      "D": { "correctFlag": true, "explanation": "Given condition is right triangle altitude theorem." }
+    }
+  },
+  {
+    "Q-No": "25",
+    "Qn": "If P is the midpoint of the arc QR and  <RQP = 60degree then find <RPT",
+    "Figure": "data:image/png;base64,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",
+    "Figure-meta-data": "",
+    "Option A": "70Â°",
+    "Option B": "50Â°",
+    "Option C": "60Â°",
+    "Option D": "65Â°",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": false, "explanation": "Angle subtended at centre miscalculated." },
+      "B": { "correctFlag": false, "explanation": "Half-angle theorem misused." },
+      "C": { "correctFlag": true, "explanation": "Angle at centre equals twice angle at circumference." },
+      "D": { "correctFlag": false, "explanation": "No such relation exists." }
+    }
+  }
+]
 
         // DOM Elements
         const questionsContainer = document.getElementById('questions-container');
