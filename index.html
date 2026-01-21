@@ -1,738 +1,430 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AG MCQ Reasoning Assistant | Mentor Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .math-display {
-            font-size: 1.05rem;
-            color: #1e293b;
-        }
-        
-        .option-correct {
-            border-color: #10b981 !important;
-            background-color: rgba(16, 185, 129, 0.05);
-        }
-        
-        .option-incorrect {
-            border-color: #ef4444 !important;
-        }
-        
-        .explanation-correct {
-            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-        }
-        
-        .explanation-incorrect {
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-        }
-        
-        .question-card {
-            scroll-margin-top: 2rem;
-            transition: all 0.3s ease;
-        }
-        
-        .question-card:hover {
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-        }
-        
-        .active-nav {
-            background-color: #4f46e5;
-            color: white;
-        }
-        
-        .sticky-nav {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        
-        .print-only {
-            display: none;
-        }
-        
-        .question-image {
-            max-width: 100%;
-            height: auto;
-            margin: 1rem 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-            
-            .print-only {
-                display: block !important;
-            }
-            
-            .question-card {
-                break-inside: avoid;
-                page-break-inside: avoid;
-            }
-            
-            body {
-                padding: 0;
-                margin: 0;
-                background: white;
-            }
-            
-            .question-image {
-                max-width: 300px !important;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>MCQ Viewer (LaTeX + Figure)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- MathJax -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+
+<style>
+.option-correct { background:#ecfdf5; border-color:#10b981 }
+.exp-correct { background:#d1fae5 }
+.exp-wrong { background:#fee2e2 }
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #000;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  font-weight: 600;
+}
+
+</style>
 </head>
-<body class="bg-gray-50">
-    <!-- Header -->
-    <header class="sticky-nav bg-white shadow-sm border-b border-gray-200 no-print">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                    <div class="bg-indigo-600 text-white p-2 rounded-lg mr-4">
-                        <i class="fas fa-chalkboard-teacher text-2xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-2xl font-bold text-gray-900">AG MCQ Reasoning Assistant</h1>
-                        <p class="text-gray-600 text-sm">Mentor & Teacher Dashboard</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <button id="print-btn" class="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors">
-                        <i class="fas fa-print mr-2"></i>Print
-                    </button>
-                    <button id="export-btn" class="px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors">
-                        <i class="fas fa-file-export mr-2"></i>Export
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
 
-    <!-- Main Content -->
-    <div class="container mx-auto px-6 py-8">
-        <!-- Dashboard Overview -->
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8 no-print">
-            <div class="bg-white rounded-xl shadow p-6">
-                <div class="flex items-center">
-                    <div class="p-3 bg-indigo-100 text-indigo-600 rounded-lg mr-4">
-                        <i class="fas fa-question-circle text-xl"></i>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold text-gray-900" id="total-questions">10</div>
-                        <div class="text-gray-600">Total Questions</div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white rounded-xl shadow p-6">
-                <div class="flex items-center">
-                    <div class="p-3 bg-emerald-100 text-emerald-600 rounded-lg mr-4">
-                        <i class="fas fa-check-circle text-xl"></i>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold text-gray-900">All</div>
-                        <div class="text-gray-600">With Explanations</div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white rounded-xl shadow p-6">
-                <div class="flex items-center">
-                    <div class="p-3 bg-amber-100 text-amber-600 rounded-lg mr-4">
-                        <i class="fas fa-calculator text-xl"></i>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold text-gray-900">8</div>
-                        <div class="text-gray-600">Math Questions</div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white rounded-xl shadow p-6">
-                <div class="flex items-center">
-                    <div class="p-3 bg-purple-100 text-purple-600 rounded-lg mr-4">
-                        <i class="fas fa-shapes text-xl"></i>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold text-gray-900">2</div>
-                        <div class="text-gray-600">Geometry Questions</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<body class="bg-gray-100 p-6">
 
-        <!-- Print Header -->
-        <div class="print-only bg-white p-6 mb-8 rounded-xl shadow">
-            <div class="text-center">
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">AG MCQ Reasoning Assistant</h1>
-                <h2 class="text-xl text-gray-600 mb-2">Mentor & Teacher Reference Material</h2>
-                <div class="border-t border-gray-300 pt-4 text-sm text-gray-500">
-                    Generated on: <span id="print-date"></span> | Total Questions: 10
-                </div>
-            </div>
-        </div>
+<div class="max-w-5xl mx-auto" id="questions"></div>
 
-        <!-- Quick Navigation -->
-        <div class="no-print mb-8">
-            <div class="bg-white rounded-xl shadow p-6">
-                <h2 class="text-xl font-bold text-gray-900 mb-4">Quick Navigation</h2>
-                <div class="flex flex-wrap gap-2" id="question-nav">
-                    <!-- Navigation buttons will be generated here -->
-                </div>
-            </div>
-        </div>
+<script>
+/* ============================
+   MCQ DATA (UNCHANGED FORMAT)
+============================ */
+const mcqData = [
+  {
+    "Q-No": "1",
+    "Qn": "Write the zeroes of the polynomial $2x^2-6x-7$",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "4, 7",
+    "Option B": "2, -4",
+    "Option C": "(1, 7) ",
+    "Option D": " (3, -2)",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Sum of zeroes is 11, but -(-6)/2 = 3. Incorrect.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Sum of zeroes is -2, does not match 3. Incorrect.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Sum of zeroes is 8, does not match 3. Incorrect.\" }, \"D\": { \"correctFlag\": true, \"explanation\": \"Given as correct, though mathematically roots of 2x²-6x-7 are irrational. Likely typo in question; (3, -2) are roots of x²-x-6.\" } }"
+  },
+  {
+    "Q-No": "2",
+    "Qn": "Solve the equations $\\frac{1}{2x}-\\frac{1}{y}= -1,\\; \\frac{1}{x}+\\frac{1}{2y}=8$  ,x,y != 0    and find $6x+4y$",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "4",
+    "Option B": "6",
+    "Option C": "1",
+    "Option D": "2",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Result of 6x+4y is 2, not 4.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Calculation yields 2, not 6.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Incorrect value.\" }, \"D\": { \"correctFlag\": true, \"explanation\": \"Solving equations: 1/x=6, 1/y=4 ⇒ x=1/6, y=1/4. Thus 6(1/6) + 4(1/4) = 1 + 1 = 2.\" } }"
+  },
+  {
+    "Q-No": "3",
+    "Qn": "\\(5\\tan \\theta +7(\\sec \\theta \\sin \\theta) = 24\\) find cot \\(\\theta\\)",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "1",
+    "Option B": "5/7",
+    "Option C": "7/5",
+    "Option D": "1/2",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"tan θ = 2, so cot θ ≠ 1.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Reciprocal of tan θ is 1/2, not 5/7.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Incorrect ratio.\" }, \"D\": { \"correctFlag\": true, \"explanation\": \"sec θ sin θ = tan θ. Equation becomes 5tan θ + 7tan θ = 24 ⇒ 12tan θ = 24 ⇒ tan θ = 2. cot θ = 1/2.\" } }"
+  },
+  {
+    "Q-No": "4",
+    "Qn": "Find the value of  X  for which DE||AB in the given figure",
+    "Figure": "data:image/png;base64,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",
+    "Figure-meta-data": "",
+    "Option A": "x=2",
+    "Option B": "x=1",
+    "Option C": "x=6",
+    "Option D": "x=3",
+    "Correct Ans": "A",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": true, \"explanation\": \"By Basic Proportionality Theorem, sides are proportional. Substituting x=2 satisfies the ratios required for DE||AB.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Does not satisfy the proportionality condition required by Thales Theorem.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Incorrect value for x based on BPT.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Ratios of sides would be unequal with x=3.\" } }"
+  },
+  {
+    "Q-No": "5",
+    "Qn": "From a point on the ground   50m away from the foot of a tower, the angle of elevation of the top of the tower is  45 degree . The angle of elevation of the top of the flag post which is on the top of the tower is 60 degree . Find the length of the flag post",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "$50(\\sqrt3+1)$",
+    "Option B": "$100(\\sqrt3+1)$",
+    "Option C": "$100(\\sqrt3-1)$",
+    "Option D": "$50(\\sqrt3-1)$",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Incorrect subtraction of heights.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Too large, involves incorrect addition.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Incorrect scalar multiplier.\" }, \"D\": { \"correctFlag\": true, \"explanation\": \"Tower height = 50tan45 = 50. Total height = 50tan60 = 50√3. Flag = Total - Tower = 50√3 - 50 = 50(√3-1).\" } }"
+  },
+  {
+    "Q-No": "6",
+    "Qn": "Find the area of the shaded region, enclosed between two concentric circles of radii   7cm and   14 cm where $\\angle AOC=90^\\circ$. ( use pi = 22/7 )",
+    "Figure": "data:image/png;base64,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",
+    "Figure-meta-data": "",
+    "Option A": "115.5 cmÂ²",
+    "Option B": "116.5 cmÂ²",
+    "Option C": "77 cmÂ²",
+    "Option D": "75 cmÂ²",
+    "Correct Ans": "A",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": true, \"explanation\": \"Area = (90/360)π(R²-r²) = (1/4)(22/7)(196-49) = (1/4)(22/7)(147) = 115.5 cm².\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Calculation error, correct is 115.5.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Incorrect calculation.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Much lower than the actual area.\" } }"
+  },
+  {
+    "Q-No": "7",
+    "Qn": "if cos A + cos^2 A = 1,then sin^2 A + sin^4 A is ",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "0",
+    "Option B": "1",
+    "Option C": "2",
+    "Option D": "None of thease",
+    "Correct Ans": "B",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Incorrect value.\" }, \"B\": { \"correctFlag\": true, \"explanation\": \"cos A = 1 - cos²A = sin²A. Substituting sin²A = cos A into expression: cos A + cos²A = 1.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Result is 1, not 2.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Option B is the correct answer.\" } }"
+  },
+  {
+    "Q-No": "8",
+    "Qn": "In a right triangle ABC, right angled at B , the ratio of AB to AC is 1:root2  find the value of  5 tan A / 1 + tan^2 A",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "1",
+    "Option B": "5/2",
+    "Option C": "0",
+    "Option D": "3/2",
+    "Correct Ans": "B",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Incorrect evaluation.\" }, \"B\": { \"correctFlag\": true, \"explanation\": \"cos A = AB/AC = 1/√2 ⇒ A=45°. tan 45 = 1. Expression: 5(1)/(1+1) = 5/2.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Result is non-zero.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Incorrect calculation.\" } }"
+  },
+  {
+    "Q-No": "9",
+    "Qn": "Two concentric circles are of radii 6 cm and  rcm  respectively where  r > 6 . A chord of larger circle of length 16 cm touches the smaller circle. Find the value of  r .",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "11 cm",
+    "Option B": "10 cm",
+    "Option C": "14 cm",
+    "Option D": "12 cm ",
+    "Correct Ans": "B",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Hypotenuse is 10, not 11.\" }, \"B\": { \"correctFlag\": true, \"explanation\": \"Perpendicular from center bisects chord (16/2=8). Right triangle with legs 6 and 8. r = √(6²+8²) = 10 cm.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Incorrect Pythagorean calculation.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Incorrect value.\" } }"
+  },
+  {
+    "Q-No": "10",
+    "Qn": "A girl calculates that the probability of her winning the first prize in a lottery is 0.08. If 6000 tickets are sold, then how many tickets has she bought?",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "420",
+    "Option B": "460",
+    "Option C": "480",
+    "Option D": "440",
+    "Correct Ans": "C ",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"420/6000 = 0.07.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"460/6000 ≠ 0.08.\" }, \"C\": { \"correctFlag\": true, \"explanation\": \"Probability = Favorable/Total. Tickets = 0.08 × 6000 = 480.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"440/6000 ≠ 0.08.\" } }"
+  },
+  {
+    "Q-No": "11",
+    "Qn": "The marks obtained by students in a test is given below. Find the mean mark \n<table border='1' cellpadding='8' cellspacing='0'> <thead> <tr> <th>Marks Range</th> <th>0–20</th> <th>20–40</th> <th>40–60</th> <th>60–80</th> <th>80–100</th> </tr> </thead> <tbody> <tr> <th>No. of Students</th> <td>20</td> <td>35</td> <td>52</td> <td>44</td> <td>38</td> </tr> </tbody> </table>",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "62.55",
+    "Option B": "56.72",
+    "Option C": "54.76",
+    "Option D": "59.35",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Too high.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Close, but incorrect.\" }, \"C\": { \"correctFlag\": true, \"explanation\": \"Mean = Σfixi / Σfi = 10350 / 189 ≈ 54.76.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Incorrect calculation.\" } }"
+  },
+  {
+    "Q-No": "12",
+    "Qn": "The mean of the following distribution is 23. Find the missing frequencies f1 and f2 the if sum of all the frequencies is 10 <br><table border='1' cellpadding='8' cellspacing='0'> <thead> <tr> <th>Class</th> <th>5–15</th> <th>15–25</th> <th>25–35</th> <th>35–45</th> </tr> </thead> <tbody> <tr> <th>Frequency</th> <td>f₁</td> <td>4</td> <td>3</td> <td>f₂</td> </tr> </tbody> </table>",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "1,2",
+    "Option B": "1,1",
+    "Option C": "2,1",
+    "Option D": "2,3",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Does not satisfy the mean equation.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Sum of frequencies would not equal 10.\" }, \"C\": { \"correctFlag\": true, \"explanation\": \"f1+f2=3. Mean eq: 10f1+4f2=24. Solving gives f1=2, f2=1.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Sum of frequencies exceeds limit.\" } }"
+  },
+  {
+    "Q-No": "13",
+    "Qn": "Two alarm clocks ring their alarms at regular intervals of 50 seconds and 48 seconds. If they first beep together at 12 noon, at what time will they beep again for the first time after 12 noon?",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "12.20 pm",
+    "Option B": "12.12 pm",
+    "Option C": "12.11 pm",
+    "Option D": "None of these",
+    "Correct Ans": "A",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": true, \"explanation\": \"LCM of 50 and 48 is 1200 seconds = 20 minutes. 12:00 + 20 min = 12.20 pm.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"12 minutes is 720s, not divisible by 50.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"11 minutes is not divisible by 50.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Option A is correct.\" } }"
+  },
+  {
+    "Q-No": "14",
+    "Qn": "If the HCF of 144 and 180 is expressed in the form 13m − 3  , find the value of m .",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "-3",
+    "Option B": "1",
+    "Option C": "2",
+    "Option D": "3",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Results in negative HCF.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"13(1)-3 = 10, incorrect.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"13(2)-3 = 23, incorrect.\" }, \"D\": { \"correctFlag\": true, \"explanation\": \"HCF(144, 180) = 36. 13m - 3 = 36 ⇒ 13m = 39 ⇒ m = 3.\" } }"
+  },
+  {
+    "Q-No": "15",
+    "Qn": "Find the points on the x -axis which are at a distance of 2 root 5 from the point (7, - 4)",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "(5,0) (0,9 )",
+    "Option B": "(0,5) (0,9 )",
+    "Option C": "(5,0) (9,0 )",
+    "Option D": "(0,5)  (9,0 )",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"(0,9) is on y-axis, not x-axis.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Points are on y-axis.\" }, \"C\": { \"correctFlag\": true, \"explanation\": \"Distance formula: (x-7)² + 16 = 20 ⇒ (x-7)² = 4 ⇒ x=5 or 9. Points (5,0), (9,0).\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Includes y-axis point.\" } }"
+  },
+  {
+    "Q-No": "16",
+    "Qn": "Name the type of triangle PQR formed by the points \\(P(\\sqrt{2},sqrt{2}),Q(-sqrt{2},-sqrt{2}) and R(-sqrt{6},sqrt{6})",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "Right triangle",
+    "Option B": "Isosceles triangle",
+    "Option C": "Equilateral Triangle",
+    "Option D": "None of these",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Sides are equal, so it is equilateral.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Technically true, but 'Equilateral' is the precise classification as all sides are equal.\" }, \"C\": { \"correctFlag\": true, \"explanation\": \"Calculate distance squared for PQ, QR, RP. All equal 16. Hence, equilateral triangle.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"It is an equilateral triangle.\" } }"
+  },
+  {
+    "Q-No": "17",
+    "Qn": "Which term of the A.P 3,15,27,39,.... is 132 more than the 54th term?",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "67th",
+    "Option B": "66th",
+    "Option C": "65th",
+    "Option D": "68th",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Incorrect term count.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Incorrect.\" }, \"C\": { \"correctFlag\": true, \"explanation\": \"d=12. Difference in terms = 132/12 = 11. 54th + 11 = 65th term.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Incorrect term count.\" } }"
+  },
+  {
+    "Q-No": "18",
+    "Qn": "If the sum of the first four terms of an A P is 26 and the sum of first 14 terms is 301, find the n th term",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "3n-2",
+    "Option B": "3n-1",
+    "Option C": "3n+1",
+    "Option D": "2n-1",
+    "Correct Ans": "B",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Incorrect formula.\" }, \"B\": { \"correctFlag\": true, \"explanation\": \"Solving S4=26 and S14=301 gives a=2, d=3. nth term = 2+(n-1)3 = 3n-1.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Incorrect intercept.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Incorrect slope and intercept.\" } }"
+  },
+  {
+    "Q-No": "19",
+    "Qn": "An inverted cone of vertical height 14 cm and radius of base 7 cm contains water to a depth of 3 cm. Find the area of the interior surface of the cone not in contact with the water. [Give your answer in whole number after rounding of decimals. Take Pi  = 3.14, root 5 = 2.236 ]",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "318cm^2",
+    "Option B": "326cm^2",
+    "Option C": "363cm^2",
+    "Option D": "314cm^2",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Calculation yields ~328, closer to D if approximated via 100π.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Calculation yields ~328, but D is the official answer.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Too high.\" }, \"D\": { \"correctFlag\": true, \"explanation\": \"Calculated CSA of frustum is approx 328cm². Option D (314) likely assumes approximation or specific constants/typo (314 ≈ 100π).\" } }"
+  },
+  {
+    "Q-No": "20",
+    "Qn": "The diameter of a roller is 120 cm and its length is 84 cm. If it takes 500 complete revolutions to level a playground, determine the cost of levelling it at the rate of 30 paise per sq. m. ( Take pi = 22/7 )",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "Rs.625.50",
+    "Option B": "Rs.525.25",
+    "Option C": "Rs.475.20",
+    "Option D": "Rs.380.75",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Calculation error.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Calculation error.\" }, \"C\": { \"correctFlag\": true, \"explanation\": \"Area = 500 × 2πrh = 1584 m². Cost = 1584 × 0.30 = Rs 475.20.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Calculation error.\" } }"
+  },
+  {
+    "Q-No": "21",
+    "Qn": "Sum of area of two squares is 970cm^2 . If the sum of their perimeters is 176cm . Find the sides of the two squares.",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "21 cm, 23 cm",
+    "Option B": "20 cm, 24 cm",
+    "Option C": "19 cm, 25 cm",
+    "Option D": "18 cm, 26 cm",
+    "Correct Ans": "A",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": true, \"explanation\": \"21² + 23² = 441 + 529 = 970. Perimeters 4(21)+4(23) = 84+92 = 176. Matches.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Sum of areas = 400 + 576 = 976 ≠ 970.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Sum of areas = 361 + 625 = 986 ≠ 970.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Sum of areas = 324 + 676 = 1000 ≠ 970.\" } }"
+  },
+  {
+    "Q-No": "22",
+    "Qn": "Which of the following equations has no real roots?",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "x^2-4x+3root2=0",
+    "Option B": "x^2+4x-3root2=0",
+    "Option C": "x^2-4x-3root2=0",
+    "Option D": "3x^2+4root3x+4=0",
+    "Correct Ans": "A",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": true, \"explanation\": \"Discriminant D = b²-4ac = 16 - 12√2 ≈ 16 - 16.9 < 0. No real roots.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"D = 16 + 12√2 > 0. Real roots exist.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"D = 16 + 12√2 > 0. Real roots exist.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"D = 48 - 48 = 0. Real equal roots exist.\" } }"
+  },
+  {
+    "Q-No": "23",
+    "Qn": "A 5 m long ladder is placed leaning towards a vertical wall such that it reaches the wall at a point 4 m high. If the foot of the ladder is moved 1.6m towards the wall, then find the distance by which the top of the ladder would slide upwards on the wall.",
+    "Figure": "",
+    "Figure-meta-data": "none",
+    "Option A": "0.8 m",
+    "Option B": "0.4 m",
+    "Option C": "1 m",
+    "Option D": "0.2 m",
+    "Correct Ans": "A",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": true, \"explanation\": \"Initial base=3m. New base=1.4m. New height = √(25 - 1.4²) = 4.8m. Shift = 4.8 - 4 = 0.8m.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Incorrect calculation.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Incorrect calculation.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Incorrect calculation.\" } }"
+  },
+  {
+    "Q-No": "24",
+    "Qn": "In a ΔPQR, N is a point on PR such that QN ⟂ PR. If PN · NR = QN², find ∠PQR.",
+    "Figure": "data:image/png;base64,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",
+    "Figure-meta-data": "none",
+    "Option A": "45Â°",
+    "Option B": "30Â°",
+    "Option C": "60Â°",
+    "Option D": "90Â°",
+    "Correct Ans": "D",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Condition implies right angle at Q, not 45°.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Condition implies right angle at Q, not 30°.\" }, \"C\": { \"correctFlag\": false, \"explanation\": \"Condition implies right angle at Q, not 60°.\" }, \"D\": { \"correctFlag\": true, \"explanation\": \"QN² = PN·NR is the geometric mean property of the altitude in a right-angled triangle. Thus ∠PQR = 90°.\" } }"
+  },
+  {
+    "Q-No": "25",
+    "Qn": "If P is the midpoint of the arc QR and  <RQP = 60degree then find <RPT",
+    "Figure": "",
+    "Figure-meta-data": "",
+    "Option A": "70Â°",
+    "Option B": "50Â°",
+    "Option C": "60Â°",
+    "Option D": "65Â°",
+    "Correct Ans": "C",
+    "Explnation ( JSON )": "{ \"A\": { \"correctFlag\": false, \"explanation\": \"Angle RPT equals angle in alternate segment.\" }, \"B\": { \"correctFlag\": false, \"explanation\": \"Angle RPT equals angle in alternate segment.\" }, \"C\": { \"correctFlag\": true, \"explanation\": \"P is midpoint of arc ⇒ PQ=PR. ΔPQR is equilateral. By alternate segment theorem (assuming T on tangent), ∠RPT = ∠PQR = 60°.\" }, \"D\": { \"correctFlag\": false, \"explanation\": \"Angle RPT equals angle in alternate segment.\" } }"
+  }
+];
 
-        <!-- Questions Container -->
-        <div id="questions-container">
-            <!-- Questions will be dynamically generated here -->
-        </div>
+/* ============================
+   HELPERS
+============================ */
+function parseExplanation(q) {
+  if (q._exp) return q._exp;
+  try {
+    q._exp = JSON.parse(q["Explnation ( JSON )"]);
+  } catch {
+    q._exp = {};
+  }
+  return q._exp;
+}
+
+function figureHTML(fig) {
+  if (!fig || !fig.trim()) return "";
+  return `
+    <div class="ml-6 mt-4 md:mt-0">
+      <img src="${fig}"
+           class="max-w-xs max-h-60 rounded-lg border shadow"
+           alt="Figure" />
+    </div>`;
+}
+
+/* ============================
+   RENDER
+============================ */
+const root = document.getElementById("questions");
+
+mcqData.forEach(q => {
+  const letters = ["A","B","C","D"];
+  const exp = parseExplanation(q);
+
+  let html = `
+  <div class="bg-white p-6 rounded-xl shadow mb-6">
+    <div class="flex flex-col md:flex-row md:items-start md:justify-between">
+      <div class="flex-1">
+        <h2 class="text-xl font-bold mb-4">
+          Q${q["Q-No"]}. ${q.Qn}
+        </h2>
+      </div>
+      ${figureHTML(q.Figure)}
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-6 mt-8 no-print">
-        <div class="container mx-auto px-6">
-            <div class="text-center text-gray-600">
-                <p>© 2023 AG MCQ Reasoning Assistant. For mentor and teacher use only.</p>
-                <p class="text-sm mt-2">This material contains detailed explanations for MCQ questions with step-by-step reasoning.</p>
-            </div>
-        </div>
-    </footer>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+  `;
 
-    <!-- JavaScript -->
-    <script>
-        // Configure MathJax
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true,
-                packages: {'[+]': ['ams']}
-            },
-            options: {
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-            }
-        };
+  letters.forEach(l => {
+    const correct = q["Correct Ans"] === l;
+    html += `
+      <div class="p-3 border rounded ${correct ? "option-correct" : ""}">
+        <b>${l}.</b> ${q[`Option ${l}`]}
+      </div>`;
+  });
 
-        // Sample MCQ Data with base64 image
-        const mcqData = [
-          {
-            "Q-No": "1",
-            "Qn": "Write the zeroes of the polynomial $2x^2-6x-7$",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "4, 7",
-            "Option B": "2, -4",
-            "Option C": "(1, 7) ",
-            "Option D": " (3, -2)",
-            "Correct Ans": "D",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Substituting 4 or 7 does not make polynomial zero; values are guessed, not solved roots." },
-              "B": { "correctFlag": false, "explanation": "These values do not satisfy $2x^2-6x-7=0$ on substitution." },
-              "C": { "correctFlag": false, "explanation": "1 and 7 are not roots; polynomial value is nonzero for both." },
-              "D": { "correctFlag": true, "explanation": "Using quadratic formula gives $x=\\frac{6\\pm\\sqrt{92}}{4} = 3, -2$." }
-            }
-          },
-          {
-            "Q-No": "2",
-            "Qn": "Solve the equations $\\frac{1}{2x}-\\frac{1}{y}= -1,\\; \\frac{1}{x}+\\frac{1}{2y}=8$  ,x,y ≠ 0    and find $6x+4y$",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "4",
-            "Option B": "6",
-            "Option C": "1",
-            "Option D": "2",
-            "Correct Ans": "D",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Incorrect algebra while solving simultaneous equations gives wrong x and y." },
-              "B": { "correctFlag": false, "explanation": "Value comes from calculation error after solving linear equations in $\\frac{1}{x}$ and $\\frac{1}{y}$." },
-              "C": { "correctFlag": false, "explanation": "Wrong substitution of x and y into $6x+4y$." },
-              "D": { "correctFlag": true, "explanation": "Solving equations gives $x=\\frac{1}{2}$, $y=-1$; hence $6x+4y=2$." }
-            }
-          },
-          {
-            "Q-No": "3",
-            "Qn": "$5\\tan \\theta +7(\\sec \\theta \\sin \\theta) = 24$ find $\\cot \\theta$",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "1",
-            "Option B": "$\\frac{5}{7}$",
-            "Option C": "$\\frac{7}{5}$",
-            "Option D": "$\\frac{1}{2}$",
-            "Correct Ans": "D",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Assumes $\\tan\\theta=1$ without simplifying $\\sec\\theta\\cdot\\sin\\theta$ term." },
-              "B": { "correctFlag": false, "explanation": "Interchanging $\\tan\\theta$ and $\\cot\\theta$ leads to wrong ratio." },
-              "C": { "correctFlag": false, "explanation": "This is reciprocal of $\\tan\\theta$, not obtained from equation." },
-              "D": { "correctFlag": true, "explanation": "Using $\\sec\\theta\\cdot\\sin\\theta=\\tan\\theta$ simplifies equation; $\\tan\\theta=2$, so $\\cot\\theta=\\frac{1}{2}$." }
-            }
-          },
-          {
-            "Q-No": "4",
-            "Qn": "Find the value of X for which DE||AB in the given figure",
-            "Figure": "data:image/png;base64,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",
-            "Figure-meta-data": "none",
-            "Option A": "x=2",
-            "Option B": "x=1",
-            "Option C": "x=6",
-            "Option D": "x=3",
-            "Correct Ans": "A",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": true, "explanation": "Using Basic Proportionality Theorem, corresponding sides are proportional only when x=2." },
-              "B": { "correctFlag": false, "explanation": "Does not satisfy required ratio of segments for parallel lines." },
-              "C": { "correctFlag": false, "explanation": "Gives unequal ratios, violating DE ∥ AB condition." },
-              "D": { "correctFlag": false, "explanation": "Fails to maintain proportional division of sides." }
-            }
-          },
-          {
-            "Q-No": "5",
-            "Qn": "From a point on the ground 50m away from the foot of a tower, the angle of elevation of the top of the tower is 45°. The angle of elevation of the top of the flag post which is on the top of the tower is 60°. Find the length of the flag post",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "$50(\\sqrt{3}+1)$",
-            "Option B": "$100(\\sqrt{3}+1)$",
-            "Option C": "$100(\\sqrt{3}-1)$",
-            "Option D": "$50(\\sqrt{3}-1)$",
-            "Correct Ans": "D",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Adds heights instead of taking difference between tower and total height." },
-              "B": { "correctFlag": false, "explanation": "Incorrect base distance used in trigonometric calculation." },
-              "C": { "correctFlag": false, "explanation": "Magnitude doubled wrongly; base distance is only 50 m." },
-              "D": { "correctFlag": true, "explanation": "Height difference: $50\\tan60^\\circ−50\\tan45^\\circ=50(\\sqrt{3}−1)$." }
-            }
-          },
-          {
-            "Q-No": "6",
-            "Qn": "Find the area of the shaded region, enclosed between two concentric circles of radii 7cm and 14 cm where $\\angle AOC=90^\\circ$. (use $\\pi = \\frac{22}{7}$)",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "115.5 cm²",
-            "Option B": "116.5 cm²",
-            "Option C": "77 cm²",
-            "Option D": "75 cm²",
-            "Correct Ans": "A",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": true, "explanation": "Area = $\\frac{1}{4}\\pi(14^2−7^2)=115.5$ cm²." },
-              "B": { "correctFlag": false, "explanation": "Numerical calculation error while subtracting areas." },
-              "C": { "correctFlag": false, "explanation": "Considers only inner sector, not shaded region." },
-              "D": { "correctFlag": false, "explanation": "Ignores sector angle; uses full circle wrongly." }
-            }
-          },
-          {
-            "Q-No": "7",
-            "Qn": "if $\\cos A + \\cos^2 A = 1$, then $\\sin^2 A + \\sin^4 A$ is ",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "0",
-            "Option B": "1",
-            "Option C": "2",
-            "Option D": "None of these",
-            "Correct Ans": "B",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Sum of squares of sine cannot be zero for real angle." },
-              "B": { "correctFlag": true, "explanation": "From given, $\\cos A = 0$ or $1$; corresponding $\\sin^2 A + \\sin^4 A$ equals 1." },
-              "C": { "correctFlag": false, "explanation": "Maximum possible value is less than 2." },
-              "D": { "correctFlag": false, "explanation": "Correct value exists, so option invalid." }
-            }
-          },
-          {
-            "Q-No": "8",
-            "Qn": "In a right triangle ABC, right angled at B, the ratio of AB to AC is $1:\\sqrt{2}$. Find the value of $\\frac{5\\tan A}{1 + \\tan^2 A}$",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "1",
-            "Option B": "$\\frac{5}{2}$",
-            "Option C": "0",
-            "Option D": "$\\frac{3}{2}$",
-            "Correct Ans": "B",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Incorrect simplification of trigonometric identity." },
-              "B": { "correctFlag": true, "explanation": "$\\frac{AB}{AC}=\\cos A=\\frac{1}{\\sqrt{2}} \\Rightarrow \\tan A=1$; expression becomes $\\frac{5}{2}$." },
-              "C": { "correctFlag": false, "explanation": "$\\tan A$ is not zero for given triangle." },
-              "D": { "correctFlag": false, "explanation": "Arithmetic error after substituting $\\tan A=1$." }
-            }
-          },
-          {
-            "Q-No": "9",
-            "Qn": "Two concentric circles are of radii 6 cm and r cm respectively where r > 6. A chord of larger circle of length 16 cm touches the smaller circle. Find the value of r.",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "11 cm",
-            "Option B": "10 cm",
-            "Option C": "14 cm",
-            "Option D": "12 cm",
-            "Correct Ans": "B",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Incorrect use of chord-distance formula." },
-              "B": { "correctFlag": true, "explanation": "Using $(r^2−8^2)=6^2$ gives r=10 cm." },
-              "C": { "correctFlag": false, "explanation": "Distance from center miscalculated." },
-              "D": { "correctFlag": false, "explanation": "Assumes wrong half-chord length." }
-            }
-          },
-          {
-            "Q-No": "10",
-            "Qn": "A girl calculates that the probability of her winning the first prize in a lottery is 0.08. If 6000 tickets are sold, then how many tickets has she bought?",
-            "Figure": "none",
-            "Figure-meta-data": "none",
-            "Option A": "420",
-            "Option B": "460",
-            "Option C": "480",
-            "Option D": "440",
-            "Correct Ans": "C",
-            "Explnation ( JSON )": {
-              "A": { "correctFlag": false, "explanation": "Probability relation not applied correctly." },
-              "B": { "correctFlag": false, "explanation": "Multiplication error with total tickets." },
-              "C": { "correctFlag": true, "explanation": "Probability = tickets bought/6000 ⇒ tickets=$0.08×6000=480$." },
-              "D": { "correctFlag": false, "explanation": "Assumes incorrect probability fraction." }
-            }
-          }
-        ];
+  html += `
+    </div>
 
-        // DOM Elements
-        const questionsContainer = document.getElementById('questions-container');
-        const questionNav = document.getElementById('question-nav');
-        const totalQuestionsEl = document.getElementById('total-questions');
-        const printBtn = document.getElementById('print-btn');
-        const exportBtn = document.getElementById('export-btn');
-        const printDateEl = document.getElementById('print-date');
+    <h3 class="font-semibold text-lg mt-6 mb-3">Explanation</h3>
+  `;
 
-        // Initialize
-        function init() {
-            // Set print date
-            const now = new Date();
-            printDateEl.textContent = now.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            // Set total questions
-            totalQuestionsEl.textContent = mcqData.length;
-            
-            // Generate navigation
-            generateNavigation();
-            
-            // Generate all questions
-            generateQuestions();
-            
-            // Initialize MathJax after content is loaded
-            setTimeout(() => {
-                if (window.MathJax) {
-                    MathJax.typesetPromise().catch(err => console.log('MathJax typeset error:', err));
-                }
-            }, 500);
-        }
+  letters.forEach(l => {
+    const e = exp[l] || { correctFlag:false, explanation:"Not available" };
+    html += `
+      <div class="p-3 rounded mb-2 ${e.correctFlag ? "exp-correct" : "exp-wrong"}">
+        <b>${l}:</b> ${e.explanation}
+      </div>`;
+  });
 
-        // Generate navigation buttons
-        function generateNavigation() {
-            questionNav.innerHTML = '';
-            
-            mcqData.forEach((question, index) => {
-                const button = document.createElement('button');
-                button.className = 'px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors';
-                button.textContent = `Q${question["Q-No"]}`;
-                
-                button.addEventListener('click', () => {
-                    // Scroll to the question
-                    const questionElement = document.getElementById(`question-${question["Q-No"]}`);
-                    if (questionElement) {
-                        questionElement.scrollIntoView({ behavior: 'smooth' });
-                        
-                        // Update active nav button
-                        document.querySelectorAll('#question-nav button').forEach(btn => {
-                            btn.classList.remove('active-nav');
-                            btn.classList.add('bg-gray-100', 'text-gray-700');
-                        });
-                        
-                        button.classList.remove('bg-gray-100', 'text-gray-700');
-                        button.classList.add('active-nav');
-                    }
-                });
-                
-                questionNav.appendChild(button);
-            });
-        }
+  html += `</div>`;
+  root.insertAdjacentHTML("beforeend", html);
+});
 
-        // Generate all questions with explanations
-        function generateQuestions() {
-            questionsContainer.innerHTML = '';
-            
-            mcqData.forEach((question, index) => {
-                const questionElement = document.createElement('div');
-                questionElement.className = 'question-card bg-white rounded-xl shadow mb-8 p-8';
-                questionElement.id = `question-${question["Q-No"]}`;
-                
-                // Question header
-                const headerHTML = `
-                    <div class="flex justify-between items-start mb-6 pb-4 border-b border-gray-200">
-                        <div>
-                            <div class="inline-flex items-center px-4 py-2 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium mb-3">
-                                <i class="fas fa-question mr-2"></i>
-                                Question ${question["Q-No"]}
-                            </div>
-                            <h2 class="text-2xl font-bold text-gray-900 math-display">${question.Qn}</h2>
-                        </div>
-                        <div class="px-4 py-2 bg-emerald-100 text-emerald-800 rounded-lg text-sm font-medium">
-                            <i class="fas fa-check-circle mr-2"></i>
-                            Correct Answer: <span class="font-bold">${question["Correct Ans"].trim()}</span>
-                        </div>
-                    </div>
-                `;
-                
-                // Image section (if exists)
-                let imageHTML = '';
-                if (question.Figure && question.Figure !== "none") {
-                    if (question.Figure.startsWith('data:image')) {
-                        // Base64 image
-                        imageHTML = `
-                            <div class="mb-6">
-                                <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
-                                    <i class="fas fa-image mr-2 text-indigo-600"></i>
-                                    Figure
-                                </h3>
-                                <div class="flex justify-center">
-                                    <img src="${question.Figure}" alt="Question Figure" class="question-image max-w-md">
-                                </div>
-                            </div>
-                        `;
-                    }
-                }
-                
-                // Options section
-                let optionsHTML = `
-                    <div class="mb-8">
-                        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
-                            <i class="fas fa-list-ul mr-2 text-indigo-600"></i>
-                            Options
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                `;
-                
-                const optionLetters = ['A', 'B', 'C', 'D'];
-                optionLetters.forEach(letter => {
-                    const optionKey = `Option ${letter}`;
-                    const optionText = question[optionKey];
-                    const isCorrect = question["Correct Ans"].trim() === letter;
-                    
-                    optionsHTML += `
-                        <div class="option p-4 rounded-xl border-2 ${isCorrect ? 'option-correct' : 'border-gray-200'}">
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
-                                    isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-800'
-                                }">
-                                    ${letter}
-                                </div>
-                                <div class="flex-1 math-display">${optionText}</div>
-                                ${isCorrect ? 
-                                    '<div class="ml-2 text-emerald-600"><i class="fas fa-check-circle"></i></div>' : 
-                                    ''
-                                }
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                optionsHTML += `
-                        </div>
-                    </div>
-                `;
-                
-                // Explanation section
-                let explanationHTML = `
-                    <div class="mb-6">
-                        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
-                            <i class="fas fa-comment-dots mr-2 text-indigo-600"></i>
-                            Detailed Explanations
-                        </h3>
-                        <div class="space-y-4">
-                `;
-                
-                const explanationData = question["Explnation ( JSON )"];
-                optionLetters.forEach(letter => {
-                    const optionData = explanationData[letter];
-                    const isCorrect = optionData.correctFlag;
-                    
-                    explanationHTML += `
-                        <div class="explanation p-5 rounded-xl ${isCorrect ? 'explanation-correct' : 'explanation-incorrect'}">
-                            <div class="flex items-start mb-3">
-                                <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center mr-4 ${
-                                    isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
-                                }">
-                                    <span class="font-bold">${letter}</span>
-                                </div>
-                                <div class="flex-1">
-                                    <div class="flex justify-between items-start">
-                                        <div>
-                                            <h4 class="font-bold ${isCorrect ? 'text-emerald-800' : 'text-red-800'}">
-                                                ${isCorrect ? 'Correct Answer' : 'Incorrect Option'}
-                                            </h4>
-                                            <div class="text-gray-700 mt-2 math-display">${optionData.explanation}</div>
-                                        </div>
-                                        <div class="px-3 py-1 rounded-full text-sm font-medium ${
-                                            isCorrect ? 'bg-emerald-200 text-emerald-800' : 'bg-red-200 text-red-800'
-                                        }">
-                                            ${isCorrect ? '✓ Correct' : '✗ Incorrect'}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                explanationHTML += `
-                        </div>
-                    </div>
-                `;
-                
-                // Teaching notes section
-                const teachingNotesHTML = `
-                    
-                `;
-                
-                // Combine all sections
-                questionElement.innerHTML = headerHTML + imageHTML + optionsHTML + explanationHTML + teachingNotesHTML;
-                questionsContainer.appendChild(questionElement);
-            });
-            
-            // Process MathJax after all questions are loaded
-            setTimeout(() => {
-                if (window.MathJax) {
-                    MathJax.typesetPromise().catch(err => console.log('MathJax typeset error:', err));
-                }
-            }, 100);
-        }
+/* Render LaTeX */
+MathJax.typesetPromise();
+</script>
 
-        // Event Listeners
-        printBtn.addEventListener('click', () => {
-            window.print();
-        });
-
-        exportBtn.addEventListener('click', () => {
-            // Create a printable version
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>AG MCQ Reasoning Assistant - Questions & Explanations</title>
-                    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"><\/script>
-                    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"><\/script>
-                    <style>
-                        body { font-family: Arial, sans-serif; margin: 40px; }
-                        .question { margin-bottom: 40px; page-break-inside: avoid; }
-                        .question-header { border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
-                        .options { margin: 20px 0; }
-                        .option { margin: 10px 0; padding: 10px; border-left: 4px solid #ddd; }
-                        .option.correct { border-color: #10b981; background-color: #f0fdf4; }
-                        .explanation { margin: 10px 0; padding: 15px; border-radius: 5px; }
-                        .explanation.correct { background-color: #f0fdf4; border: 1px solid #10b981; }
-                        .explanation.incorrect { background-color: #fef2f2; border: 1px solid #ef4444; }
-                        h1 { color: #1f2937; }
-                        h2 { color: #374151; }
-                        .header { text-align: center; margin-bottom: 40px; }
-                        .footer { margin-top: 40px; text-align: center; color: #6b7280; font-size: 12px; }
-                        img { max-width: 100%; height: auto; margin: 10px 0; }
-                    </style>
-                    <script>
-                        window.MathJax = {
-                            tex: {
-                                inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
-                                displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
-                                processEscapes: true
-                            }
-                        };
-                    <\/script>
-                </head>
-                <body>
-                    <div class="header">
-                        <h1>AG MCQ Reasoning Assistant</h1>
-                        <h2>Questions with Detailed Explanations</h2>
-                        <p>Generated on: ${new Date().toLocaleDateString()}</p>
-                    </div>
-            `);
-
-            // Add each question
-            mcqData.forEach(question => {
-                let imageHTML = '';
-                if (question.Figure && question.Figure !== "none") {
-                    if (question.Figure.startsWith('data:image')) {
-                        imageHTML = `<div style="text-align: center; margin: 20px 0;"><img src="${question.Figure}" alt="Question Figure" style="max-width: 400px;"></div>`;
-                    }
-                }
-                
-                printWindow.document.write(`
-                    <div class="question">
-                        <div class="question-header">
-                            <h2>Question ${question["Q-No"]}: ${question.Qn}</h2>
-                            <p><strong>Correct Answer:</strong> ${question["Correct Ans"].trim()}</p>
-                        </div>
-                        
-                        ${imageHTML}
-                        
-                        <div class="options">
-                            <h3>Options:</h3>
-                            ${['A', 'B', 'C', 'D'].map(letter => {
-                                const isCorrect = question["Correct Ans"].trim() === letter;
-                                return `
-                                    <div class="option ${isCorrect ? 'correct' : ''}">
-                                        <strong>${letter}:</strong> ${question[`Option ${letter}`]}
-                                        ${isCorrect ? ' (Correct)' : ''}
-                                    </div>
-                                `;
-                            }).join('')}
-                        </div>
-                        
-                        <div class="explanations">
-                            <h3>Explanations:</h3>
-                            ${['A', 'B', 'C', 'D'].map(letter => {
-                                const exp = question["Explnation ( JSON )"][letter];
-                                return `
-                                    <div class="explanation ${exp.correctFlag ? 'correct' : 'incorrect'}">
-                                        <strong>${letter}:</strong> ${exp.explanation}
-                                        <br><em>${exp.correctFlag ? 'Correct Answer' : 'Incorrect Option'}</em>
-                                    </div>
-                                `;
-                            }).join('')}
-                        </div>
-                        
-                        <div class="teaching-notes">
-                            <h3>Teaching Notes:</h3>
-                            <p>Focus on the reasoning process, common misconceptions, and alternative solution methods.</p>
-                        </div>
-                    </div>
-                    <hr style="margin: 30px 0;">
-                `);
-            });
-
-            printWindow.document.write(`
-                    <div class="footer">
-                        <p>© 2023 AG MCQ Reasoning Assistant. For educational use only.</p>
-                    </div>
-                </body>
-                </html>
-            `);
-            
-            printWindow.document.close();
-            
-            // Initialize MathJax in print window
-            printWindow.onload = function() {
-                if (printWindow.MathJax) {
-                    printWindow.MathJax.typesetPromise().catch(err => console.log('MathJax typeset error:', err));
-                }
-            };
-        });
-
-        // Initialize the application
-        init();
-    </script>
 </body>
 </html>

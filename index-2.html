@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AG MCQ Reasoning Assistant | Mentor Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .math-display {
+            font-size: 1.05rem;
+            color: #1e293b;
+        }
+        
+        .option-correct {
+            border-color: #10b981 !important;
+            background-color: rgba(16, 185, 129, 0.05);
+        }
+        
+        .option-incorrect {
+            border-color: #ef4444 !important;
+        }
+        
+        .explanation-correct {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        }
+        
+        .explanation-incorrect {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        }
+        
+        .question-card {
+            scroll-margin-top: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .question-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .active-nav {
+            background-color: #4f46e5;
+            color: white;
+        }
+        
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .print-only {
+            display: none;
+        }
+        
+        .question-image {
+            max-width: 100%;
+            height: auto;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            .print-only {
+                display: block !important;
+            }
+            
+            .question-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            body {
+                padding: 0;
+                margin: 0;
+                background: white;
+            }
+            
+            .question-image {
+                max-width: 300px !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="sticky-nav bg-white shadow-sm border-b border-gray-200 no-print">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="bg-indigo-600 text-white p-2 rounded-lg mr-4">
+                        <i class="fas fa-chalkboard-teacher text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">AG MCQ Reasoning Assistant</h1>
+                        <p class="text-gray-600 text-sm">Mentor & Teacher Dashboard</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="print-btn" class="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors">
+                        <i class="fas fa-print mr-2"></i>Print
+                    </button>
+                    <button id="export-btn" class="px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+                        <i class="fas fa-file-export mr-2"></i>Export
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-8">
+        <!-- Dashboard Overview -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8 no-print">
+            <div class="bg-white rounded-xl shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-indigo-100 text-indigo-600 rounded-lg mr-4">
+                        <i class="fas fa-question-circle text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-gray-900" id="total-questions">10</div>
+                        <div class="text-gray-600">Total Questions</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-emerald-100 text-emerald-600 rounded-lg mr-4">
+                        <i class="fas fa-check-circle text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-gray-900">All</div>
+                        <div class="text-gray-600">With Explanations</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-amber-100 text-amber-600 rounded-lg mr-4">
+                        <i class="fas fa-calculator text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-gray-900">8</div>
+                        <div class="text-gray-600">Math Questions</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-purple-100 text-purple-600 rounded-lg mr-4">
+                        <i class="fas fa-shapes text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-gray-900">2</div>
+                        <div class="text-gray-600">Geometry Questions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Print Header -->
+        <div class="print-only bg-white p-6 mb-8 rounded-xl shadow">
+            <div class="text-center">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">AG MCQ Reasoning Assistant</h1>
+                <h2 class="text-xl text-gray-600 mb-2">Mentor & Teacher Reference Material</h2>
+                <div class="border-t border-gray-300 pt-4 text-sm text-gray-500">
+                    Generated on: <span id="print-date"></span> | Total Questions: 10
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="no-print mb-8">
+            <div class="bg-white rounded-xl shadow p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Quick Navigation</h2>
+                <div class="flex flex-wrap gap-2" id="question-nav">
+                    <!-- Navigation buttons will be generated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Questions Container -->
+        <div id="questions-container">
+            <!-- Questions will be dynamically generated here -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-6 mt-8 no-print">
+        <div class="container mx-auto px-6">
+            <div class="text-center text-gray-600">
+                <p>© 2023 AG MCQ Reasoning Assistant. For mentor and teacher use only.</p>
+                <p class="text-sm mt-2">This material contains detailed explanations for MCQ questions with step-by-step reasoning.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Configure MathJax
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                packages: {'[+]': ['ams']}
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+
+        // Sample MCQ Data with base64 image
+        const mcqData = [
+          {
+            "Q-No": "1",
+            "Qn": "Write the zeroes of the polynomial $2x^2-6x-7$",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "4, 7",
+            "Option B": "2, -4",
+            "Option C": "(1, 7) ",
+            "Option D": " (3, -2)",
+            "Correct Ans": "D",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Substituting 4 or 7 does not make polynomial zero; values are guessed, not solved roots." },
+              "B": { "correctFlag": false, "explanation": "These values do not satisfy $2x^2-6x-7=0$ on substitution." },
+              "C": { "correctFlag": false, "explanation": "1 and 7 are not roots; polynomial value is nonzero for both." },
+              "D": { "correctFlag": true, "explanation": "Using quadratic formula gives $x=\\frac{6\\pm\\sqrt{92}}{4} = 3, -2$." }
+            }
+          },
+          {
+            "Q-No": "2",
+            "Qn": "Solve the equations $\\frac{1}{2x}-\\frac{1}{y}= -1,\\; \\frac{1}{x}+\\frac{1}{2y}=8$  ,x,y ≠ 0    and find $6x+4y$",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "4",
+            "Option B": "6",
+            "Option C": "1",
+            "Option D": "2",
+            "Correct Ans": "D",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Incorrect algebra while solving simultaneous equations gives wrong x and y." },
+              "B": { "correctFlag": false, "explanation": "Value comes from calculation error after solving linear equations in $\\frac{1}{x}$ and $\\frac{1}{y}$." },
+              "C": { "correctFlag": false, "explanation": "Wrong substitution of x and y into $6x+4y$." },
+              "D": { "correctFlag": true, "explanation": "Solving equations gives $x=\\frac{1}{2}$, $y=-1$; hence $6x+4y=2$." }
+            }
+          },
+          {
+            "Q-No": "3",
+            "Qn": "$5\\tan \\theta +7(\\sec \\theta \\sin \\theta) = 24$ find $\\cot \\theta$",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "1",
+            "Option B": "$\\frac{5}{7}$",
+            "Option C": "$\\frac{7}{5}$",
+            "Option D": "$\\frac{1}{2}$",
+            "Correct Ans": "D",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Assumes $\\tan\\theta=1$ without simplifying $\\sec\\theta\\cdot\\sin\\theta$ term." },
+              "B": { "correctFlag": false, "explanation": "Interchanging $\\tan\\theta$ and $\\cot\\theta$ leads to wrong ratio." },
+              "C": { "correctFlag": false, "explanation": "This is reciprocal of $\\tan\\theta$, not obtained from equation." },
+              "D": { "correctFlag": true, "explanation": "Using $\\sec\\theta\\cdot\\sin\\theta=\\tan\\theta$ simplifies equation; $\\tan\\theta=2$, so $\\cot\\theta=\\frac{1}{2}$." }
+            }
+          },
+          {
+            "Q-No": "4",
+            "Qn": "Find the value of X for which DE||AB in the given figure",
+            "Figure": "data:image/png;base64,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",
+            "Figure-meta-data": "none",
+            "Option A": "x=2",
+            "Option B": "x=1",
+            "Option C": "x=6",
+            "Option D": "x=3",
+            "Correct Ans": "A",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": true, "explanation": "Using Basic Proportionality Theorem, corresponding sides are proportional only when x=2." },
+              "B": { "correctFlag": false, "explanation": "Does not satisfy required ratio of segments for parallel lines." },
+              "C": { "correctFlag": false, "explanation": "Gives unequal ratios, violating DE ∥ AB condition." },
+              "D": { "correctFlag": false, "explanation": "Fails to maintain proportional division of sides." }
+            }
+          },
+          {
+            "Q-No": "5",
+            "Qn": "From a point on the ground 50m away from the foot of a tower, the angle of elevation of the top of the tower is 45°. The angle of elevation of the top of the flag post which is on the top of the tower is 60°. Find the length of the flag post",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "$50(\\sqrt{3}+1)$",
+            "Option B": "$100(\\sqrt{3}+1)$",
+            "Option C": "$100(\\sqrt{3}-1)$",
+            "Option D": "$50(\\sqrt{3}-1)$",
+            "Correct Ans": "D",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Adds heights instead of taking difference between tower and total height." },
+              "B": { "correctFlag": false, "explanation": "Incorrect base distance used in trigonometric calculation." },
+              "C": { "correctFlag": false, "explanation": "Magnitude doubled wrongly; base distance is only 50 m." },
+              "D": { "correctFlag": true, "explanation": "Height difference: $50\\tan60^\\circ−50\\tan45^\\circ=50(\\sqrt{3}−1)$." }
+            }
+          },
+          {
+            "Q-No": "6",
+            "Qn": "Find the area of the shaded region, enclosed between two concentric circles of radii 7cm and 14 cm where $\\angle AOC=90^\\circ$. (use $\\pi = \\frac{22}{7}$)",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "115.5 cm²",
+            "Option B": "116.5 cm²",
+            "Option C": "77 cm²",
+            "Option D": "75 cm²",
+            "Correct Ans": "A",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": true, "explanation": "Area = $\\frac{1}{4}\\pi(14^2−7^2)=115.5$ cm²." },
+              "B": { "correctFlag": false, "explanation": "Numerical calculation error while subtracting areas." },
+              "C": { "correctFlag": false, "explanation": "Considers only inner sector, not shaded region." },
+              "D": { "correctFlag": false, "explanation": "Ignores sector angle; uses full circle wrongly." }
+            }
+          },
+          {
+            "Q-No": "7",
+            "Qn": "if $\\cos A + \\cos^2 A = 1$, then $\\sin^2 A + \\sin^4 A$ is ",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "0",
+            "Option B": "1",
+            "Option C": "2",
+            "Option D": "None of these",
+            "Correct Ans": "B",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Sum of squares of sine cannot be zero for real angle." },
+              "B": { "correctFlag": true, "explanation": "From given, $\\cos A = 0$ or $1$; corresponding $\\sin^2 A + \\sin^4 A$ equals 1." },
+              "C": { "correctFlag": false, "explanation": "Maximum possible value is less than 2." },
+              "D": { "correctFlag": false, "explanation": "Correct value exists, so option invalid." }
+            }
+          },
+          {
+            "Q-No": "8",
+            "Qn": "In a right triangle ABC, right angled at B, the ratio of AB to AC is $1:\\sqrt{2}$. Find the value of $\\frac{5\\tan A}{1 + \\tan^2 A}$",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "1",
+            "Option B": "$\\frac{5}{2}$",
+            "Option C": "0",
+            "Option D": "$\\frac{3}{2}$",
+            "Correct Ans": "B",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Incorrect simplification of trigonometric identity." },
+              "B": { "correctFlag": true, "explanation": "$\\frac{AB}{AC}=\\cos A=\\frac{1}{\\sqrt{2}} \\Rightarrow \\tan A=1$; expression becomes $\\frac{5}{2}$." },
+              "C": { "correctFlag": false, "explanation": "$\\tan A$ is not zero for given triangle." },
+              "D": { "correctFlag": false, "explanation": "Arithmetic error after substituting $\\tan A=1$." }
+            }
+          },
+          {
+            "Q-No": "9",
+            "Qn": "Two concentric circles are of radii 6 cm and r cm respectively where r > 6. A chord of larger circle of length 16 cm touches the smaller circle. Find the value of r.",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "11 cm",
+            "Option B": "10 cm",
+            "Option C": "14 cm",
+            "Option D": "12 cm",
+            "Correct Ans": "B",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Incorrect use of chord-distance formula." },
+              "B": { "correctFlag": true, "explanation": "Using $(r^2−8^2)=6^2$ gives r=10 cm." },
+              "C": { "correctFlag": false, "explanation": "Distance from center miscalculated." },
+              "D": { "correctFlag": false, "explanation": "Assumes wrong half-chord length." }
+            }
+          },
+          {
+            "Q-No": "10",
+            "Qn": "A girl calculates that the probability of her winning the first prize in a lottery is 0.08. If 6000 tickets are sold, then how many tickets has she bought?",
+            "Figure": "none",
+            "Figure-meta-data": "none",
+            "Option A": "420",
+            "Option B": "460",
+            "Option C": "480",
+            "Option D": "440",
+            "Correct Ans": "C",
+            "Explnation ( JSON )": {
+              "A": { "correctFlag": false, "explanation": "Probability relation not applied correctly." },
+              "B": { "correctFlag": false, "explanation": "Multiplication error with total tickets." },
+              "C": { "correctFlag": true, "explanation": "Probability = tickets bought/6000 ⇒ tickets=$0.08×6000=480$." },
+              "D": { "correctFlag": false, "explanation": "Assumes incorrect probability fraction." }
+            }
+          }
+        ];
+
+        // DOM Elements
+        const questionsContainer = document.getElementById('questions-container');
+        const questionNav = document.getElementById('question-nav');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const printBtn = document.getElementById('print-btn');
+        const exportBtn = document.getElementById('export-btn');
+        const printDateEl = document.getElementById('print-date');
+
+        // Initialize
+        function init() {
+            // Set print date
+            const now = new Date();
+            printDateEl.textContent = now.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Set total questions
+            totalQuestionsEl.textContent = mcqData.length;
+            
+            // Generate navigation
+            generateNavigation();
+            
+            // Generate all questions
+            generateQuestions();
+            
+            // Initialize MathJax after content is loaded
+            setTimeout(() => {
+                if (window.MathJax) {
+                    MathJax.typesetPromise().catch(err => console.log('MathJax typeset error:', err));
+                }
+            }, 500);
+        }
+
+        // Generate navigation buttons
+        function generateNavigation() {
+            questionNav.innerHTML = '';
+            
+            mcqData.forEach((question, index) => {
+                const button = document.createElement('button');
+                button.className = 'px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors';
+                button.textContent = `Q${question["Q-No"]}`;
+                
+                button.addEventListener('click', () => {
+                    // Scroll to the question
+                    const questionElement = document.getElementById(`question-${question["Q-No"]}`);
+                    if (questionElement) {
+                        questionElement.scrollIntoView({ behavior: 'smooth' });
+                        
+                        // Update active nav button
+                        document.querySelectorAll('#question-nav button').forEach(btn => {
+                            btn.classList.remove('active-nav');
+                            btn.classList.add('bg-gray-100', 'text-gray-700');
+                        });
+                        
+                        button.classList.remove('bg-gray-100', 'text-gray-700');
+                        button.classList.add('active-nav');
+                    }
+                });
+                
+                questionNav.appendChild(button);
+            });
+        }
+
+        // Generate all questions with explanations
+        function generateQuestions() {
+            questionsContainer.innerHTML = '';
+            
+            mcqData.forEach((question, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-card bg-white rounded-xl shadow mb-8 p-8';
+                questionElement.id = `question-${question["Q-No"]}`;
+                
+                // Question header
+                const headerHTML = `
+                    <div class="flex justify-between items-start mb-6 pb-4 border-b border-gray-200">
+                        <div>
+                            <div class="inline-flex items-center px-4 py-2 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium mb-3">
+                                <i class="fas fa-question mr-2"></i>
+                                Question ${question["Q-No"]}
+                            </div>
+                            <h2 class="text-2xl font-bold text-gray-900 math-display">${question.Qn}</h2>
+                        </div>
+                        <div class="px-4 py-2 bg-emerald-100 text-emerald-800 rounded-lg text-sm font-medium">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Correct Answer: <span class="font-bold">${question["Correct Ans"].trim()}</span>
+                        </div>
+                    </div>
+                `;
+                
+                // Image section (if exists)
+                let imageHTML = '';
+                if (question.Figure && question.Figure !== "none") {
+                    if (question.Figure.startsWith('data:image')) {
+                        // Base64 image
+                        imageHTML = `
+                            <div class="mb-6">
+                                <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                                    <i class="fas fa-image mr-2 text-indigo-600"></i>
+                                    Figure
+                                </h3>
+                                <div class="flex justify-center">
+                                    <img src="${question.Figure}" alt="Question Figure" class="question-image max-w-md">
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                // Options section
+                let optionsHTML = `
+                    <div class="mb-8">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-list-ul mr-2 text-indigo-600"></i>
+                            Options
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                `;
+                
+                const optionLetters = ['A', 'B', 'C', 'D'];
+                optionLetters.forEach(letter => {
+                    const optionKey = `Option ${letter}`;
+                    const optionText = question[optionKey];
+                    const isCorrect = question["Correct Ans"].trim() === letter;
+                    
+                    optionsHTML += `
+                        <div class="option p-4 rounded-xl border-2 ${isCorrect ? 'option-correct' : 'border-gray-200'}">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
+                                    isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-800'
+                                }">
+                                    ${letter}
+                                </div>
+                                <div class="flex-1 math-display">${optionText}</div>
+                                ${isCorrect ? 
+                                    '<div class="ml-2 text-emerald-600"><i class="fas fa-check-circle"></i></div>' : 
+                                    ''
+                                }
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                optionsHTML += `
+                        </div>
+                    </div>
+                `;
+                
+                // Explanation section
+                let explanationHTML = `
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-comment-dots mr-2 text-indigo-600"></i>
+                            Detailed Explanations
+                        </h3>
+                        <div class="space-y-4">
+                `;
+                
+                const explanationData = question["Explnation ( JSON )"];
+                optionLetters.forEach(letter => {
+                    const optionData = explanationData[letter];
+                    const isCorrect = optionData.correctFlag;
+                    
+                    explanationHTML += `
+                        <div class="explanation p-5 rounded-xl ${isCorrect ? 'explanation-correct' : 'explanation-incorrect'}">
+                            <div class="flex items-start mb-3">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center mr-4 ${
+                                    isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
+                                }">
+                                    <span class="font-bold">${letter}</span>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-bold ${isCorrect ? 'text-emerald-800' : 'text-red-800'}">
+                                                ${isCorrect ? 'Correct Answer' : 'Incorrect Option'}
+                                            </h4>
+                                            <div class="text-gray-700 mt-2 math-display">${optionData.explanation}</div>
+                                        </div>
+                                        <div class="px-3 py-1 rounded-full text-sm font-medium ${
+                                            isCorrect ? 'bg-emerald-200 text-emerald-800' : 'bg-red-200 text-red-800'
+                                        }">
+                                            ${isCorrect ? '✓ Correct' : '✗ Incorrect'}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                explanationHTML += `
+                        </div>
+                    </div>
+                `;
+                
+                // Teaching notes section
+                const teachingNotesHTML = `
+                    
+                `;
+                
+                // Combine all sections
+                questionElement.innerHTML = headerHTML + imageHTML + optionsHTML + explanationHTML + teachingNotesHTML;
+                questionsContainer.appendChild(questionElement);
+            });
+            
+            // Process MathJax after all questions are loaded
+            setTimeout(() => {
+                if (window.MathJax) {
+                    MathJax.typesetPromise().catch(err => console.log('MathJax typeset error:', err));
+                }
+            }, 100);
+        }
+
+        // Event Listeners
+        printBtn.addEventListener('click', () => {
+            window.print();
+        });
+
+        exportBtn.addEventListener('click', () => {
+            // Create a printable version
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>AG MCQ Reasoning Assistant - Questions & Explanations</title>
+                    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"><\/script>
+                    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"><\/script>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 40px; }
+                        .question { margin-bottom: 40px; page-break-inside: avoid; }
+                        .question-header { border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
+                        .options { margin: 20px 0; }
+                        .option { margin: 10px 0; padding: 10px; border-left: 4px solid #ddd; }
+                        .option.correct { border-color: #10b981; background-color: #f0fdf4; }
+                        .explanation { margin: 10px 0; padding: 15px; border-radius: 5px; }
+                        .explanation.correct { background-color: #f0fdf4; border: 1px solid #10b981; }
+                        .explanation.incorrect { background-color: #fef2f2; border: 1px solid #ef4444; }
+                        h1 { color: #1f2937; }
+                        h2 { color: #374151; }
+                        .header { text-align: center; margin-bottom: 40px; }
+                        .footer { margin-top: 40px; text-align: center; color: #6b7280; font-size: 12px; }
+                        img { max-width: 100%; height: auto; margin: 10px 0; }
+                    </style>
+                    <script>
+                        window.MathJax = {
+                            tex: {
+                                inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+                                displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
+                                processEscapes: true
+                            }
+                        };
+                    <\/script>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>AG MCQ Reasoning Assistant</h1>
+                        <h2>Questions with Detailed Explanations</h2>
+                        <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                    </div>
+            `);
+
+            // Add each question
+            mcqData.forEach(question => {
+                let imageHTML = '';
+                if (question.Figure && question.Figure !== "none") {
+                    if (question.Figure.startsWith('data:image')) {
+                        imageHTML = `<div style="text-align: center; margin: 20px 0;"><img src="${question.Figure}" alt="Question Figure" style="max-width: 400px;"></div>`;
+                    }
+                }
+                
+                printWindow.document.write(`
+                    <div class="question">
+                        <div class="question-header">
+                            <h2>Question ${question["Q-No"]}: ${question.Qn}</h2>
+                            <p><strong>Correct Answer:</strong> ${question["Correct Ans"].trim()}</p>
+                        </div>
+                        
+                        ${imageHTML}
+                        
+                        <div class="options">
+                            <h3>Options:</h3>
+                            ${['A', 'B', 'C', 'D'].map(letter => {
+                                const isCorrect = question["Correct Ans"].trim() === letter;
+                                return `
+                                    <div class="option ${isCorrect ? 'correct' : ''}">
+                                        <strong>${letter}:</strong> ${question[`Option ${letter}`]}
+                                        ${isCorrect ? ' (Correct)' : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        
+                        <div class="explanations">
+                            <h3>Explanations:</h3>
+                            ${['A', 'B', 'C', 'D'].map(letter => {
+                                const exp = question["Explnation ( JSON )"][letter];
+                                return `
+                                    <div class="explanation ${exp.correctFlag ? 'correct' : 'incorrect'}">
+                                        <strong>${letter}:</strong> ${exp.explanation}
+                                        <br><em>${exp.correctFlag ? 'Correct Answer' : 'Incorrect Option'}</em>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        
+                        <div class="teaching-notes">
+                            <h3>Teaching Notes:</h3>
+                            <p>Focus on the reasoning process, common misconceptions, and alternative solution methods.</p>
+                        </div>
+                    </div>
+                    <hr style="margin: 30px 0;">
+                `);
+            });
+
+            printWindow.document.write(`
+                    <div class="footer">
+                        <p>© 2023 AG MCQ Reasoning Assistant. For educational use only.</p>
+                    </div>
+                </body>
+                </html>
+            `);
+            
+            printWindow.document.close();
+            
+            // Initialize MathJax in print window
+            printWindow.onload = function() {
+                if (printWindow.MathJax) {
+                    printWindow.MathJax.typesetPromise().catch(err => console.log('MathJax typeset error:', err));
+                }
+            };
+        });
+
+        // Initialize the application
+        init();
+    </script>
+</body>
+</html>
