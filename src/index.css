@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-primary: #3071b7;
+  --color-primary-light: #4a8fd6;
+  --color-primary-dark: #1e5a96;
+  --color-success: #2d9c5e;
+  --color-success-light: #e8f7ee;
+  --color-error: #c0392b;
+  --color-error-light: #fdecea;
+  --color-warning: #e67e22;
+  --color-border: #d6e4f2;
+  --color-text-dark: #1a2b3c;
+  --color-text-medium: #4a5d70;
+  --color-text-light: #7a8d9f;
+  --color-off-white: #f8fbff;
+}
+
+@layer base {
+  body {
+    @apply bg-off-white text-text-dark antialiased;
+    color-scheme: light;
+  }
+}
+
+@layer components {
+  .card-shadow {
+    box-shadow: 0 4px 24px rgba(48, 113, 183, 0.12);
+  }
+  
+  .card-shadow-hover:hover {
+    box-shadow: 0 8px 32px rgba(48, 113, 183, 0.18);
+  }
+
+  .markdown-content ul {
+    @apply list-disc list-inside my-6 space-y-2;
+  }
+  
+  .markdown-content ol {
+    @apply list-decimal list-inside my-6 space-y-2;
+  }
+
+  .markdown-content p {
+    @apply mb-4 leading-relaxed text-text-dark;
+  }
+
+  /* Math Scaling */
+  .katex {
+    font-size: 1.15em !important;
+  }
+
+  .katex-display {
+    @apply my-6 !py-4 bg-off-white rounded-xl border border-border overflow-x-auto;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-text-light;
+  }
+}

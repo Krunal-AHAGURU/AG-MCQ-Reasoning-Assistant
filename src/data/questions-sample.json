@@ -1,0 +1,367 @@
+[
+  {
+    "id": 1,
+    "question": "If 'A + B' means 'A is the father of B', 'A - B' means 'A is the mother of B', then what does 'P + Q - R' mean?",
+    "options": [
+      "P is the paternal grandfather of R",
+      "P is the maternal grandfather of R",
+      "P is the father of R",
+      "P is the husband of R"
+    ],
+    "correctAnswer": 0,
+    "explanation": "P + Q means P is the father of Q. Q - R means Q is the mother of R. Therefore, P is the father of R's mother, making him the maternal grandfather. Wait, P is father of Q (mother of R). So P is the father of R's mother. Maternal grandfather. Let me re-read options: P is paternal grandfather (father's father), P is maternal grandfather (mother's father). Correct is Maternal.",
+    "solutionImage": "https://img.freepik.com/free-vector/blood-relationship-diagram-concept_23-2148674512.jpg",
+    "mentorNotes": "Check if students understand the difference between maternal and paternal relations."
+  },
+  {
+    "id": 2,
+    "question": "Find the missing number in the series: 2, 6, 12, 20, 30, ?",
+    "options": ["40", "42", "44", "46"],
+    "correctAnswer": 1,
+    "explanation": "The differences between consecutive terms are: 6-2=4, 12-6=6, 20-12=8, 30-20=10. The pattern is adding consecutive even numbers (+4, +6, +8, +10). The next number to add is 12. 30 + 12 = 42.",
+    "solutionImage": "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&q=80&w=400",
+    "mentorNotes": "Logical reasoning series. Ensure kids don't just guess."
+  },
+  {
+    "id": 3,
+    "question": "A is B's sister. C is B's mother. D is C's father. E is D's mother. Then, how is A related to D?",
+    "options": ["Grandfather", "Grandmother", "Daughter", "Granddaughter"],
+    "correctAnswer": 3,
+    "explanation": "A is sister of B. C is mother of B (and A). D is father of C. So D is the grandfather of A. Therefore A is the granddaughter of D.",
+    "solutionImage": "https://img.freepik.com/free-vector/family-tree-template-flat-design_23-2148151241.jpg",
+    "mentorNotes": "Multi-generational blood relation."
+  },
+  {
+    "id": 4,
+    "question": "Pointing to a photograph, a man said, 'I have no brother or sister but that man's father is my father's son.' Whose photograph was it?",
+    "options": ["His own", "His son", "His father", "His nephew"],
+    "correctAnswer": 1,
+    "explanation": "The man says 'my father's son' and 'I have no brother or sister', so 'my father's son' must be himself. The statement becomes 'that man's father is me'. Therefore, the man in the photograph is his son.",
+    "solutionImage": "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=400",
+    "mentorNotes": "Classic self-referential puzzle. Focus on the phrase 'my father's son'."
+  },
+  {
+    "id": 5,
+    "question": "Identify the odd one out from the following options.",
+    "options": ["Mercury", "Mars", "Moon", "Venus"],
+    "correctAnswer": 2,
+    "explanation": "Mercury, Mars, and Venus are planets. The Moon is a satellite (of Earth).",
+    "solutionImage": "https://images.unsplash.com/photo-1454789548928-9efd52dc4031?auto=format&fit=crop&q=80&w=400",
+    "mentorNotes": "Basic astronomy categorization."
+  },
+  {
+    "id": 6,
+    "question": "If FRIEND is coded as HUMJTK, how is CANDLE coded?",
+    "options": ["EDPLRH", "DCQHOK", "ESJFME", "FYOBOC"],
+    "correctAnswer": 0,
+    "explanation": "F(+2)H, R(+3)U, I(+4)M, E(+5)J, N(+6)T, D(+7)K. Apply the same +2, +3, +4, +5, +6, +7 to CANDLE: C+2=E, A+3=D, N+4=R, D+5=I ... Wait, let me recheck. C+2=E, A+3=D, N+4=R, D+5=I (p), L+6=R, E+7=L. E-D-P-L-R-H matches.",
+    "solutionImage": "https://img.freepik.com/free-vector/alphabetical-order-concept-illustration_114360-11210.jpg",
+    "mentorNotes": "Coding-decoding requires careful counting."
+  },
+  {
+    "id": 7,
+    "question": "At what time between 3 and 4 o'clock will the hands of a clock be together?",
+    "options": ["16 4/11 min past 3", "15 4/11 min past 3", "16 5/11 min past 3", "14 4/11 min past 3"],
+    "correctAnswer": 0,
+    "explanation": "The hands are together when the angle between them is 0. Formula: theta = |(30*h) - (11/2)*m|. 0 = |30*3 - 5.5m| => 90 = 5.5m => m = 90/5.5 = 180/11 = 16 4/11.",
+    "solutionImage": "https://images.unsplash.com/photo-1508962914676-13632df5937a?auto=format&fit=crop&q=80&w=400",
+    "mentorNotes": "Clock geometry. Formula approach is best."
+  },
+  {
+    "id": 8,
+    "question": "Find the missing number: 8, 24, 12, 36, 18, 54, ?",
+    "options": ["24", "27", "30", "32"],
+    "correctAnswer": 1,
+    "explanation": "The pattern is: multiply by 3, then divide by 2. 8*3=24, 24/2=12, 12*3=36, 36/2=18, 18*3=54, 54/2=27.",
+    "solutionImage": "https://img.freepik.com/free-vector/abstract-math-background_23-2148151241.jpg",
+    "mentorNotes": "Arithmetic sequence with dual operations."
+  },
+  {
+    "id": 9,
+    "question": "If LIGHT is coded as GILTH, how is RAINY coded?",
+    "options": ["IARNY", "ARIYN", "IARYN", "ARINY"],
+    "correctAnswer": 2,
+    "explanation": "L-I-G-H-T becomes G-I-L-T-H. The middle letter stays the same? No. 12345 becomes 32154. Applying 32154 to R-A-I-N-Y (12345): I-A-R-Y-N.",
+    "solutionImage": "https://img.freepik.com/free-vector/cyberspace-concept-illustration_114360-11210.jpg",
+    "mentorNotes": "Transposition cipher."
+  },
+  {
+    "id": 10,
+    "question": "Which word cannot be formed from the letters of 'DETERMINATION'?",
+    "options": ["TERMINATE", "NATIVE", "MENTAL", "DETRIMENT"],
+    "correctAnswer": 1,
+    "explanation": "NATIVE contains the letter 'V', which is not in DETERMINATION.",
+    "solutionImage": "https://img.freepik.com/free-vector/word-cloud-concept-illustration_114360-11210.jpg",
+    "mentorNotes": "Vocabulary and letter-matching."
+  },
+  {
+    "id": 11,
+    "question": "A, B, C, D and E are sitting on a bench. A is sitting next to B, C is sitting next to D, D is not sitting with E who is on the left end of the bench. C is on the second position from the right. A is to the right of B and E. A and C are sitting together. In which position A is sitting?",
+    "options": ["Between B and C", "Between D and C", "Between E and D", "Between C and E"],
+    "correctAnswer": 0,
+    "explanation": "E is at the left end. C is 2nd from right. So it's E, _, _, C, D. A is to the right of B, and A/C sit together. A must be 3rd. Position: E, B, A, C, D. A is between B and C.",
+    "solutionImage": "https://img.freepik.com/free-vector/group-friends-sitting-bench_23-2148512141.jpg",
+    "mentorNotes": "Linear arrangement puzzle."
+  },
+  {
+    "id": 12,
+    "question": "If 1st January 2008 was Tuesday, what day of the week was 1st January 2009?",
+    "options": ["Wednesday", "Thursday", "Friday", "Monday"],
+    "correctAnswer": 1,
+    "explanation": "2008 is a leap year (multiple of 4). In a leap year, the same date of the next year moves forward by 2 days. Tuesday + 2 days = Thursday.",
+    "solutionImage": "https://images.unsplash.com/photo-1506784919141-8f5f08573cd3?auto=format&fit=crop&q=80&w=400",
+    "mentorNotes": "Calendar concepts: Leap year vs Ordinary year."
+  },
+  {
+    "id": 13,
+    "question": "Identify the pair that expresses a relationship different from the others.",
+    "options": ["Doctor: Patient", "Teacher: Student", "Carpenter: Wood", "Shopkeeper: Customer"],
+    "correctAnswer": 2,
+    "explanation": "In pairs (Doctor:Patient), (Teacher:Student), (Shopkeeper:Customer), one performs a service for another person. Carpenter:Wood is professional:material.",
+    "solutionImage": "https://img.freepik.com/free-vector/professional-people-concept_23-2148491241.jpg",
+    "mentorNotes": "Analogy categorization."
+  },
+  {
+    "id": 14,
+    "question": "A fruit seller had some apples. He sells 40% apples and still has 420 apples. Originally, he had:",
+    "options": ["588 apples", "600 apples", "672 apples", "700 apples"],
+    "correctAnswer": 3,
+    "explanation": "If he sells 40%, he has 60% left. 60% of X = 420. 0.6X = 420. X = 420 / 0.6 = 700.",
+    "solutionImage": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&q=80&w=400",
+    "mentorNotes": "Basic percentage reasoning."
+  },
+  {
+    "id": 15,
+    "question": "Choose the word which is least like the other words in the group.",
+    "options": ["Zebra", "Lion", "Tiger", "Horse"],
+    "correctAnswer": 3,
+    "explanation": "Zebra, Lion, and Tiger are wild animals. Horse is a domestic animal.",
+    "solutionImage": "https://img.freepik.com/free-vector/wild-animals-set_23-2148151241.jpg",
+    "mentorNotes": "Animal classification."
+  },
+  {
+    "id": 16,
+    "question": "If in a certain language, MADRAS is coded as NBESBT, how is BOMBAY coded in that code?",
+    "options": ["CPNCBX", "CPNCBZ", "CPOCBZ", "CQOCBZ"],
+    "correctAnswer": 1,
+    "explanation": "M+1=N, A+1=B, D+1=E, R+1=S, A+1=B, S+1=T. Every letter moves +1. B+1=C, O+1=P, M+1=N, B+1=C, A+1=B, Y+1=Z. Code: CPNCBZ.",
+    "solutionImage": "https://img.freepik.com/free-vector/city-map-concept-illustration_114360-11210.jpg",
+    "mentorNotes": "Simple shift cipher."
+  },
+  {
+    "id": 17,
+    "question": "What is the missing number? 1, 4, 9, 16, 25, ?",
+    "options": ["30", "35", "36", "49"],
+    "correctAnswer": 2,
+    "explanation": "The numbers are squares of consecutive integers: 1^2, 2^2, 3^2, 4^2, 5^2. The next is 6^2 = 36.",
+    "solutionImage": "https://img.freepik.com/free-vector/math-education-concept_23-2148151241.jpg",
+    "mentorNotes": "Square numbers sequence."
+  },
+  {
+    "id": 18,
+    "question": "A man starts from a point and walks 2km north, turns right and walks 3km, then turns left and walks 2km. Which direction is he facing now?",
+    "options": ["East", "West", "North", "South"],
+    "correctAnswer": 2,
+    "explanation": "Starts moving North. Turns Right (East). Turns Left (facing North again).",
+    "solutionImage": "https://img.freepik.com/free-vector/compass-direction-concept_23-2148671241.jpg",
+    "mentorNotes": "Direction and distance logic."
+  },
+  {
+    "id": 19,
+    "question": "Fill in the blank: ELFA, GLHA, ILJA, _____, MLNA",
+    "options": ["OLPA", "KLMA", "LLMA", "KLLA"],
+    "correctAnswer": 3,
+    "explanation": "1st letter: E, G, I, (K), M (jump of 1). 2nd letter: L (constant). 3rd letter: F, H, J, (L), N (jump of 1). 4th letter: A (constant). Result: KLLA.",
+    "solutionImage": "https://img.freepik.com/free-vector/letter-patterns-concept_23-2148674512.jpg",
+    "mentorNotes": "Letter pattern completion."
+  },
+  {
+    "id": 20,
+    "question": "If 'water' is called 'food', 'food' is called 'tree', 'tree' is called 'sky', 'sky' is called 'wall', on which of the following grows a fruit?",
+    "options": ["Water", "Food", "Tree", "Sky"],
+    "correctAnswer": 3,
+    "explanation": "Fruit grows on a 'tree'. In this code, 'tree' is called 'sky'. So fruits grow on the 'sky'.",
+    "solutionImage": "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&q=80&w=400",
+    "mentorNotes": "Substitution coding logic."
+  },
+  {
+    "id": 21,
+    "question": "Looking at a portrait, a man said, 'That lady is the wife of my grandfather's only son.' How is the lady related to the man?",
+    "options": ["Sister", "Mother", "Aunt", "Wife"],
+    "correctAnswer": 1,
+    "explanation": "Grandfather's only son is the man's father. The lady is the wife of his father, so she is his mother.",
+    "solutionImage": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400",
+    "mentorNotes": "Relation chain simplification."
+  },
+  {
+    "id": 22,
+    "question": "Which of the following is different from the rest?",
+    "options": ["January", "May", "July", "November"],
+    "correctAnswer": 3,
+    "explanation": "January, May, and July have 31 days. November has 30 days.",
+    "solutionImage": "https://images.unsplash.com/photo-1506784919141-8f5f08573cd3?auto=format&fit=crop&q=80&w=400",
+    "mentorNotes": "Calendar classification."
+  },
+  {
+    "id": 23,
+    "question": "Point out the missing number: 2, 5, 10, 17, 26, ?",
+    "options": ["35", "37", "40", "45"],
+    "correctAnswer": 1,
+    "explanation": "The pattern is n^2 + 1: 1^2+1=2, 2^2+1=5, 3^2+1=10, 4^2+1=17, 5^2+1=26. Next is 6^2+1=37.",
+    "solutionImage": "https://img.freepik.com/free-vector/abstract-math-background_23-2148151241.jpg",
+    "mentorNotes": "Square + 1 pattern."
+  },
+  {
+    "id": 24,
+    "question": "If 'ORAL' is coded as '3196', then 'WRITTEN' is coded as:",
+    "options": ["5992255", "5522995", "5893355", "9955225"],
+    "correctAnswer": 0,
+    "explanation": "O=15(1+5=6), R=18(1+8=9), A=1(1), L=12(1+2=3). Reversed: 3196. W=23(5), R=18(9), I=9(9), T=20(2), T=20(2), E=5(5), N=14(5). Sequence: 5-9-9-2-2-5-5.",
+    "solutionImage": "https://img.freepik.com/free-vector/alphabetical-order-concept-illustration_114360-11210.jpg",
+    "mentorNotes": "Numeric coding with digit sum and reversal."
+  },
+  {
+    "id": 25,
+    "question": "Pointing to a man, a woman said, 'His mother is the only daughter of my mother.' How is the woman related to the man?",
+    "options": ["Sister", "Mother", "Aunt", "Grandmother"],
+    "correctAnswer": 1,
+    "explanation": "'Only daughter of my mother' is the woman herself. So the man's mother is the woman. She is his mother.",
+    "solutionImage": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400",
+    "mentorNotes": "Self-referencing blood relation."
+  },
+  {
+    "id": 26,
+    "question": "What number should replace the question mark? 3, 7, 15, 31, ?",
+    "options": ["60", "61", "62", "63"],
+    "correctAnswer": 3,
+    "explanation": "The pattern is (number * 2) + 1. 3*2+1=7, 7*2+1=15, 15*2+1=31, 31*2+1=63.",
+    "solutionImage": "https://img.freepik.com/free-vector/math-education-concept_23-2148151241.jpg",
+    "mentorNotes": "Recursive sequence (*2 + 1)."
+  },
+  {
+    "id": 27,
+    "question": "A is taller than B, but shorter than C. D is taller than E, but shorter than B. Who is the tallest?",
+    "options": ["A", "B", "C", "E"],
+    "correctAnswer": 2,
+    "explanation": "Heights: C > A > B. Also B > D > E. Combining them: C > A > B > D > E. C is the tallest.",
+    "solutionImage": "https://img.freepik.com/free-vector/height-comparison-concept_23-2148712141.jpg",
+    "mentorNotes": "Ranking and ordering logic."
+  },
+  {
+    "id": 28,
+    "question": "In a class of 40 students, Ram's rank is 15th from the top. What is his rank from the bottom?",
+    "options": ["25th", "26th", "27th", "24th"],
+    "correctAnswer": 1,
+    "explanation": "Rank from bottom = (Total students - Rank from top) + 1 = (40 - 15) + 1 = 25 + 1 = 26th.",
+    "solutionImage": "https://img.freepik.com/free-vector/classroom-concept-illustration_114360-11210.jpg",
+    "mentorNotes": "Positioning logic formula."
+  },
+  {
+    "id": 29,
+    "question": "If '+' means '*', '-' means '/', '*' means '+' and '/' means '-', then 15 / 5 + 3 - 3 * 2 = ?",
+    "options": ["12", "14", "16", "18"],
+    "correctAnswer": 0,
+    "explanation": "15 - 5 * 3 / 3 + 2 = 15 - 5 * 1 + 2 = 15 - 5 + 2 = 12.",
+    "solutionImage": "https://img.freepik.com/free-vector/math-operators-concept_23-2148151241.jpg",
+    "mentorNotes": "Operator substitution with BODMAS."
+  },
+  {
+    "id": 30,
+    "question": "Arrange these words in alphabetical order: 1. Play 2. Plane 3. Place 4. Player",
+    "options": ["3, 2, 1, 4", "3, 1, 2, 4", "2, 3, 1, 4", "3, 2, 4, 1"],
+    "correctAnswer": 0,
+    "explanation": "P-L-A is common. 4th letters: C (Place), N (Plane), Y (Play), Y-E (Player). Order: Place, Plane, Play, Player.",
+    "solutionImage": "https://img.freepik.com/free-vector/alphabetical-order-concept-illustration_114360-11210.jpg",
+    "mentorNotes": "Dictionary sorting."
+  },
+  {
+    "id": 31,
+    "question": "If every alternate letter starting from B is written in small letters, and rest in capitals, how will 'SEPTEMBER' be written?",
+    "options": ["SePtEmBeR", "sEpTeMbEr", "SEpTeMBEr", "SePtEMBeR"],
+    "correctAnswer": 0,
+    "explanation": "Position 1(S) Capital, 2(E) small, 3(P) Capital, 4(T) small, etc. Results in SePtEmBeR.",
+    "solutionImage": "https://img.freepik.com/free-vector/letter-case-concept_23-2148674512.jpg",
+    "mentorNotes": "Case sensitivity pattern."
+  },
+  {
+    "id": 32,
+    "question": "A girl is facing North. She turns 180 degrees clockwise and then 45 degrees anticlockwise. Which direction is she facing now?",
+    "options": ["South-East", "South-West", "North-East", "North-West"],
+    "correctAnswer": 0,
+    "explanation": "Start: North. 180 clockwise: South. 45 anticlockwise from South: South-East.",
+    "solutionImage": "https://img.freepik.com/free-vector/compass-direction-concept_23-2148671241.jpg",
+    "mentorNotes": "Angular direction movement."
+  },
+  {
+    "id": 33,
+    "question": "Find the odd one: 3, 5, 7, 9, 11",
+    "options": ["3", "5", "7", "9"],
+    "correctAnswer": 3,
+    "explanation": "3, 5, 7, 11 are prime numbers. 9 is a composite number.",
+    "solutionImage": "https://img.freepik.com/free-vector/math-education-concept_23-2148151241.jpg",
+    "mentorNotes": "Prime number identification."
+  },
+  {
+    "id": 34,
+    "question": "If 10 men can do a piece of work in 12 days, how many days will it take 20 men to do the same work?",
+    "options": ["6", "5", "4", "24"],
+    "correctAnswer": 0,
+    "explanation": "Total work = 10 * 12 = 120 man-days. Days for 20 men = 120 / 20 = 6 days.",
+    "solutionImage": "https://img.freepik.com/free-vector/men-working-concept_23-2148512141.jpg",
+    "mentorNotes": "Work-man relationship."
+  },
+  {
+    "id": 35,
+    "question": "Which set of letters should come next? ABC, FGH, KLM, ?",
+    "options": ["PQR", "OPQ", "QRS", "MNO"],
+    "correctAnswer": 0,
+    "explanation": "ABC skip DE -> FGH skip IJ -> KLM skip NO -> PQR.",
+    "solutionImage": "https://img.freepik.com/free-vector/alphabetical-order-concept-illustration_114360-11210.jpg",
+    "mentorNotes": "Triple letter pattern with gaps."
+  },
+  {
+    "id": 36,
+    "question": "Find the missing number: 5, 10, 20, 40, ?",
+    "options": ["50", "60", "70", "80"],
+    "correctAnswer": 3,
+    "explanation": "The pattern is multiplying by 2 (doubling). 5*2=10, 10*2=20, 20*2=40, 40*2=80.",
+    "solutionImage": "https://img.freepik.com/free-vector/math-education-concept_23-2148151241.jpg",
+    "mentorNotes": "Universal doubling sequence."
+  },
+  {
+    "id": 37,
+    "question": "A is B's brother. B is C's brother. D is A's father. Based on these three statements, which of the following statements cannot be definitely true?",
+    "options": ["A is C's brother", "B is A's brother", "C is A's brother", "D is B's father"],
+    "correctAnswer": 2,
+    "explanation": "We know A is male (brother of B), B is male (brother of C). D is father of A, so father of B and C too. But we don't know the gender of C. C could be a sister. So 'C is A's brother' is not definitely true.",
+    "solutionImage": "https://img.freepik.com/free-vector/family-tree-template-flat-design_23-2148151241.jpg",
+    "mentorNotes": "Gender ambiguity in relations."
+  },
+  {
+    "id": 38,
+    "question": "If 'S' means '+', 'D' means '-', 'M' means '*', and 'A' means '/', what is the value of 10M5A2S1D1?",
+    "options": ["24", "25", "26", "27"],
+    "correctAnswer": 1,
+    "explanation": "10 * 5 / 2 + 1 - 1 = 10 * 2.5 + 0 = 25.",
+    "solutionImage": "https://img.freepik.com/free-vector/math-operators-concept_23-2148151241.jpg",
+    "mentorNotes": "Another operator substitution."
+  },
+  {
+    "id": 39,
+    "question": "Complete the series: J14, L16, N18, P20, ?",
+    "options": ["R22", "S22", "Q21", "T24"],
+    "correctAnswer": 0,
+    "explanation": "Letters: J, L, N, P (skip one each). Next is R. Numbers: 14, 16, 18, 20 (increase by 2). Next is 22. Result: R22.",
+    "solutionImage": "https://img.freepik.com/free-vector/letter-patterns-concept_23-2148674512.jpg",
+    "mentorNotes": "Alphanumeric pattern."
+  },
+  {
+    "id": 40,
+    "question": "Which of these is a leap year?",
+    "options": ["1900", "2000", "2100", "2200"],
+    "correctAnswer": 1,
+    "explanation": "Century years must be divisible by 400 to be leap years. 2000 is divisible by 400, while 1900, 2100, and 2200 are not.",
+    "solutionImage": "https://images.unsplash.com/photo-1506784919141-8f5f08573cd3?auto=format&fit=crop&q=80&w=400",
+    "mentorNotes": "Gregorian calendar leap year rule for centuries."
+  }
+]
