@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import html2pdf from 'html2pdf.js';
 import { 
@@ -12,7 +12,9 @@ import {
   Eye,
   BrainCircuit,
   Download,
-  FileText
+  FileText,
+  ExternalLink,
+  X
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
@@ -41,7 +43,8 @@ interface Question {
 type Screen = 'START' | 'SELECTION' | 'QUIZ' | 'RESULTS';
 
 export default function App() {
-  const allQuestions = questionsData as Question[];
+  const [importedQuestions, setImportedQuestions] = useState<Question[] | null>(null);
+  const allQuestions = importedQuestions || (questionsData as Question[]);
   const [screen, setScreen] = useState<Screen>('START');
   const [selectedCount, setSelectedCount] = useState<number>(10);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -49,7 +52,35 @@ export default function App() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
   const [reviewingQuestion, setReviewingQuestion] = useState<Question | null>(null);
+  const [showSetupGuide, setShowSetupGuide] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
   const pdfRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Handle JSON file import
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const json = JSON.parse(e.target?.result as string);
+        // Validate it's an array of questions
+        if (Array.isArray(json) && json.length > 0) {
+          setImportedQuestions(json as Question[]);
+          alert('✅ Questions imported successfully! Now you can start the quiz with the new data.');
+          setShowSetupGuide(false);
+        } else {
+          alert('❌ Invalid format. Please ensure the JSON is an array of questions.');
+        }
+      } catch (error) {
+        alert('❌ Error parsing JSON file. Please check the format.');
+        console.error(error);
+      }
+    };
+    reader.readAsText(file);
+  };
 
   const exportToPDF = () => {
     if (!pdfRef.current) return;
@@ -699,11 +730,249 @@ export default function App() {
       </main>
 
       <footer className="fixed bottom-4 right-4 z-50">
-        <div className="px-5 py-2.5 bg-white/90 backdrop-blur-md rounded-full border border-slate-200 shadow-lg flex items-center gap-3">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#3071b7] animate-pulse shadow-sm shadow-[#3071b7]/50" />
-          <span className="text-[10px] font-bold text-slate-600 uppercase tracking-[0.2em]">Crafted by Team Analytics</span>
+        <div className="flex items-center gap-2">
+          {/* Setup Guide Button */}
+          <button
+            onClick={() => {
+              setShowSetupGuide(true);
+              setCurrentStep(1);
+            }}
+            className="px-4 py-2 bg-gradient-to-r from-[#3071b7] to-[#4a8fd6] text-white rounded-lg font-semibold text-sm flex items-center gap-2 hover:shadow-lg transition-all hover:scale-105"
+            title="Setup & Import Questions"
+          >
+            <FileText size={16} />
+            Setup Guide
+          </button>
+
+          {/* Crafted By Badge */}
+          <div className="px-5 py-2.5 bg-white/90 backdrop-blur-md rounded-full border border-slate-200 shadow-lg flex items-center gap-3">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#3071b7] animate-pulse shadow-sm shadow-[#3071b7]/50" />
+            <span className="text-[10px] font-bold text-slate-600 uppercase tracking-[0.2em]">Crafted by Team Analytics</span>
+          </div>
         </div>
       </footer>
+
+      {/* Hidden File Input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".json"
+        onChange={handleFileUpload}
+        className="hidden"
+      />
+
+      {/* Setup Guide Modal */}
+      <AnimatePresence>
+        {showSetupGuide && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowSetupGuide(false)}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-auto"
+            >
+              {/* Modal Header */}
+              <div className="sticky top-0 bg-gradient-to-r from-[#3071b7] to-[#4a8fd6] text-white px-6 py-4 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <BrainCircuit size={24} />
+                  <h2 className="text-xl font-bold">Setup Guide - Import Questions</h2>
+                </div>
+                <button
+                  onClick={() => setShowSetupGuide(false)}
+                  className="p-1 hover:bg-white/20 rounded-lg transition-all"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Modal Content */}
+              <div className="p-8">
+                {/* Steps Navigation */}
+                <div className="flex justify-between mb-8">
+                  {[1, 2, 3].map((step) => (
+                    <motion.button
+                      key={step}
+                      onClick={() => setCurrentStep(step)}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`flex-1 mx-2 py-3 rounded-lg font-semibold transition-all ${
+                        currentStep === step
+                          ? 'bg-gradient-to-r from-[#3071b7] to-[#4a8fd6] text-white shadow-lg'
+                          : 'bg-slate-200 text-slate-600 hover:bg-slate-300'
+                      }`}
+                    >
+                      Step {step}
+                    </motion.button>
+                  ))}
+                </div>
+
+                {/* Step Content */}
+                <motion.div
+                  key={currentStep}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="min-h-[400px]"
+                >
+                  {currentStep === 1 && (
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-[#3071b7] mb-6">Step 1: Generate Questions Using Prompt</h3>
+                      <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-6">
+                        <p className="text-slate-700 mb-4">
+                          Use the following prompt template with an AI model (like Claude, ChatGPT, etc.) to generate MCQ questions with detailed explanations.
+                        </p>
+                        <div className="bg-white border border-slate-300 rounded-lg p-4 mb-4">
+                          <pre className="text-xs overflow-x-auto text-slate-700 font-mono whitespace-pre-wrap break-words max-h-64">
+{`You are an expert teacher with 15+ years of experience teaching students from Class 8 to JEE & NEET level across subjects.
+
+Your teaching style:
+- Clear, conceptual, and student-friendly
+- Focused on WHY an option is correct or wrong
+- No unnecessary theory
+- Language suitable for CBSE level
+
+For each MCQ, provide explanations for all options in this JSON format:
+{
+  "id": 1,
+  "question_text": "...",
+  "correct_answer": "A",
+  "no_of_options": 4,
+  "Explnation ( JSON )": {
+    "A": {
+      "correctFlag": true/false,
+      "explanation": "short reason",
+      "why_right": "why student might pick this",
+      "core_concept": "key idea",
+      "next_step": "how to avoid mistake"
+    }
+  }
+}`}
+                          </pre>
+                        </div>
+                        <p className="text-slate-600 text-sm italic">Copy this prompt and use it with your preferred AI tool.</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {currentStep === 2 && (
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-[#3071b7] mb-6">Step 2: Generate Questions in Colab</h3>
+                      <div className="bg-orange-50 border-2 border-orange-200 rounded-lg p-6">
+                        <p className="text-slate-700 mb-4">
+                          Open the Google Colab notebook to generate questions in bulk using the Gemini AI API. This notebook will generate properly formatted JSON output.
+                        </p>
+                        <a
+                          href="https://colab.research.google.com/drive/1DmPO3zhLfCM4n49DT29XML8xVCj6lCyH?usp=sharing"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all mb-4"
+                        >
+                          <ExternalLink size={18} />
+                          Open Google Colab Notebook
+                        </a>
+                        <div className="bg-white border border-slate-300 rounded-lg p-4">
+                          <p className="font-semibold text-slate-700 mb-2">Steps in Colab:</p>
+                          <ol className="list-decimal list-inside space-y-2 text-slate-600 text-sm">
+                            <li>Enter your questions or topics</li>
+                            <li>Configure the Gemini API key</li>
+                            <li>Run the notebook to generate formatted JSON</li>
+                            <li>Download the JSON output file</li>
+                          </ol>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {currentStep === 3 && (
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-[#3071b7] mb-6">Step 3: Import JSON & Start Quiz</h3>
+                      <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6">
+                        <p className="text-slate-700 mb-6">
+                          Import the JSON file generated from Step 1 or Step 2. Once imported, you can use it for the quiz immediately.
+                        </p>
+
+                        <button
+                          onClick={() => fileInputRef.current?.click()}
+                          className="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all mb-6 flex items-center justify-center gap-2"
+                        >
+                          <FileText size={20} />
+                          Click Here to Import JSON File
+                        </button>
+
+                        <div className="bg-white border border-slate-300 rounded-lg p-4 mb-4">
+                          <p className="font-semibold text-slate-700 mb-2">📋 Expected JSON Format:</p>
+                          <pre className="text-xs overflow-x-auto text-slate-700 font-mono whitespace-pre-wrap break-words max-h-48">
+{`[
+  {
+    "id": 1,
+    "question_text": "What is...",
+    "solution_text": "The answer is...",
+    "correct_answer": "A",
+    "no_of_options": 4,
+    "solution_image_urls": [],
+    "solution_images_base64": [],
+    "Explnation ( JSON )": {
+      "A": { "correctFlag": true, ... },
+      "B": { "correctFlag": false, ... }
+    }
+  }
+]`}
+                          </pre>
+                        </div>
+
+                        {importedQuestions && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="bg-green-100 border border-green-500 rounded-lg p-4"
+                          >
+                            <p className="text-green-700 font-semibold">
+                              ✅ {importedQuestions.length} questions loaded! Ready to start the quiz.
+                            </p>
+                          </motion.div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 px-6 py-4 flex justify-between items-center">
+                <button
+                  onClick={() => setShowSetupGuide(false)}
+                  className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg font-semibold hover:bg-slate-300 transition-all"
+                >
+                  Close
+                </button>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => currentStep > 1 && setCurrentStep(currentStep - 1)}
+                    disabled={currentStep === 1}
+                    className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg font-semibold hover:bg-slate-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    ← Previous
+                  </button>
+                  <button
+                    onClick={() => currentStep < 3 && setCurrentStep(currentStep + 1)}
+                    disabled={currentStep === 3}
+                    className="px-4 py-2 bg-[#3071b7] text-white rounded-lg font-semibold hover:bg-[#1e5a96] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Next →
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
