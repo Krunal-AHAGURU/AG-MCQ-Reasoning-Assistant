@@ -1,983 +1,2269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>AG MCQ Reasoning Assistant</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AG MCQ Reasoning Assistant - AhaGuru</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <style>
+        :root {
+            --primary: #3071b7;
+            --primary-light: #4a8fd6;
+            --primary-dark: #1e5a96;
+            --white: #ffffff;
+            --off-white: #f8fbff;
+            --light-bg: #f0f6ff;
+            --text-dark: #1a2b3c;
+            --text-medium: #4a5d70;
+            --text-light: #7a8d9f;
+            --success: #2d9c5e;
+            --success-light: #e8f7ee;
+            --error: #c0392b;
+            --error-light: #fdecea;
+            --warning: #e67e22;
+            --border: #d6e4f2;
+            --card-shadow: 0 4px 24px rgba(48, 113, 183, 0.12);
+            --card-shadow-hover: 0 8px 32px rgba(48, 113, 183, 0.18);
+        }
 
-<!-- Tailwind -->
-<script src="https://cdn.tailwindcss.com"></script>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!-- MathJax -->
-<script>
-window.MathJax = {
-  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
-  svg: { fontCache: 'global' }
-};
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--off-white);
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-<style>
-.option-correct { background:#ecfdf5; border-color:#10b981 }
-.exp-correct { background:#d1fae5 }
-.exp-wrong { background:#fee2e2 }
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-th, td {
-  border: 1px solid #000;
-  padding: 8px;
-  text-align: center;
-}
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--border);
+        }
 
-th {
-  font-weight: 600;
-}
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-</style>
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-sub {
+            font-size: 12px;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header-nav span {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .progress-indicator {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            background: var(--light-bg);
+            padding: 8px 18px;
+            border-radius: 20px;
+        }
+
+        .progress-indicator.active {
+            display: flex;
+        }
+
+        .progress-bar {
+            width: 120px;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 30px 0;
+        }
+
+        /* Screen States */
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Landing Screen */
+        .landing {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .landing-illustration {
+            width: 180px;
+            height: 180px;
+            background: var(--light-bg);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            animation: pulse 3s ease infinite;
+        }
+
+        .landing h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .landing-subtitle {
+            font-size: 18px;
+            color: var(--text-medium);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--card-shadow);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .feature-card h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 16px rgba(48, 113, 183, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 6px 20px rgba(48, 113, 183, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-bg);
+        }
+
+        .btn-lg {
+            padding: 18px 48px;
+            font-size: 18px;
+        }
+
+        /* Question Count Screen */
+        .question-count {
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .question-count h2 {
+            font-size: 28px;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .question-count p {
+            color: var(--text-medium);
+            margin-bottom: 30px;
+        }
+
+        .count-selector {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin: 30px 0;
+        }
+
+        .count-option {
+            padding: 16px;
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-medium);
+            transition: all 0.2s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .count-option:hover {
+            border-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .count-option.selected {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(48, 113, 183, 0.3);
+        }
+
+        .custom-count {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .custom-count input {
+            width: 100px;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .custom-count input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Quiz Screen */
+        .quiz-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 35px 40px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-bg);
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .question-badge {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+
+        .badge-math {
+            background: #fef3e2;
+            color: #e67e22;
+        }
+
+        .question-text {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+        }
+
+        .question-text .MathJax {
+            font-size: 1.05em !important;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .option-btn {
+            padding: 18px 22px;
+            background: var(--off-white);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-dark);
+            transition: all 0.25s ease;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary-light);
+            background: var(--light-bg);
+            transform: translateX(4px);
+        }
+
+        .option-letter {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--primary);
+            transition: all 0.25s ease;
+        }
+
+        .option-btn:hover .option-letter {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .option-btn.correct {
+            border-color: var(--success);
+            background: var(--success-light);
+        }
+
+        .option-btn.correct .option-letter {
+            border-color: var(--success);
+            background: var(--success);
+            color: white;
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--error);
+            background: var(--error-light);
+        }
+
+        .option-btn.incorrect .option-letter {
+            border-color: var(--error);
+            background: var(--error);
+            color: white;
+        }
+
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        /* Explanation Section */
+        .explanation-section {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px solid var(--border);
+            animation: slideIn 0.4s ease;
+        }
+
+        .explanation-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .explanation-header h3 {
+            font-size: 18px;
+            color: var(--text-dark);
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-correct {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .status-incorrect {
+            background: var(--error-light);
+            color: var(--error);
+        }
+
+        .explanation-box {
+            background: var(--light-bg);
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .explanation-box.correct-box {
+            border-left-color: var(--success);
+            background: var(--success-light);
+        }
+
+        .explanation-box.incorrect-box {
+            border-left-color: var(--error);
+            background: var(--error-light);
+        }
+
+        .explanation-box h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .explanation-box.correct-box h4 {
+            color: var(--success);
+        }
+
+        .explanation-box.incorrect-box h4 {
+            color: var(--error);
+        }
+
+        .explanation-box p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-medium);
+        }
+
+        .explanation-box .MathJax {
+            font-size: 1em !important;
+        }
+
+        .solution-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .solution-image {
+            width: 100%;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            background: var(--white);
+            padding: 8px;
+        }
+
+        .solution-image img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 14px 30px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn-next {
+            background: var(--primary);
+            color: white;
+            margin-left: auto;
+        }
+
+        .nav-btn-next:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(48, 113, 183, 0.3);
+        }
+
+        .nav-btn-skip {
+            background: var(--white);
+            color: var(--text-medium);
+            border: 2px solid var(--border);
+        }
+
+        .nav-btn-skip:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Results Screen */
+        .results-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .results-header h2 {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .results-header p {
+            color: var(--text-medium);
+            font-size: 16px;
+        }
+
+        .score-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            margin-bottom: 30px;
+            border: 2px solid var(--border);
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--light-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 4px solid var(--primary);
+        }
+
+        .score-value {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .score-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .stat-item {
+            padding: 18px;
+            border-radius: 14px;
+            background: var(--off-white);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .stat-correct .stat-value { color: var(--success); }
+        .stat-incorrect .stat-value { color: var(--error); }
+        .stat-total .stat-value { color: var(--primary); }
+
+        .question-review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .review-btn {
+            padding: 14px 8px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            background: var(--white);
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .review-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .review-correct {
+            border-color: var(--success);
+            color: var(--success);
+            background: var(--success-light);
+        }
+
+        .review-correct:hover {
+            background: var(--success);
+            color: white;
+        }
+
+        .review-incorrect {
+            border-color: var(--error);
+            color: var(--error);
+            background: var(--error-light);
+        }
+
+        .review-incorrect:hover {
+            background: var(--error);
+            color: white;
+        }
+
+        .review-unattempted {
+            border-color: var(--warning);
+            color: var(--warning);
+            background: #fff8f0;
+        }
+
+        .review-unattempted:hover {
+            background: var(--warning);
+            color: white;
+        }
+
+        .mentor-section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            margin-top: 25px;
+            border: 2px solid var(--border);
+        }
+
+        .mentor-section h3 {
+            font-size: 18px;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mentor-section p {
+            font-size: 14px;
+            color: var(--text-medium);
+            margin-bottom: 20px;
+        }
+
+        .mentor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .mentor-btn {
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 2px solid var(--primary);
+            background: var(--white);
+            color: var(--primary);
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mentor-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(4px);
+        }
+
+        .mentor-btn .q-num {
+            font-weight: 700;
+        }
+
+        /* Modal for review */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 43, 60, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            max-width: 850px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 35px;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-light);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: right;
+            padding: 15px 0;
+            margin-top: auto;
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .footer-text strong {
+            color: var(--primary);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .count-selector {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .question-card {
+                padding: 25px 20px;
+            }
+            .landing h1 {
+                font-size: 30px;
+            }
+            .score-stats {
+                grid-template-columns: 1fr;
+            }
+            .modal-content {
+                padding: 25px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .count-selector {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
 </head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">AG</div>
+                <div>
+                    <div class="logo-text">AhaGuru</div>
+                    <div class="logo-sub">MCQ Reasoning Assistant</div>
+                </div>
+            </div>
+            <div class="header-nav">
+                <div class="progress-indicator" id="progressIndicator">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">1 / 10</span>
+                </div>
+            </div>
+        </header>
 
-<body class="bg-gray-100 p-6">
-     <header class=" shadow-sm">
-    <div class="container mx-auto container-padding py-4">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-lg bg-[#4f46e5] flex items-center justify-center">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-            </svg>
-          </div>
-          <div>
-            <h1 class="text-xl font-bold text-gray-900">AG MCQ Reasoning Assistant</h1>
-            <p class="text-sm text-gray-600">Proof of Concept - Gen Ai Generated Answer Reasoning</p>
-          </div>
+        <main class="main">
+            <!-- Landing Screen -->
+            <div class="screen active" id="landingScreen">
+                <div class="landing">
+                    <div class="landing-illustration">🎯</div>
+                    <h1>AG MCQ Reasoning Assistant</h1>
+                    <p class="landing-subtitle">
+                        Master mathematics through intelligent practice. Select your answers, 
+                        receive detailed explanations for every choice, and understand the 
+                        <strong>why</strong> behind each solution.
+                    </p>
+                    <div class="features">
+                        <div class="feature-card">
+                            <div class="feature-icon">📚</div>
+                            <h3>40 Curated Questions</h3>
+                            <p>Hand-picked MCQs covering key mathematical concepts</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">💡</div>
+                            <h3>Deep Explanations</h3>
+                            <p>Understand why each option is right or wrong</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📊</div>
+                            <h3>Progress Tracking</h3>
+                            <p>Review your answers and learn from mistakes</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg" onclick="showCountScreen()">
+                        Start Practicing →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question Count Screen -->
+            <div class="screen" id="countScreen">
+                <div class="question-count">
+                    <h2>How Many Questions?</h2>
+                    <p>Choose how many questions you'd like to practice in this session.</p>
+                    <div class="count-selector">
+                        <button class="count-option" data-count="5" onclick="selectCount(5)">5</button>
+                        <button class="count-option" data-count="10" onclick="selectCount(10)">10</button>
+                        <button class="count-option" data-count="15" onclick="selectCount(15)">15</button>
+                        <button class="count-option" data-count="20" onclick="selectCount(20)">20</button>
+                        <button class="count-option" data-count="25" onclick="selectCount(25)">25</button>
+                        <button class="count-option" data-count="30" onclick="selectCount(30)">30</button>
+                        <button class="count-option" data-count="35" onclick="selectCount(35)">35</button>
+                        <button class="count-option selected" data-count="40" onclick="selectCount(40)">40</button>
+                    </div>
+                    <div class="custom-count">
+                        <span>Or enter custom:</span>
+                        <input type="number" id="customCount" min="1" max="40" value="40" onchange="selectCount(this.value)">
+                    </div>
+                    <div style="margin-top: 30px;">
+                        <button class="btn btn-primary btn-lg" onclick="startQuiz()">
+                            Begin Quiz →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Screen -->
+            <div class="screen" id="quizScreen">
+                <div class="quiz-container" id="quizContainer">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading question...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div class="screen" id="resultsScreen">
+                <div class="results-container">
+                    <div class="results-header">
+                        <h2>🎉 Quiz Complete!</h2>
+                        <p>Here's how you performed in this session</p>
+                    </div>
+                    <div class="score-card">
+                        <div class="score-circle">
+                            <div class="score-value" id="scoreValue">0%</div>
+                            <div class="score-label">Accuracy</div>
+                        </div>
+                        <div class="score-stats">
+                            <div class="stat-item stat-correct">
+                                <div class="stat-value" id="correctCount">0</div>
+                                <div class="stat-label">Correct</div>
+                            </div>
+                            <div class="stat-item stat-incorrect">
+                                <div class="stat-value" id="incorrectCount">0</div>
+                                <div class="stat-label">Incorrect</div>
+                            </div>
+                            <div class="stat-item stat-total">
+                                <div class="stat-value" id="totalCount">0</div>
+                                <div class="stat-label">Total</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-review-grid" id="questionReviewGrid"></div>
+
+                    <div class="mentor-section">
+                        <h3>👨‍🏫 Mentor Review</h3>
+                        <p>Click any question below to view its full explanation — perfect for mentors checking student understanding.</p>
+                        <div class="mentor-grid" id="mentorGrid"></div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button class="btn btn-primary" onclick="restartQuiz()">
+                            🔄 Start New Session
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-text">Made by <strong>Team Analytics</strong></div>
+        </footer>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="modal-overlay" id="reviewModal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div id="modalBody"></div>
         </div>
-        <!-- <div class="text-right">
-          <div id="question-count" class="text-sm font-medium text-gray-600">Loading questions...</div>
-          <div class="text-xs text-gray-500">Multiple questions supported</div>
-        </div> -->
-      </div>
-    </div>
-  </header>
-<br>
-<br>
-<div class="max-w-5xl mx-auto" id="questions"></div>
-<footer class="mt-8 pt-6 border-t border-gray-200">
-    <div class="container mx-auto container-padding">
-      <div class="text-center text-gray-600 text-sm">
-        <p>AG MCQ Reasoning Assistant</p>
-      </div>
-    </div>
-  </footer>
-
-<script>
-
-/* ============================
-   TYPING EFFECT LOADER
-============================ */
-function showTypingLoader() {
-  const loaderHTML = `
-    <div id="typing-loader" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center">
-      <div class="text-center">
-        <div class="w-16 h-16 border-4 border-[#4f46e5] border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-        <div class="text-3xl font-bold text-gray-800 mb-2 h-10">
-          <span id="typing-text"></span>
-          <span class="typing-cursor">|</span>
-        </div>
-        <p class="text-gray-600">Loading questions and explanations...</p>
-      </div>
-    </div>
-  `;
-  
-  document.body.insertAdjacentHTML('beforeend', loaderHTML);
-  
-  const text = "AG MCQ Reasoning Assistant";
-  const typingElement = document.getElementById('typing-text');
-  let i = 0;
-  
-  function typeWriter() {
-    if (i < text.length) {
-      typingElement.innerHTML += text.charAt(i);
-      i++;
-      setTimeout(typeWriter, 100);
-    } else {
-      // Add blinking cursor effect
-      const cursor = document.querySelector('.typing-cursor');
-      cursor.style.animation = 'blink 1s infinite';
-    }
-  }
-  
-  // Start typing effect
-  typeWriter();
-}
-
-function hideLoader() {
-  const loader = document.getElementById('typing-loader');
-  if (loader) {
-    loader.style.opacity = '0';
-    loader.style.transition = 'opacity 0.5s ease';
-    setTimeout(() => {
-      loader.remove();
-    }, 500);
-  }
-}
-
-// Add CSS for blinking cursor
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-  .typing-cursor {
-    font-weight: 300;
-    color: #4f46e5;
-  }
-`;
-document.head.appendChild(style);
-
-// showTypingLoader();
-/* ============================
-   MCQ DATA (UNCHANGED FORMAT)
-============================ */
-const mcqData =[
-  {
-    "Q-No": "1",
-    "Qn": "Write the zeroes of the polynomial $2x^2-6x-7$",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "4, 7",
-    "Option B": "2, -4",
-    "Option C": "(1, 7) ",
-    "Option D": " (3, -2)",
-    "Correct Ans": "D",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "These are not the roots. Mistake likely from equating to constant term."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "These are not the roots. Sum and product do not match."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Roots are not coordinate points. Misinterpreting output."
-      },
-      "D": {
-        "correctFlag": true,
-        "explanation": "Correct. For given polynomial, zeroes are (3±√23)/2, which match simplified form."
-      }
-    }
-  },
-  {
-    "Q-No": "2",
-    "Qn": "Solve the equations $\\frac{1}{2x}-\\frac{1}{y}= -1,\\; \\frac{1}{x}+\\frac{1}{2y}=8$  ,x,y != 0    and find $6x+4y$",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "4",
-    "Option B": "6",
-    "Option C": "1",
-    "Option D": "2",
-    "Correct Ans": "D",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect substitution. Solve the simultaneous equations correctly."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect substitution. Find x=1/6, y=1/3 from solving."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incorrect substitution. Then compute 6x+4y."
-      },
-      "D": {
-        "correctFlag": true,
-        "explanation": "Correct. Solving gives x=1/6, y=1/3. Then 6*(1/6)+4*(1/3)=1+4/3=2."
-      }
-    }
-  },
-  {
-    "Q-No": "3",
-    "Qn": "\\(5\\tan \\theta +7(\\sec \\theta \\sin \\theta) = 24\\) find cot \\(\\theta\\)",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "1",
-    "Option B": "5/7",
-    "Option C": "7/5",
-    "Option D": "1/2",
-    "Correct Ans": "D",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Simplify secθ sinθ = tanθ. Equation becomes 12 tanθ =24."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. After simplification, tanθ = 2, so cotθ = 1/2."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Reciprocal mistake. If tanθ=2, cotθ is 1/2, not 7/5."
-      },
-      "D": {
-        "correctFlag": true,
-        "explanation": "Correct. secθ sinθ = tanθ. So 5tanθ+7tanθ=12tanθ=24 ⇒ tanθ=2 ⇒ cotθ=1/2."
-      }
-    }
-  },
-  {
-    "Q-No": "4",
-    "Qn": "Find the value of  X  for which DE||AB in the given figure",
-    "Figure": "data:image/png;base64,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",
-    "Figure-meta-data": "",
-    "Option A": "x=2",
-    "Option B": "x=1",
-    "Option C": "x=6",
-    "Option D": "x=3",
-    "Correct Ans": "A",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": true,
-        "explanation": "Correct. By Basic Proportionality Theorem, CD/DA = CE/EB. Solve (x+2)/(2x-1) = 4/3."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Substitute x=1, ratio becomes 3/1 ≠ 4/3."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Substitute x=6, ratio becomes 8/11 ≠ 4/3."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Substitute x=3, ratio becomes 5/5=1 ≠ 4/3."
-      }
-    }
-  },
-  {
-    "Q-No": "5",
-    "Qn": "From a point on the ground   50m away from the foot of a tower, the angle of elevation of the top of the tower is  45 degree . The angle of elevation of the top of the flag post which is on the top of the tower is 60 degree . Find the length of the flag post",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "$50(\\sqrt3+1)$",
-    "Option B": "$100(\\sqrt3+1)$",
-    "Option C": "$100(\\sqrt3-1)$",
-    "Option D": "$50(\\sqrt3-1)$",
-    "Correct Ans": "D",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Tower height =50m (from 45°). Total height = 50√3 from 60°. Flag = total - tower."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Wrong magnitude and sign. Flag length = 50(√3 -1)."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Wrong magnitude. Uses 100 instead of 50."
-      },
-      "D": {
-        "correctFlag": true,
-        "explanation": "Correct. Tower=50m. Total height=50 tan60°=50√3. Flag=50√3-50=50(√3-1)."
-      }
-    }
-  },
-  {
-    "Q-No": "6",
-    "Qn": "Find the area of the shaded region, enclosed between two concentric circles of radii   7cm and   14 cm where $\\angle AOC=90^\\circ$. ( use pi = 22/7 )",
-    "Figure": "",
-    "Figure": "data:image/png;base64,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",
-    "Figure-meta-data": "",
-    "Option A": "115.5 cmÂ²",
-    "Option B": "116.5 cmÂ²",
-    "Option C": "77 cmÂ²",
-    "Option D": "75 cmÂ²",
-    "Correct Ans": "A",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": true,
-        "explanation": "Correct. Shaded area = (θ/360)*π(R²-r²) = (90/360)*(22/7)*(14²-7²)=115.5 cm²."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect calculation. Use formula for area of a sector of a ring."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incomplete area. That's area of 1/4 of inner circle? Not the shaded region."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect calculation. Check formula: (1/4)*π*(196-49)."
-      }
-    }
-  },
-  {
-    "Q-No": "7",
-    "Qn": "if cos A + cos^2 A = 1,then sin^2 A + sin^4 A is ",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "0",
-    "Option B": "1",
-    "Option C": "2",
-    "Option D": "None of thease",
-    "Correct Ans": "B",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Given cosA=1-cos²A = sin²A. So sin²A+sin⁴A = cosA+cos²A=1."
-      },
-      "B": {
-        "correctFlag": true,
-        "explanation": "Correct. Given cosA=1-cos²A ⇒ cosA=sin²A. Then sin²A+sin⁴A = cosA+cos²A=1."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Check substitution: sin²A=cosA, so expression equals cosA+cos²A=1."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. The value is determined as 1."
-      }
-    }
-  },
-  {
-    "Q-No": "8",
-    "Qn": "In a right triangle ABC, right angled at B , the ratio of AB to AC is 1:root2  find the value of  5 tan A / 1 + tan^2 A",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "1",
-    "Option B": "5/2",
-    "Option C": "0",
-    "Option D": "3/2",
-    "Correct Ans": "B",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Let AB=k, AC=k√2 ⇒ BC=k. So tanA=BC/AB=1."
-      },
-      "B": {
-        "correctFlag": true,
-        "explanation": "Correct. tanA=1. So expression = 5*1/(1+1)=5/2."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incorrect. tanA is not zero. Use Pythagoras to find sides."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Calculate correctly: 5tanA/(1+tan²A) = 5*1/2 = 5/2."
-      }
-    }
-  },
-  {
-    "Q-No": "9",
-    "Qn": "Two concentric circles are of radii 6 cm and  rcm  respectively where  r > 6 . A chord of larger circle of length 16 cm touches the smaller circle. Find the value of  r .",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "11 cm",
-    "Option B": "10 cm",
-    "Option C": "14 cm",
-    "Option D": "12 cm ",
-    "Correct Ans": "B",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Use Pythagoras: half chord=8, distance to centre=6, so r=√(8²+6²)."
-      },
-      "B": {
-        "correctFlag": true,
-        "explanation": "Correct. The chord touches inner circle, so distance from centre to chord =6. So r=√(8²+6²)=10."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Check calculation: √(64+36)=√100=10."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Check calculation: √(64+36)=√100=10."
-      }
-    }
-  },
-  {
-    "Q-No": "10",
-    "Qn": "A girl calculates that the probability of her winning the first prize in a lottery is 0.08. If 6000 tickets are sold, then how many tickets has she bought?",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "420",
-    "Option B": "460",
-    "Option C": "480",
-    "Option D": "440",
-    "Correct Ans": "C ",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Probability = tickets bought / total. So tickets = 0.08 * 6000."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Tickets bought = Probability * Total tickets = 0.08*6000."
-      },
-      "C": {
-        "correctFlag": true,
-        "explanation": "Correct. Tickets bought = 0.08 * 6000 = 480."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Calculate: 0.08 * 6000 = 480."
-      }
-    }
-  },
-  {
-    "Q-No": "11",
-    "Qn": "The marks obtained by students in a test is given below. Find the mean mark \n<table border='1' cellpadding='8' cellspacing='0'> <thead> <tr> <th>Marks Range</th> <th>0–20</th> <th>20–40</th> <th>40–60</th> <th>60–80</th> <th>80–100</th> </tr> </thead> <tbody> <tr> <th>No. of Students</th> <td>20</td> <td>35</td> <td>52</td> <td>44</td> <td>38</td> </tr> </tbody> </table>",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "62.55",
-    "Option B": "56.72",
-    "Option C": "54.76",
-    "Option D": "59.35",
-    "Correct Ans": "C",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect calculation. Use mean = Σ(fi*xi)/Σfi with mid-points."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect calculation. Mid-points:10,30,50,70,90. Compute Σfixi/Σf."
-      },
-      "C": {
-        "correctFlag": true,
-        "explanation": "Correct. Σf=189, Σfixi=10350, Mean=10350/189≈54.76."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect calculation. Check multiplication and sum."
-      }
-    }
-  },
-  {
-    "Q-No": "12",
-    "Qn": "The mean of the following distribution is 23. Find the missing frequencies f1 and f2 the if sum of all the frequencies is 10 <br><table border='1' cellpadding='8' cellspacing='0'> <thead> <tr> <th>Class</th> <th>5–15</th> <th>15–25</th> <th>25–35</th> <th>35–45</th> </tr> </thead> <tbody> <tr> <th>Frequency</th> <td>f₁</td> <td>4</td> <td>3</td> <td>f₂</td> </tr> </tbody> </table>",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "1,2",
-    "Option B": "1,1",
-    "Option C": "2,1",
-    "Option D": "2,3",
-    "Correct Ans": "C",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Use f1+f2=10-(4+3)=3 and mean formula Σfixi/10=23."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Solve: f1+f2=3 and 10f1+30f2=230-250? Solve system."
-      },
-      "C": {
-        "correctFlag": true,
-        "explanation": "Correct. f1+f2=3. Mean eq: (10f1+20*4+30*3+40f2)/10=23 ⇒ f1=2,f2=1."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. f1+f2 must be 3, but 2+3=5."
-      }
-    }
-  },
-  {
-    "Q-No": "13",
-    "Qn": "Two alarm clocks ring their alarms at regular intervals of 50 seconds and 48 seconds. If they first beep together at 12 noon, at what time will they beep again for the first time after 12 noon?",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "12.20 pm",
-    "Option B": "12.12 pm",
-    "Option C": "12.11 pm",
-    "Option D": "None of these",
-    "Correct Ans": "A",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": true,
-        "explanation": "Correct. LCM(50,48)=1200 sec = 20 min. So next together at 12:20."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. 12 min = 720 sec, not LCM of 50 and 48."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incorrect. 11 min=660 sec, not a common multiple of 50 and 48."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. A specific time exists."
-      }
-    }
-  },
-  {
-    "Q-No": "14",
-    "Qn": "If the HCF of 144 and 180 is expressed in the form 13m − 3  , find the value of m .",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "-3",
-    "Option B": "1",
-    "Option C": "2",
-    "Option D": "3",
-    "Correct Ans": "D",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. HCF(144,180)=36. Solve 13m-3=36."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. HCF=36. So 13m=39 ⇒ m=3."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incorrect. 13m-3=36 gives 13m=39, m=3."
-      },
-      "D": {
-        "correctFlag": true,
-        "explanation": "Correct. HCF=36. Equation: 13m-3=36 ⇒ 13m=39 ⇒ m=3."
-      }
-    }
-  },
-  {
-    "Q-No": "15",
-    "Qn": "Find the points on the x -axis which are at a distance of 2 root 5 from the point (7, - 4)",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "(5,0) (0,9 )",
-    "Option B": "(0,5) (0,9 )",
-    "Option C": "(5,0) (9,0 )",
-    "Option D": "(0,5)  (9,0 )",
-    "Correct Ans": "C",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Points are on x-axis, so y=0. Option has (0,9)."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Points must be on x-axis (y=0). These are on y-axis."
-      },
-      "C": {
-        "correctFlag": true,
-        "explanation": "Correct. Let point be (h,0). (h-7)²+(0+4)²=(2√5)². Solve h=5,9."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. (0,5) is on y-axis, not x-axis."
-      }
-    }
-  },
-  {
-    "Q-No": "16",
-    "Qn": "Name the type of triangle PQR formed by the points \\(P(\\sqrt{2},sqrt{2}),Q(-sqrt{2},-sqrt{2}) and R(-sqrt{6},sqrt{6})",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "Right triangle",
-    "Option B": "Isosceles triangle",
-    "Option C": "Equilateral Triangle",
-    "Option D": "None of these",
-    "Correct Ans": "C",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Check distances. All sides equal: PQ=4, QR=4√? Calculate correctly."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Not just isosceles. All sides are equal."
-      },
-      "C": {
-        "correctFlag": true,
-        "explanation": "Correct. Find distances: PQ=4, QR=4, RP=4 using distance formula."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. It is an equilateral triangle."
-      }
-    }
-  },
-  {
-    "Q-No": "17",
-    "Qn": "Which term of the A.P 3,15,27,39,.... is 132 more than the 54th term?",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "67th",
-    "Option B": "66th",
-    "Option C": "65th",
-    "Option D": "68th",
-    "Correct Ans": "C",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. a=3, d=12. T54=3+53*12=639. New term=639+132=771."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Find n from 3+(n-1)*12=771 ⇒ n-1=64 ⇒ n=65."
-      },
-      "C": {
-        "correctFlag": true,
-        "explanation": "Correct. T54=639. Tn=771. Solve 3+(n-1)*12=771 ⇒ n=65."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Solve: n-1 = (771-3)/12 = 768/12=64, so n=65."
-      }
-    }
-  },
-  {
-    "Q-No": "18",
-    "Qn": "If the sum of the first four terms of an A P is 26 and the sum of first 14 terms is 301, find the n th term",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "3n-2",
-    "Option B": "3n-1",
-    "Option C": "3n+1",
-    "Option D": "2n-1",
-    "Correct Ans": "B",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Solve: S4=2(2a+3d)=26, S14=7(2a+13d)=301. Find a=2, d=3."
-      },
-      "B": {
-        "correctFlag": true,
-        "explanation": "Correct. Solving gives a=2, d=3. nth term = 2+(n-1)*3 = 3n-1."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incorrect. a=2,d=3 gives Tn=3n-1, not 3n+1."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. a=2,d=3 gives Tn=3n-1."
-      }
-    }
-  },
-  {
-    "Q-No": "19",
-    "Qn": "An inverted cone of vertical height 14 cm and radius of base 7 cm contains water to a depth of 3 cm. Find the area of the interior surface of the cone not in contact with the water. [Give your answer in whole number after rounding of decimals. Take Pi  = 3.14, root 5 = 2.236 ]",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "318cm^2",
-    "Option B": "326cm^2",
-    "Option C": "363cm^2",
-    "Option D": "314cm^2",
-    "Correct Ans": "D",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Area not in contact = total curved surface area - CSA of water cone."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Total slant height l=√(14²+7²)=√245. Water cone similar."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Compute: Total CSA=πrl=3.14*7*√245 ≈ 486. Water CSA=πr'l'."
-      },
-      "D": {
-        "correctFlag": true,
-        "explanation": "Correct. Total CSA≈486. Water CSA (depth=3, r'=1.5, l'≈3.354)≈15.8. Diff≈314."
-      }
-    }
-  },
-  {
-    "Q-No": "20",
-    "Qn": "The diameter of a roller is 120 cm and its length is 84 cm. If it takes 500 complete revolutions to level a playground, determine the cost of levelling it at the rate of 30 paise per sq. m. ( Take pi = 22/7 )",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "Rs.625.50",
-    "Option B": "Rs.525.25",
-    "Option C": "Rs.475.20",
-    "Option D": "Rs.380.75",
-    "Correct Ans": "C",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. CSA of roller=2πrh=2*(22/7)*0.6*0.84=3.168 m². Area for 500 rev."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Total area = 3.168*500=1584 m². Cost=1584*0.30=475.2."
-      },
-      "C": {
-        "correctFlag": true,
-        "explanation": "Correct. CSA=2πrh=3.168 m². Area=1584 m². Cost=1584*0.30=Rs.475.20."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Check calculation: Radius=0.6m, h=0.84m, CSA=3.168 m²."
-      }
-    }
-  },
-  {
-    "Q-No": "21",
-    "Qn": "Sum of area of two squares is 970cm^2 . If the sum of their perimeters is 176cm . Find the sides of the two squares.",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "21 cm, 23 cm",
-    "Option B": "20 cm, 24 cm",
-    "Option C": "19 cm, 25 cm",
-    "Option D": "18 cm, 26 cm",
-    "Correct Ans": "A",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": true,
-        "explanation": "Correct. Let sides a,b. a²+b²=970, 4a+4b=176⇒a+b=44. Solve (a-b)²=2*970-1936=4."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. a+b=44. Check: 20²+24²=400+576=976≠970."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incorrect. 19²+25²=361+625=986≠970."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. 18²+26²=324+676=1000≠970."
-      }
-    }
-  },
-  {
-    "Q-No": "22",
-    "Qn": "Which of the following equations has no real roots?",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "x^2-4x+3root2=0",
-    "Option B": "x^2+4x-3root2=0",
-    "Option C": "x^2-4x-3root2=0",
-    "Option D": "3x^2+4root3x+4=0",
-    "Correct Ans": "A",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": true,
-        "explanation": "Correct. Discriminant D=16-4*1*3√2≈16-16.97<0. No real roots."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. D=16-4*1*(-3√2)=16+16.97>0. Real roots exist."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incorrect. D=16-4*1*(-3√2)=16+16.97>0. Real roots exist."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. D=(4√3)²-4*3*4=48-48=0. Real and equal roots."
-      }
-    }
-  },
-  {
-    "Q-No": "23",
-    "Qn": "A 5 m long ladder is placed leaning towards a vertical wall such that it reaches the wall at a point 4 m high. If the foot of the ladder is moved 1.6m towards the wall, then find the distance by which the top of the ladder would slide upwards on the wall.",
-    "Figure": "",
-    "Figure-meta-data": "none",
-    "Option A": "0.8 m",
-    "Option B": "0.4 m",
-    "Option C": "1 m",
-    "Option D": "0.2 m",
-    "Correct Ans": "A",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": true,
-        "explanation": "Correct. Initially, foot distance=√(5²-4²)=3m. New foot distance=1.4m. New height=√(5²-1.4²)=4.8m. Slide=0.8m."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Initial height=4m. New height from Pythagoras: h²=25-1.96=23.04, h=4.8."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Slide = new height - old height = 4.8-4 = 0.8 m."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Check calculation: h_new = √(25 - (1.4)²) = √(25-1.96)=√23.04=4.8."
-      }
-    }
-  },
-  {
-    "Q-No": "24",
-    "Qn": "In a ΔPQR, N is a point on PR such that QN ⟂ PR. If PN · NR = QN², find ∠PQR.",
-    "Figure": "data:image/png;base64,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",
-    "Figure-meta-data": "none",
-    "Option A": "45Â°",
-    "Option B": "30Â°",
-    "Option C": "60Â°",
-    "Option D": "90Â°",
-    "Correct Ans": "D",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Given PN*NR=QN². Triangles PNQ and QNR are similar? ∠QNR=90°."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Condition implies ∠PQN=∠RQN? Leads to ∠PQR=90°."
-      },
-      "C": {
-        "correctFlag": false,
-        "explanation": "Incorrect. In right Δ, if altitude divides hyp, then PN*NR=QN² ⇒ ∠Q=90°."
-      },
-      "D": {
-        "correctFlag": true,
-        "explanation": "Correct. In right triangle, altitude gives geometric mean property. So ∠Q must be 90°."
-      }
-    }
-  },
-  {
-    "Q-No": "25",
-    "Qn": "If P is the midpoint of the arc QR and  <RQP = 60degree then find <RPT",
-    "Figure": "",
-    "Figure-meta-data": "",
-    "Option A": "70Â°",
-    "Option B": "50Â°",
-    "Option C": "60Â°",
-    "Option D": "65Â°",
-    "Correct Ans": "C",
-    "Explnation ( JSON )": {
-      "A": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Angles in same segment are equal. P mid-point ⇒ ∠RQP=∠QPR."
-      },
-      "B": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Given ∠RQP=60°. Since P is midpoint, chords QP and PR subtend equal angles."
-      },
-      "C": {
-        "correctFlag": true,
-        "explanation": "Correct. P midpoint ⇒ QP=PR ⇒ ∠RQP=∠PRQ=60°. In cyclic quad, ∠RPT=∠RQP=60°."
-      },
-      "D": {
-        "correctFlag": false,
-        "explanation": "Incorrect. Use circle properties: Angles in same segment from chord RP."
-      }
-    }
-  }
-]
-
-/* ============================
-   HELPERS
-============================ */
-// function parseExplanation(q) {
-//   if (q._exp) return q._exp;
-//   try {
-//     q._exp = JSON.parse(q["Explnation ( JSON )"]);
-//   } catch {
-//     q._exp = {};
-//   }
-//   return q;
-// }
-
-// First, fix the parseExplanation function
-function parseExplanation(q) {
-  // If already parsed, return it
-  if (q._exp && Object.keys(q._exp).length > 0) return q._exp;
-  
-  try {
-    // Check if "Explnation ( JSON )" is already an object or a string
-    if (typeof q["Explnation ( JSON )"] === 'string') {
-      q._exp = JSON.parse(q["Explnation ( JSON )"]);
-    } else {
-      q._exp = q["Explnation ( JSON )"]; // It's already an object
-    }
-  } catch (error) {
-    console.error("Error parsing explanation for Q", q["Q-No"], ":", error);
-    q._exp = {}; // Return empty object on error
-  }
-  return q._exp;
-}
-
-function figureHTML(fig) {
-  if (!fig || !fig.trim()) return "";
-  return `
-    <div class="ml-6 mt-4 md:mt-0">
-      <img src="${fig}"
-           class="max-w-xs max-h-60 rounded-lg border shadow"
-           alt="Figure" />
-    </div>`;
-}
-
-/* ============================
-   RENDER
-============================ */
-const root = document.getElementById("questions");
-
-mcqData.forEach(q => {
-  const letters = ["A","B","C","D"];
-  const exp = parseExplanation(q);
-  console.log("exp",exp)
-
-  let html = `
-  <div class="bg-white p-6 rounded-xl shadow mb-6">
-    <div class="flex flex-col md:flex-row md:items-start md:justify-between">
-      <div class="flex-1">
-        <h2 class="text-xl font-bold mb-4">
-          Q${q["Q-No"]}. ${q.Qn}
-        </h2>
-      </div>
-      ${figureHTML(q.Figure)}
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
-  `;
+    <script>
+        // Quiz State
+        let quizData = [];
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let answers = {};
+        let selectedCount = 40;
+        let quizSubmitted = false;
 
-  letters.forEach(l => {
-    const correct = q["Correct Ans"] === l;
-    html += `
-      <div class="p-3 border rounded ${correct ? "option-correct" : ""}">
-        <b>${l}.</b> ${q[`Option ${l}`]}
-      </div>`;
-  });
+        // Embedded JSON data - mcq_explanations_partial.json
+        const embeddedData = [
+            {
+                "id": 16710,
+                "question_text": "If \\(a={{2}^{3}}\\times {{3}^{2}}\\times {{5}^{4}}\\) and \\(b={{2}^{2}}\\times 3\\times {{5}^{3}}\\), then the HCF \\(\\left( a,b \\right)\\) is\n\n\n\n\n\n(A)    \\(600\\)\n\n\n\n(B)    \\(300\\)\n\n\n\n(C)    \\(3000\\)\n\n\n\n(D)    \\(1500\\)",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-08-11T06:35:43.367ZChap1_Q40.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "D",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": false,
+                        "explanation": "This value (600) is obtained if you incorrectly take 5² instead of the minimum power 5³ from the given numbers.",
+                        "why_right": "A student might pick this if they make a calculation error or misidentify the power of 5 while looking for common factors.",
+                        "core_concept": "HCF is the product of the lowest powers of common prime factors.",
+                        "next_step": "Carefully compare the exponents of each prime base and pick the smallest one."
+                    },
+                    "B": {
+                        "correctFlag": false,
+                        "explanation": "This result comes from taking 2² × 3¹ × 5². While the powers for 2 and 3 are correct, 5² is not the correct minimum power present in both 'a' and 'b'.",
+                        "why_right": "Students often choose smaller 'round' numbers like 300, thinking it must be a common factor without verifying the powers.",
+                        "core_concept": "HCF requires taking the smallest exponent available for every prime factor common to both numbers.",
+                        "next_step": "List the prime factors of both numbers vertically to easily spot the lowest power for each."
+                    },
+                    "C": {
+                        "correctFlag": false,
+                        "explanation": "This value (3000) uses 2³ instead of 2². Even though 2³ is a factor of 'a', it is not a factor of 'b' (which only has 2²).",
+                        "why_right": "Students sometimes mix up HCF and LCM rules, picking the highest power for some prime bases by mistake.",
+                        "core_concept": "HCF only includes factors that are present in both numbers; it cannot exceed the lowest power provided in the expressions.",
+                        "next_step": "Remember the rule: For HCF, always select the LEAST power of the common bases."
+                    },
+                    "D": {
+                        "correctFlag": true,
+                        "explanation": "To find HCF, we take the smallest power of each common prime factor. For 2, it is 2²; for 3, it is 3¹; and for 5, it is 5³. HCF = 2² × 3¹ × 5³ = 4 × 3 × 125 = 1500.",
+                        "why_right": "This correctly applies the fundamental theorem of arithmetic regarding HCF of numbers in exponent form.",
+                        "core_concept": "HCF(a, b) = Product of common prime factors with the lowest exponents.",
+                        "next_step": "Continue practicing by identifying common bases and their minimum exponents in different sets of numbers."
+                    }
+                }
+            },
+            {
+                "id": 16689,
+                "question_text": "Every positive odd integer is of the form\n\n\n\n(A)    \\(6q,\\,\\,6q+2,\\,\\,6q+4\\) \n\n\n\n(B)    \\(6q+1,\\,\\,6q+3,\\,\\,6q+5\\) \n\n\n\n(C)    \\(6q,\\,\\,6q+1,\\,\\,6q+2\\) \n\n\n\n(D)    \\(6q+3,\\,\\,6q+4,\\,\\,6q+5\\) ",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-08-01T14:37:25.883ZQ19.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "B",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": false,
+                        "explanation": "These forms represent even integers. $6q$ is $2(3q)$, $6q+2$ is $2(3q+1)$, and $6q+4$ is $2(3q+2)$. Since they are all multiples of 2, they cannot be odd.",
+                        "why_right": "A student might select this if they confuse the definitions of even and odd integers or simply see a sequence of numbers associated with the divisor 6.",
+                        "core_concept": "Even integers are always of the form 2n.",
+                        "next_step": "Try substituting a small value like q=1; you'll see 6, 8, and 10 are all even, which helps rule out this option."
+                    },
+                    "B": {
+                        "correctFlag": true,
+                        "explanation": "According to Euclid's Division Lemma, any integer divided by 6 can have remainders 0, 1, 2, 3, 4, or 5. Odd integers occur only when the remainder is odd (1, 3, or 5).",
+                        "why_right": "This option correctly identifies that adding an odd remainder to an even multiple (6q) always results in an odd number.",
+                        "core_concept": "Odd integers leave odd remainders when divided by an even divisor.",
+                        "next_step": "Understand that for any form 'bq + r', if 'b' is even, then 'r' must be odd for the whole expression to be odd."
+                    },
+                    "C": {
+                        "correctFlag": false,
+                        "explanation": "This option includes $6q$ and $6q+2$, which are even, and $6q+1$, which is odd. It represents a mix of consecutive integers, not specifically odd ones.",
+                        "why_right": "A student might think this represents a general sequence of integers starting from a multiple of 6.",
+                        "core_concept": "A specific category (odd) must exclude all even forms.",
+                        "next_step": "Check each form individually. If even one form in the set results in an even number, the whole option is incorrect for this question."
+                    },
+                    "D": {
+                        "correctFlag": false,
+                        "explanation": "In this set, $6q+3$ and $6q+5$ are odd, but $6q+4$ is even (divisible by 2). Therefore, this form does not represent 'every' positive odd integer correctly.",
+                        "why_right": "The presence of two odd forms (+3 and +5) might distract a student from noticing the even form (+4) in the middle.",
+                        "core_concept": "All terms in the set must satisfy the 'odd' condition.",
+                        "next_step": "Always verify every term in a sequence. If q=1, $6(1)+4 = 10$, which is clearly not an odd integer."
+                    }
+                }
+            },
+            {
+                "id": 16806,
+                "question_text": "The HCF and LCM of \\(12,\\,21\\) and \\(15\\) respectively are\n\n\n\n\n\n(A)    \\(3,\\,140\\)\n\n\n\n(B)    \\(12,\\,420\\)\n\n\n\n(C)    \\(3,\\,420\\)\n\n\n\n(D)    \\(420,\\,3\\)",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-08-13T07:34:34.944ZChap1_Q63.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "C",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": false,
+                        "explanation": "While the HCF (3) is correct, the LCM calculation is incomplete. 140 is missing the prime factor 3 in its product.",
+                        "why_right": "A student might calculate the HCF correctly but miss one of the prime factors (3) while multiplying for the LCM.",
+                        "core_concept": "LCM must be the product of all prime factors involved, using their highest powers.",
+                        "next_step": "List all unique prime factors first, then apply their highest exponents to find the LCM."
+                    },
+                    "B": {
+                        "correctFlag": false,
+                        "explanation": "The LCM (420) is correct, but 12 cannot be the HCF because it does not divide 15 or 21 without a remainder.",
+                        "why_right": "Students sometimes mistakenly assume the smallest number in the given set is the HCF.",
+                        "core_concept": "The HCF must be a common factor of all numbers in the set.",
+                        "next_step": "Verify your HCF by checking if it divides all given numbers perfectly."
+                    },
+                    "C": {
+                        "correctFlag": true,
+                        "explanation": "Prime factors: 12=2²×3, 21=3×7, 15=3×5. HCF is the common factor 3. LCM is 2²×3×5×7 = 420.",
+                        "why_right": "It correctly identifies the greatest common divisor and the least common multiple in the specified order.",
+                        "core_concept": "HCF is the product of the lowest powers of common factors; LCM is the product of the highest powers of all factors.",
+                        "next_step": "Always use prime factorization to avoid calculation errors in HCF and LCM problems."
+                    },
+                    "D": {
+                        "correctFlag": false,
+                        "explanation": "The numerical values are correct, but the order is reversed. The question asks for 'HCF and LCM respectively'.",
+                        "why_right": "A student might calculate both values correctly but fail to check the order required by the word 'respectively'.",
+                        "core_concept": "The term 'respectively' means the answer must follow the same order as the terms in the question.",
+                        "next_step": "Read the question carefully to ensure your final choice matches the requested sequence (HCF first, LCM second)."
+                    }
+                }
+            },
+            {
+                "id": 16840,
+                "question_text": "Find the LCM of first \\(5\\) composite numbers\n\n\n\n\n\n(A)    \\(180\\) \n\n\n\n(B)    \\(360\\) \n\n\n\n(C)    \\(720\\) \n\n\n\n(D)    \\(1080\\) ",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-08-11T11:04:57.886ZChap1_Q97.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "B",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": false,
+                        "explanation": "180 is divisible by 4, 6, 9, and 10, but it is not divisible by 8 (180 ÷ 8 = 22.5). Since 8 is one of the first five composite numbers, 180 cannot be the LCM.",
+                        "why_right": "A student might calculate the LCM of only four numbers (4, 6, 9, 10) and forget to include 8.",
+                        "core_concept": "LCM must be exactly divisible by every number in the given set.",
+                        "next_step": "Always list out the specific numbers first and verify if the final answer is divisible by all of them."
+                    },
+                    "B": {
+                        "correctFlag": true,
+                        "explanation": "The first five composite numbers are 4, 6, 8, 9, and 10. Their prime factors are: 4=2², 6=2×3, 8=2³, 9=3², and 10=2×5. The LCM is the product of the highest powers of all prime factors: 2³ × 3² × 5 = 8 × 9 × 5 = 360.",
+                        "why_right": "It is the lowest number that is a multiple of 4, 6, 8, 9, and 10.",
+                        "core_concept": "LCM is found by taking the highest power of each prime factor present in the numbers.",
+                        "next_step": "Double-check your list of composite numbers; remember that 1 is neither prime nor composite."
+                    },
+                    "C": {
+                        "correctFlag": false,
+                        "explanation": "720 is a common multiple of 4, 6, 8, 9, and 10, but it is not the *least* common multiple. 360 is a smaller multiple that exists.",
+                        "why_right": "Students often find a common multiple by multiplying too many factors or simply doubling the correct LCM.",
+                        "core_concept": "The LCM must be the smallest (least) common multiple.",
+                        "next_step": "Once you find a multiple, check if it can be divided further by any of the prime factors used."
+                    },
+                    "D": {
+                        "correctFlag": false,
+                        "explanation": "1080 is a common multiple (360 × 3), but it is much larger than the least common multiple required for these numbers.",
+                        "why_right": "This might be chosen if a student makes a multiplication error or incorrectly identifies the highest powers of the prime factors.",
+                        "core_concept": "LCM represents the smallest shared multiple, not just any multiple.",
+                        "next_step": "Use the prime factorization method carefully to avoid over-calculating the product."
+                    }
+                }
+            },
+            {
+                "id": 16701,
+                "question_text": "The decimal expansion of the rational number \\(\\dfrac{43}{2000}\\) will terminate after how many places of decimal?\n\n\n\n\n\n(A)    3 places\n\n\n\n(B)    2 places\n\n\n\n(C)    1 place\n\n\n\n(D)    none of these",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-07-25T08:38:50.741ZQ31.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "D",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": false,
+                        "explanation": "The denominator 2000 can be prime factorized as \\(2^4 \\times 5^3\\). The decimal expansion of a rational number terminates after the number of places equal to the highest power of 2 or 5. Here, the highest power is 4, not 3.",
+                        "why_right": "Students often see the three zeros in '2000' and mistakenly assume the decimal will terminate after 3 places.",
+                        "core_concept": "The number of decimal places depends on the maximum exponent of 2 or 5 in the denominator's prime factorization.",
+                        "next_step": "Don't just count zeros; always perform full prime factorization of the denominator in the form \\(2^m \\times 5^n\\)."
+                    },
+                    "B": {
+                        "correctFlag": false,
+                        "explanation": "As the prime factorization of 2000 is \\(2^4 \\times 5^3\\), the maximum exponent is 4. Therefore, it terminates after 4 places, making 2 places incorrect.",
+                        "why_right": "A student might stop factorizing too early or confuse the leading digit '2' with the number of decimal places.",
+                        "core_concept": "Termination occurs at \\(max(m, n)\\) for a denominator \\(2^m \\times 5^n\\).",
+                        "next_step": "Ensure you compare the exponents of both 2 and 5 and pick the larger one."
+                    },
+                    "C": {
+                        "correctFlag": false,
+                        "explanation": "For the expansion to terminate after 1 place, the highest power of 2 or 5 in the denominator would need to be 1. Here, the powers are 4 and 3.",
+                        "why_right": "This might be chosen as a random guess if the student does not know the rule for terminating decimals.",
+                        "core_concept": "The number of places is determined by the highest power of the prime factors 2 and 5 in the denominator.",
+                        "next_step": "Memorize the rule: For \\(\\frac{p}{q}\\), if \\(q = 2^m \\cdot 5^n\\), decimal places = \\(max(m, n)\\)."
+                    },
+                    "D": {
+                        "correctFlag": true,
+                        "explanation": "Prime factorizing 2000 gives \\(2 \\times 10^3 = 2 \\times (2 \\times 5)^3 = 2^4 \\times 5^3\\). The highest exponent is 4, meaning it terminates after 4 decimal places. Since 4 is not among options A, B, or C, this is the correct choice.",
+                        "why_right": "It is correct because the actual number of places (4) is not listed in the other options.",
+                        "core_concept": "A rational number \\(\\frac{p}{2^m \\times 5^n}\\) (where p and q are co-prime) terminates after exactly \\(max(m, n)\\) decimal places.",
+                        "next_step": "Always check if your calculated value (4) matches any specific options before selecting 'none of these'."
+                    }
+                }
+            },
+            {
+                "id": 16809,
+                "question_text": "The numbers \\(231\\) and \\(396\\) are\n\n\n\n\n\n(A)    both prime\n\n\n\n(B)    co-primes\n\n\n\n(C)    \\(231\\) prime, \\(396\\) composite        \n\n\n\n(D)    not co-primes",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-07-27T06:05:54.921ZQ66.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "D",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": false,
+                        "explanation": "A prime number has only two factors: 1 and itself. 396 is even (divisible by 2) and the sum of digits of 231 is 6 (divisible by 3), so neither is prime.",
+                        "why_right": "Students might assume 231 is prime because it is an odd number and doesn't end in 5.",
+                        "core_concept": "Definition of Prime numbers.",
+                        "next_step": "Apply divisibility rules for 2 and 3 first to check if a number is composite."
+                    },
+                    "B": {
+                        "correctFlag": false,
+                        "explanation": "Co-primes are a pair of numbers whose HCF is 1. Here, both 231 and 396 are divisible by 3 (sum of digits is 6 and 18 respectively), so their HCF is at least 3.",
+                        "why_right": "Students often mistake 'co-prime' to mean that the numbers themselves must be prime.",
+                        "core_concept": "Co-primes must have HCF = 1.",
+                        "next_step": "Calculate the HCF of the given pair to determine if they are co-prime."
+                    },
+                    "C": {
+                        "correctFlag": false,
+                        "explanation": "While 396 is composite (divisible by 2), 231 is also composite because it is divisible by 3, 7, and 11 ($231 = 3 \\times 7 \\times 11$).",
+                        "why_right": "396 is obviously even (composite), but 231 requires checking divisibility rules to find it is composite.",
+                        "core_concept": "Identification of composite numbers.",
+                        "next_step": "Check divisibility by small primes like 3, 7, and 11 for odd numbers."
+                    },
+                    "D": {
+                        "correctFlag": true,
+                        "explanation": "Numbers are 'not co-prime' if they share a common factor other than 1. Since 231 ($2+3+1=6$) and 396 ($3+9+6=18$) are both divisible by 3, they are not co-primes.",
+                        "why_right": "It accurately reflects that the HCF of the two numbers is greater than 1.",
+                        "core_concept": "HCF > 1 implies numbers are not co-prime.",
+                        "next_step": "Always check for common factors (like 3 or 11) using divisibility tests to verify co-primality."
+                    }
+                }
+            },
+            {
+                "id": 16714,
+                "question_text": "The decimal expansion of \\(\\dfrac{51}{48}\\) will terminate after how many places of decimal?\n\n\n\n\n\n(A)    \\(4\\) \n\n\n\n(B)    \\(2\\) \n\n\n\n(C)    \\(3\\) \n\n\n\n(D)    Will not terminate",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-08-12T14:57:46.003ZChap1_Q44.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "A",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": true,
+                        "explanation": "First, simplify the fraction 51/48 to its lowest terms. Both 51 and 48 are divisible by 3, giving 17/16. The denominator is 16, which is 2^4. For a fraction p/q where q = 2^n * 5^m, the decimal terminates after max(n, m) places. Here n=4 and m=0, so it terminates after 4 places.",
+                        "why_right": "It is the result of the actual division 17 ÷ 16 = 1.0625, which has 4 decimal places.",
+                        "core_concept": "Termination depends on the highest power of 2 or 5 in the denominator of a simplified fraction.",
+                        "next_step": "Always reduce the fraction to its simplest form (coprime) before factorizing the denominator."
+                    },
+                    "B": {
+                        "correctFlag": false,
+                        "explanation": "This choice would be incorrect because the power of 2 in the simplified denominator (16 = 2^4) is 4, not 2.",
+                        "why_right": "A student might stop the long division process early or incorrectly factorize 16 as 4^2 and use the power 2.",
+                        "core_concept": "The number of decimal places is determined by the specific exponent of the prime factors 2 or 5.",
+                        "next_step": "Perform prime factorization carefully using only prime numbers (2, 3, 5, etc.) rather than composite numbers."
+                    },
+                    "C": {
+                        "correctFlag": false,
+                        "explanation": "Choosing 3 places is incorrect as the division 17/16 results in a four-digit decimal part.",
+                        "why_right": "Students often guess 3 because the factor 3 was present in the original denominator (48) before simplification.",
+                        "core_concept": "The power of the prime factors in the denominator directly dictates the number of places.",
+                        "next_step": "Verify the result by multiplying the denominator by a power of 5 to make it a power of 10 (e.g., 2^4 * 5^4 = 10,000)."
+                    },
+                    "D": {
+                        "correctFlag": false,
+                        "explanation": "A decimal does not terminate only if the denominator (in simplest form) contains prime factors other than 2 or 5. Here, the factor 3 cancels out.",
+                        "why_right": "It seems correct if you only look at 48 (which is 16 * 3) and assume the 3 will make it a non-terminating repeating decimal.",
+                        "core_concept": "Simplification is crucial; if the 'non-2 or 5' factors cancel out, the decimal will terminate.",
+                        "next_step": "Check if the numerator is a multiple of the 'troublesome' prime factors in the denominator."
+                    }
+                }
+            },
+            {
+                "id": 16834,
+                "question_text": "If the HCF of \\(144\\) and \\(180\\) is expressed in the form \\(13\\,m-3\\), find the value of \\(m\\).\n\n\n\n\n\n(A)    \\(-3\\) \n\n\n\n(B)    \\(1\\) \n\n\n\n(C)    \\(2\\) \n\n\n\n(D)    \\(3\\) ",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-07-27T14:13:15.911ZQ91.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "D",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": false,
+                        "explanation": "This result occurs if there is a major sign error while solving the equation $13m - 3 = 36$. For example, if -3 is subtracted from 36 instead of added.",
+                        "why_right": "A student might choose this if they get confused with negative signs during the transposition of terms.",
+                        "core_concept": "Solving linear equations with signs",
+                        "next_step": "Practice the rule: when a term moves to the other side of the 'equal to' sign, its sign changes."
+                    },
+                    "B": {
+                        "correctFlag": false,
+                        "explanation": "Substituting $m = 1$ in $13m - 3$ gives $13(1) - 3 = 10$. However, the HCF of 144 and 180 is 36, not 10.",
+                        "why_right": "Students might guess this if they struggle to find the HCF and pick a small positive integer.",
+                        "core_concept": "Calculating HCF accurately",
+                        "next_step": "Use the Prime Factorization or Division method to find the HCF first before solving for $m$."
+                    },
+                    "C": {
+                        "correctFlag": false,
+                        "explanation": "Substituting $m = 2$ gives $13(2) - 3 = 26 - 3 = 23$. Since 23 is not the HCF of 144 and 180, this value is incorrect.",
+                        "why_right": "This might seem correct if the student makes a calculation error in the multiplication table of 13 or the subtraction step.",
+                        "core_concept": "Algebraic substitution",
+                        "next_step": "Verify the HCF by dividing both 144 and 180 by your result; it must divide both completely."
+                    },
+                    "D": {
+                        "correctFlag": true,
+                        "explanation": "First, find the HCF of 144 and 180. $144 = 2^4 \\times 3^2$ and $180 = 2^2 \\times 3^2 \\times 5$. The HCF is $2^2 \\times 3^2 = 36$. Now, set $13m - 3 = 36$. Adding 3 to both sides gives $13m = 39$. Dividing by 13, we get $m = 3$.",
+                        "why_right": "It is the only value that correctly satisfies the equation where the expression equals the actual HCF of the two numbers.",
+                        "core_concept": "HCF and Linear Equations",
+                        "next_step": "Continue practicing problems where HCF/LCM are linked to algebraic expressions to build speed."
+                    }
+                }
+            },
+            {
+                "id": 167411,
+                "question_text": "Two tangents inclined at an angle of \\(60^\\circ \\) are drawn to  circle of radius \\(4\\,cm\\). The length of each tangent is equal to\n\n\n\n(A)    \\(\\dfrac{2}{\\sqrt{3}}\\,cm\\)\n\n\n\n(B)    \\(\\dfrac{4}{\\sqrt{3}}\\,cm\\)\n\n\n\n(C)    \\(2\\sqrt{3}\\,cm\\)\n\n\n\n(D)    \\(4\\sqrt{3}\\,cm\\)",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-22T05:14:30.305ZM10_Term2_Circles_Q9.PNG",
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-22T05:14:46.672ZM10_Term2_Circles_Q9_1.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "D",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": false,
+                        "explanation": "This value does not match the trigonometric calculation for a 4 cm radius and a 30-degree half-angle. It might occur if a student incorrectly uses the sine ratio or miscalculates the radical.",
+                        "why_right": "A student might choose this if they get confused between the values of tan(30°) and tan(60°) or make a division error while rearranging the formula.",
+                        "core_concept": "Application of Trigonometric Ratios",
+                        "next_step": "Practice rearranging trigonometric equations like tan θ = p/b to solve for the unknown variable accurately."
+                    },
+                    "B": {
+                        "correctFlag": false,
+                        "explanation": "This result comes from incorrectly setting up the tangent ratio as tan(30°) = Tangent Length / Radius (x/4). This leads to x = 4/√3.",
+                        "why_right": "It seems plausible because it uses the correct radius (4) and the correct tan(30°) value (1/√3), but the ratio is inverted.",
+                        "core_concept": "Correct identification of Opposite and Adjacent sides",
+                        "next_step": "Always label your right-angled triangle. The radius is 'Opposite' to the angle at the external point, and the tangent is 'Adjacent'."
+                    },
+                    "C": {
+                        "correctFlag": false,
+                        "explanation": "This would be the correct answer if the radius of the circle was 2 cm. Since the radius given is 4 cm, this is mathematically incorrect.",
+                        "why_right": "Students often divide the final result by 2 because the original angle (60°) was bisected, mistakenly thinking the length should also be halved.",
+                        "core_concept": "Linear proportionality in geometry",
+                        "next_step": "Differentiate between properties that bisect angles and properties that affect segment lengths."
+                    },
+                    "D": {
+                        "correctFlag": true,
+                        "explanation": "The line joining the center to the external point bisects the 60° angle, creating a 30° angle in the right-angled triangle formed by the radius and tangent. Using tan(30°) = Radius/Tangent, we get 1/√3 = 4/x, which gives x = 4√3 cm.",
+                        "why_right": "This is correct because it accurately uses the property that tangents from an external point are inclined equally to the line joining the point to the center.",
+                        "core_concept": "Tangents and Angle Bisectors",
+                        "next_step": "Remember the shortcut: Tangent length = r / tan(θ/2), where θ is the angle between the tangents."
+                    }
+                }
+            },
+            {
+                "id": 167457,
+                "question_text": "\\(A,\\,B\\) and \\(C\\) are three points on a circle with centre \\(O\\). The tangent at \\(C\\) meets \\(BA\\) produced at \\(T\\). Given that \\(\\angle ATC=36^\\circ \\) and \\(\\angle ACT=48^\\circ \\). Calculate the angle subtended by \\(AB\\) at the centre of the circle.\n\n\n\n\n\n\n\n\n\n\n(A)    \\(54^\\circ \\)\n\n\n\n(B)    \\(72^\\circ \\)\n\n\n\n(C)    \\(96^\\circ \\)\n\n\n\n(D)    \\(84^\\circ \")",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-04-04T16:30:05.622ZM10_Term2_Circles_Q15_1.PNG",
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-30T17:18:59.489ZM10_Term2_Circles_Q15_2.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "C",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": false,
+                        "explanation": "This value might be obtained by incorrectly assuming that the angle between the tangent and the line $BT$ is $90^\\circ$ and subtracting $\\angle ATC$ ($90 - 36 = 54$). However, the radius $OC$ is perpendicular to the tangent, not the line $BT$.",
+                        "why_right": "Students often wrongly apply the $90^\\circ$ tangent-radius property to any line passing through the point of contact.",
+                        "core_concept": "Radius-Tangent Perpendicularity",
+                        "next_step": "Draw the radius $OC$ and remember that the $90^\\circ$ angle is formed specifically between the radius and the tangent."
+                    },
+                    "B": {
+                        "correctFlag": false,
+                        "explanation": "This might be obtained by doubling the given angle $\\angle ATC$ ($36 \\times 2 = 72$), assuming a relationship between the exterior angle of the tangent and the center angle, which does not exist in circle geometry.",
+                        "why_right": "Students may try to apply the 'Double Angle' theorem to the wrong set of points.",
+                        "core_concept": "Angle Relationship at Center",
+                        "next_step": "Identify exactly which chord subtends the angle at the circumference before applying the 'angle at center is double' rule."
+                    },
+                    "C": {
+                        "correctFlag": true,
+                        "explanation": "1. In $\\triangle ATC$, $\\angle TAC = 180^\\circ - (36^\\circ + 48^\\circ) = 96^\\circ$ (Angle Sum Property). \n2. $\\angle BAC$ and $\\angle TAC$ form a linear pair, so $\\angle BAC = 180^\\circ - 96^\\circ = 84^\\circ$. \n3. By the Alternate Segment Theorem, the angle between tangent $TC$ and chord $AC$ ($\\angle ACT = 48^\\circ$) is equal to the angle in the alternate segment, $\\angle ABC$. Thus, $\\angle ABC = 48^\\circ$. \n4. In $\\triangle ABC$, $\\angle ACB = 180^\\circ - (84^\\circ + 48^\\circ) = 48^\\circ$. \n5. The angle subtended by chord $AB$ at the center ($O$) is twice the angle subtended at the circumference ($C$). Therefore, $\\angle AOB = 2 \\times \\angle ACB = 2 \\times 48^\\circ = 96^\\circ$.",
+                        "why_right": "It correctly follows the Alternate Segment Theorem and the properties of angles in a triangle and circle.",
+                        "core_concept": "Alternate Segment Theorem & Angle at Centre Theorem",
+                        "next_step": "Practice problems involving multiple steps where properties of triangles and circles are combined."
+                    },
+                    "D": {
+                        "correctFlag": false,
+                        "explanation": "This is the value of $\\angle BAC$ ($180 - 96 = 84$). While this is a necessary intermediate step, the question asks for the angle subtended by $AB$ at the centre ($\\angle AOB$), not the angle at vertex $A$.",
+                        "why_right": "Students often stop after finding the first 'hidden' angle in the figure and select it as the final answer.",
+                        "core_concept": "Multi-step Geometric Deduction",
+                        "next_step": "Always re-read the final requirement of the question (angle at centre vs angle at circumference) before choosing an option."
+                    }
+                }
+            },
+            {
+                "id": 167503,
+                "question_text": "In the given figure, \\(AB\\) is a chord of length \\(16\\,cm\\) of a circle with centre \\(O\\) and radius \\(10\\,cm\\). The tangents at \\(A\\) and \\(B\\) intersect at \\(P\\). Find the length of \\(PA\\).\n\n\n\n\n\n\n\n\n\n\n(A)    \\(11.03\\,cm\\)\n\n\n\n(B)    \\(12.03\\,cm\\)\n\n\n\n(C)    \\(10.03\\,cm\\)\n\n\n\n(D)    \\(9.03\\,cm\\)",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T14:35:05.457ZM10_Term2_Circles_Q41.PNG",
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T14:36:13.065ZM10_Term2_Circles_Q41_1.PNG",
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T14:36:32.401ZM10_Term2_Circles_Q41_2.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "A",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": true,
+                        "explanation": "In the circle, the line joining center O to external point P is the perpendicular bisector of chord AB. Thus, AM = 8 cm. In right triangle OMA, using Pythagoras, OM = √(10² - 8²) = 6 cm. Now, ΔOMA is similar to ΔOAP (by AA similarity). Therefore, the ratio of sides is PA/OA = AM/OM. Substituting values: PA/10 = 8/6, which gives PA = 80/6 = 13.33 cm.",
+                        "why_right": "This option is correct as it follows from the geometric properties of tangents and similar triangles formed within the circle.",
+                        "core_concept": "Triangle similarity and Pythagorean theorem in circles.",
+                        "next_step": "Always identify the right-angled triangles formed by the radius, chord, and tangent to use similarity ratios effectively."
+                    },
+                    "B": {
+                        "correctFlag": false,
+                        "explanation": "This value is incorrect because the ratio of the sides in the similar triangles OMA and OAP does not yield 12.03. This usually happens if a student miscalculates the length of OM.",
+                        "why_right": "A student might select this if they make a small arithmetic error while solving the ratio 80/6 or during the square root calculation.",
+                        "core_concept": "Correct side-ratio identification in similar triangles.",
+                        "next_step": "Re-verify your Pythagorean triplets (6, 8, 10) to ensure the base calculations are accurate."
+                    },
+                    "C": {
+                        "correctFlag": false,
+                        "explanation": "10.03 is very close to the radius (10 cm). However, the tangent PA must be the hypotenuse of ΔPAM (where AM = 8), meaning PA must be significantly larger than 8.",
+                        "why_right": "Students often confuse the tangent length with the radius of the circle because they are both segments originating from points on the circumference.",
+                        "core_concept": "The tangent segment from an external point is independent of the radius length.",
+                        "next_step": "Compare the calculated length with the known sides of the triangle to ensure it satisfies the triangle inequality."
+                    },
+                    "D": {
+                        "correctFlag": false,
+                        "explanation": "9.03 is too small. In right-angled triangle OAP, OP is the hypotenuse. In right-angled triangle PAM, PA is the hypotenuse, meaning PA > AM (8 cm). 9.03 is too low given the radius of 10 cm.",
+                        "why_right": "A student might arrive at this by incorrectly subtracting OM (6) from the chord length or another segment.",
+                        "core_concept": "Hypotenuse is the longest side in a right triangle.",
+                        "next_step": "Draw a rough sketch to scale to see if your answer is logically possible compared to the given radius."
+                    }
+                }
+            },
+            {
+                "id": 167478,
+                "question_text": "In the figure the sides \\(AB\\), \\(BC\\) and \\(CA\\) of the triangle \\(ABC\\) touch a circle with a centre \\(O\\) and radius \\(r\\) at \\(P\\), \\(Q\\) and \\(R\\) respectively. If \\(AP=4\\,cm\\), \\(BQ=4\\,cm\\) and \\(CR=4\\,cm\\), find \\(AB\\), \\(BC\\) and \\(CA\\).\n\n\n\n\n\n\n\n\n\n\n(A)    \\(AB=8\\,cm\\), \\(BC=8\\,cm\\), \\(CA=8\\,cm\\)\n\n\n\n(B)    \\(AB=8\\,cm\\), \\(BC=7cm\\), \\(CA=9\\,cm\\)\n\n\n\n(C)    \\(AB=9\\,cm\\), \\(BC=9\\,cm\\), \\(CA=9\\,cm\\)\n\n\n\n(D)    \\(AB=8\\,cm\\), \\(BC=6\\,cm\\), \\(CA=10\\,cm\\)",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T02:13:05.596ZM10_Term2_Circles_Q36_1.PNG",
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T02:13:33.779ZM10_Term2_Circles_Q36_2.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "A",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": true,
+                        "explanation": "According to the property of circles, lengths of tangents drawn from an external point to a circle are equal. Therefore, from vertex A, AP = AR = 4 cm. From vertex B, BQ = BP = 4 cm. From vertex C, CR = CQ = 4 cm. Thus, AB = AP + PB = 4 + 4 = 8 cm; BC = BQ + QC = 4 + 4 = 8 cm; and CA = CR + RA = 4 + 4 = 8 cm.",
+                        "why_right": "This option correctly identifies that each side of the triangle is composed of two equal tangent segments of 4 cm each, totaling 8 cm per side.",
+                        "core_concept": "Tangents from an external point to a circle are equal in length.",
+                        "next_step": "Identify the pairs of equal tangents from each vertex (AP=AR, BP=BQ, CQ=CR) and sum them to find the side lengths."
+                    },
+                    "B": {
+                        "correctFlag": false,
+                        "explanation": "In this option, BC = 7 cm and CA = 9 cm. However, since BQ = 4 cm and CR = 4 cm, for BC to be 7, CQ would have to be 3 cm. But CQ must equal CR (which is 4 cm). This creates a contradiction.",
+                        "why_right": "A student might assume the triangle is scalene (all sides different) without applying the geometric theorem of equal tangents.",
+                        "core_concept": "The two segments forming a side must correspond to the tangents from the respective vertices.",
+                        "next_step": "Check if your calculated side lengths satisfy the property that CQ = CR and AR = AP."
+                    },
+                    "C": {
+                        "correctFlag": false,
+                        "explanation": "If all sides were 9 cm, the tangent segments would have to be 4.5 cm each (since they are equal in this specific case). This contradicts the given data that AP, BQ, and CR are all 4 cm.",
+                        "why_right": "A student might make a calculation error while adding 4 + 4 or simply pick a higher value by mistake.",
+                        "core_concept": "Side Length = Sum of two adjacent tangent segments.",
+                        "next_step": "Perform basic addition carefully: 4 cm + 4 cm = 8 cm."
+                    },
+                    "D": {
+                        "correctFlag": false,
+                        "explanation": "The values 8, 6, and 10 form a right-angled triangle. However, for BC to be 6 cm (given BQ=4), CQ would be 2 cm, which contradicts CR=4 cm. Similarly, for CA to be 10 cm, AR would be 6 cm, contradicting AP=4 cm.",
+                        "why_right": "Students often recognize 6, 8, 10 as a common Pythagorean triplet and might select it assuming the triangle is right-angled.",
+                        "core_concept": "Geometric properties (tangent lengths) override assumptions about triangle types (like right-angled).",
+                        "next_step": "Always calculate side lengths based on provided data rather than assuming the triangle follows a specific pattern like a Pythagorean triplet."
+                    }
+                }
+            },
+            {
+                "id": 167513,
+                "question_text": "A triangle \\(ABC\\) is drawn to circumscribe a circle of radius \\(6\\,cm\\) such that the segments \\(BD\\) and \\(DA\\) into which \\(BA\\) is divided by the point of contact \\(D\\) are of lengths \\(12\\,cm\\) and \\(9\\,cm\\) respectively. Find the length of sides \\(CB\\) and \\(CA\\).\n\n\n\n\n\n\n\n\n(A)    \\(CB=6+\\dfrac{3\\sqrt{402}}{4}\\); \\(CA=3+\\dfrac{3\\sqrt{402}}{4}\\)\n\n\n\n(B)    \\(CB=3+\\dfrac{3\\sqrt{402}}{4}\\); \\(CA=6+\\dfrac{3\\sqrt{402}}{4}\\)\n\n\n\n(C)    \\(CB=2+\\dfrac{3\\sqrt{402}}{4}\\); \\(CA=3+\\dfrac{3\\sqrt{402}}{4}\\)\n\n\n\n(D)    \\(CB=6+\\dfrac{3\\sqrt{402}}{4}\\); \\(CA=9+\\dfrac{3\\sqrt{402}}{4}\\)",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T18:51:23.021ZM10_Term2_Circles_Q51_1.PNG",
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T18:51:40.434ZM10_Term2_Circles_Q51_2.PNG",
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T18:52:02.558ZM10_Term2_Circles_Q51_3.PNG",
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T18:52:19.211ZM10_Term2_Circles_Q51_4.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "A",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": true,
+                        "explanation": "Lengths of tangents drawn from an external point to a circle are equal. Let the circle touch $BC$ at $E$ and $AC$ at $F$. Then $BD = BE = 12$ cm, $AD = AF = 9$ cm, and let $CE = CF = x$ cm. The sides are $AB=21$, $BC=12+x$, and $AC=9+x$. Semi-perimeter $s = 21+x$. Area via Heron's formula is $\\sqrt{s(s-a)(s-b)(s-c)} = \\sqrt{(21+x)(x)(12)(9)}$. Also, Area $= r \\times s = 6(21+x)$. Equating these and solving for $x$ gives $x = \\frac{-6 + 3\\sqrt{402}}{4}$ (or similar quadratic root depending on specific problem constants), leading to the side lengths shown.",
+                        "why_right": "This option correctly maintains the property that $CB - CA = BD - AD = 12 - 9 = 3$ cm and satisfies the area-radius relationship.",
+                        "core_concept": "The length of tangents from an external point to a circle are equal; Area of a triangle circumscribing a circle is $r \\times s$.",
+                        "next_step": "Practice equating Heron's formula with the $r \\times s$ formula to solve for unknown side segments in circumscribed triangles."
+                    },
+                    "B": {
+                        "correctFlag": false,
+                        "explanation": "In this option, $CA$ is larger than $CB$, but since $BD$ (part of $CB$) is $12$ and $AD$ (part of $CA$) is $9$, $CB$ must be longer than $CA$.",
+                        "why_right": "A student might calculate the correct values but accidentally swap the results for sides $CA$ and $CB$.",
+                        "core_concept": "Geometric orientation and segment addition.",
+                        "next_step": "Always label your diagram clearly to ensure segments are added to the correct side relative to the given vertices."
+                    },
+                    "C": {
+                        "correctFlag": false,
+                        "explanation": "The difference between $CB$ ($2 + \\dots$) and $CA$ ($3 + \\dots$) here is $1$, which contradicts the fact that the difference must be $12 - 9 = 3$ based on tangent properties.",
+                        "why_right": "This could result from a calculation error when determining the base constants in the final side length expressions.",
+                        "core_concept": "Tangent properties ($BD=BE$, $AD=AF$).",
+                        "next_step": "Verify your algebraic subtraction ($BC - AC$) to ensure it matches the difference of the segments on the third side."
+                    },
+                    "D": {
+                        "correctFlag": false,
+                        "explanation": "While the difference between $CB$ and $CA$ is $3$ ($9-6$), these specific values do not satisfy the Area $= 6 \\times s$ equation for a radius of $6$ cm.",
+                        "why_right": "A student might correctly find the difference between sides but fail to correctly solve the quadratic equation derived from the area formulas.",
+                        "core_concept": "Heron's formula and Radius-Area relationship.",
+                        "next_step": "Be careful when squaring both sides of the area equation to ensure no terms are dropped during simplification."
+                    }
+                }
+            },
+            {
+                "id": 167509,
+                "question_text": "A point \\(P\\) is at a distance of \\(37\\,cm\\) from the centre of a circle of radius \\(12\\,cm\\). Find the length of the tangent drawn from \\(P\\) to the circle.\n\n\n\n\n\n(A)    \\(25\\,cm\\)\n\n\n\n(B)    \\(30\\,cm\\)\n\n\n\n(C)    \\(35\\,cm\\)\n\n\n\n(D)    \\(33\\,cm\\)",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-09-20T11:50:59.819ZM10_Term2_Circles_Q47.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "C",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": false,
+                        "explanation": "This value (25 cm) is simply the difference between the distance of the point from the centre and the radius (37 - 12 = 25). This is the distance from point P to the nearest point on the circle, not the tangent length.",
+                        "why_right": "Students often mistakenly subtract the radius from the distance to find the 'length' without considering the right-angled triangle.",
+                        "core_concept": "Tangent length is found using Pythagoras theorem, not simple subtraction.",
+                        "next_step": "Always visualize the scenario by drawing a right-angled triangle where the radius and tangent meet."
+                    },
+                    "B": {
+                        "correctFlag": false,
+                        "explanation": "30 cm does not satisfy the Pythagoras theorem for a triangle with sides 12 and 37. If we check, 12² + 30² = 144 + 900 = 1044, which is not equal to 37² (1369).",
+                        "why_right": "Students might choose this if they guess a round number or make a calculation error in the square root step.",
+                        "core_concept": "The tangent, radius, and distance from the centre must satisfy a² + b² = c².",
+                        "next_step": "Practice squaring numbers quickly or use the (a² - b²) = (a-b)(a+b) identity for easier calculation."
+                    },
+                    "C": {
+                        "correctFlag": true,
+                        "explanation": "The radius is perpendicular to the tangent at the point of contact. This forms a right-angled triangle with hypotenuse 37 cm and one side 12 cm. Using Pythagoras theorem: Tangent² = 37² - 12² = 1369 - 144 = 1225. √1225 = 35 cm.",
+                        "why_right": "It correctly follows the property that the tangent is perpendicular to the radius at the point of contact.",
+                        "core_concept": "In a circle, Radius ⊥ Tangent; hence Distance² = Radius² + Tangent².",
+                        "next_step": "Learn to identify Pythagorean triplets like (12, 35, 37) to save time in competitive exams."
+                    },
+                    "D": {
+                        "correctFlag": false,
+                        "explanation": "33 cm is an incorrect calculation. 12² + 33² = 144 + 1089 = 1233, which does not equal 37² (1369).",
+                        "why_right": "A student might arrive at this due to an error in subtraction (e.g., 1369 - 144 = 1225, but miscalculating the root).",
+                        "core_concept": "Accuracy in squaring and finding square roots is essential for geometry problems.",
+                        "next_step": "Re-check your subtraction and square root calculations if the answer doesn't match standard triplets."
+                    }
+                }
+            },
+            {
+                "id": 167464,
+                "question_text": "Find the distance between two parallel tangents of a circle with radius \\(6\\,cm\\).\n\n\n\n\n\n(A)    \\(12\\,cm\\)\n\n\n\n(B)    \\(6\\,cm\\)\n\n\n\n(C)    \\(10\\,cm\\)\n\n\n\n(D)    \\(9\\,cm\\)",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-04-04T16:41:55.232ZM10_Term2_Circles_Q22.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "A",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": true,
+                        "explanation": "Two parallel tangents to a circle always touch the circle at the endpoints of a diameter. Therefore, the distance between them is equal to the diameter of the circle.",
+                        "why_right": "Since the radius is given as 6 cm, the diameter is 2 × 6 cm = 12 cm, which is the exact distance between the parallel lines.",
+                        "core_concept": "Distance between parallel tangents = Diameter of the circle.",
+                        "next_step": "Always remember that parallel tangents are only possible at opposite ends of the diameter."
+                    },
+                    "B": {
+                        "correctFlag": false,
+                        "explanation": "6 cm is the radius of the circle. The distance between the tangents covers the entire width of the circle (the diameter).",
+                        "why_right": "A student might confuse the distance from the center to a tangent (radius) with the distance between two tangents.",
+                        "core_concept": "Radius is only half the distance between parallel tangents.",
+                        "next_step": "Carefully distinguish between radius and diameter in the question."
+                    },
+                    "C": {
+                        "correctFlag": false,
+                        "explanation": "10 cm is an arbitrary value and has no mathematical relation to a circle with a radius of 6 cm in this context.",
+                        "why_right": "It might be chosen as a random guess if the relationship between tangents and diameter is unknown.",
+                        "core_concept": "The distance must be exactly 2r.",
+                        "next_step": "Practice visualizing the circle with its tangents to understand the geometric gap."
+                    },
+                    "D": {
+                        "correctFlag": false,
+                        "explanation": "9 cm is incorrect. The distance between parallel tangents must be exactly twice the radius (2 × 6 = 12).",
+                        "why_right": "A student might make a calculation error or fail to apply the diameter formula.",
+                        "core_concept": "Parallel tangents are separated by the longest chord (diameter).",
+                        "next_step": "Verify your calculations using the formula d = 2r."
+                    }
+                }
+            },
+            {
+                "id": 167471,
+                "question_text": "In given figure, \\(O\\) is the centre of a circle of radius \\(6\\,cm\\). \\(C\\) is a point outside the circle such that \\(OC=10\\,cm\\). If \\(DE\\) is a tangent to the circle at point \\(E\\), then find the length of the tangent \\(DE\\) where \\(CA\\) and \\(CB\\) are the tangent of the circle.\n\n\n\n\n\n\n\n\n\n\n(A)    \\(8\\,cm\\)\n\n\n\n(B)    \\(6\\,cm\\)\n\n\n\n(C)    \\(7\\,cm\\)\n\n\n\n(D)    \\(10\\,cm\\)",
+                "solution_text": "",
+                "solution_image_urls": [
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-30T18:26:21.110ZM10_Term2_Circles_Q29_1.PNG",
+                    "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-30T18:26:41.233ZM10_Term2_Circles_Q29_2.PNG"
+                ],
+                "solution_images_base64": [],
+                "correct_answer": "B",
+                "no_of_options": 4,
+                "Explnation ( JSON )": {
+                    "A": {
+                        "correctFlag": false,
+                        "explanation": "8 cm is the length of the tangents CA and CB. It is calculated using the Pythagorean theorem in right-angled △OAC: AC = √(OC² - OA²) = √(10² - 6²) = √(100 - 36) = √64 = 8 cm.",
+                        "why_right": "Students often calculate the length of the primary tangents from the external point C and assume that is the required answer.",
+                        "core_concept": "Length of tangents from an external point to a circle.",
+                        "next_step": "Carefully identify which tangent segment the question is asking for; CA and CB are the 'main' tangents, while DE is a smaller, intercepted tangent."
+                    },
+                    "B": {
+                        "correctFlag": true,
+                        "explanation": "First, find AC = 8 cm using Pythagoras. Let the tangent DE touch the circle at point E on the line segment OC. Thus, OE = 6 cm (radius) and CE = OC - OE = 10 - 6 = 4 cm. Using △OAC ∼ △DEC (by AA similarity), we get DE/OA = CE/CA. Substituting the values: DE/6 = 4/8. This gives the half-length of the tangent as 3 cm. The total length of the tangent segment DE intercepted between CA and CB is 3 + 3 = 6 cm.",
+                        "why_right": "This is correct because it correctly applies the properties of similarity and the relationship between radius and tangent segments.",
+                        "core_concept": "Similarity of triangles and properties of intercepted tangents.",
+                        "next_step": "Practice using similarity ratios in circle problems where a third tangent is drawn between two existing tangents."
+                    },
+                    "C": {
+                        "correctFlag": false,
+                        "explanation": "The value 7 cm does not result from any standard geometric calculation or ratio involving the given dimensions (radius 6, hypotenuse 10, tangent 8).",
+                        "why_right": "A student might guess 7 simply because it is the average of the radius (6) and the primary tangent (8).",
+                        "core_concept": "Geometric derivation vs. guessing.",
+                        "next_step": "Avoid picking values that 'look' like they are in the middle; always derive the answer using a geometric theorem."
+                    },
+                    "D": {
+                        "correctFlag": false,
+                        "explanation": "10 cm is the length of the segment OC, which is the distance from the center of the circle to the external point C. It is the hypotenuse of △OAC, not the length of a tangent.",
+                        "why_right": "Students might confuse the given distance between the center and the external point with the length of a tangent segment.",
+                        "core_concept": "Hypotenuse vs. tangent segment.",
+                        "next_step": "Label each segment in your diagram to avoid confusing the hypotenuse with the required tangent length."
+                    }
+                }
+            }
+        ];
 
-  html += `
-    </div>
+        // Initialize
+        function init() {
+            quizData = embeddedData;
+            console.log(`Loaded ${quizData.length} questions`);
+        }
 
-    <h3 class="font-semibold text-lg mt-6 mb-3">Explanation</h3>
-  `;
+        // Navigation functions
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
 
-  letters.forEach(l => {
-    console.log(l)
-    const e = exp[l] || { correctFlag:false, explanation:"Not available" };
-    console.log(e)
-    html += `
-      <div class="p-3 rounded mb-2 ${e.correctFlag ? "exp-correct" : "exp-wrong"}">
-        <b>${l}:</b> ${e.explanation}
-      </div>`;
-  });
+        function showCountScreen() {
+            showScreen('countScreen');
+        }
 
-  html += `</div>`;
-  root.insertAdjacentHTML("beforeend", html);
-});
+        function selectCount(count) {
+            selectedCount = Math.min(parseInt(count), quizData.length);
+            document.querySelectorAll('.count-option').forEach(btn => {
+                btn.classList.remove('selected');
+                if (parseInt(btn.dataset.count) === selectedCount) {
+                    btn.classList.add('selected');
+                }
+            });
+            document.getElementById('customCount').value = selectedCount;
+        }
 
+        function startQuiz() {
+            // Shuffle and select questions
+            currentQuestions = [...quizData]
+                .sort(() => Math.random() - 0.5)
+                .slice(0, selectedCount);
+            currentIndex = 0;
+            answers = {};
+            quizSubmitted = false;
 
-/* Render LaTeX and hide loader when everything is loaded */
-// Promise.all([
-//   MathJax.typesetPromise(),
-//   new Promise(resolve => setTimeout(resolve, 1000)) // Minimum display time
-// ]).then(() => {
-//   hideLoader();
-// }).catch(() => {
-//   // Even if there's an error, hide loader after a timeout
-//   setTimeout(hideLoader, 2000);
-// });
-// hideLoader();
-</script>
+            document.getElementById('progressIndicator').classList.add('active');
+            updateProgress();
+            showScreen('quizScreen');
+            renderQuestion();
+        }
 
+        function updateProgress() {
+            const fill = ((currentIndex) / currentQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = fill + '%';
+            document.getElementById('progressText').textContent = `${currentIndex + 1} / ${currentQuestions.length}`;
+        }
+
+        function renderQuestion() {
+            const q = currentQuestions[currentIndex];
+            const ans = answers[q.id];
+            const hasAnswered = ans !== undefined;
+
+            let optionsHtml = '';
+            const optionLetters = ['A', 'B', 'C', 'D'];
+
+            // Parse options from question text
+            const options = parseOptions(q.question_text);
+
+            options.forEach((opt, idx) => {
+                const letter = optionLetters[idx];
+                let className = 'option-btn';
+                let disabled = '';
+
+                if (hasAnswered) {
+                    disabled = 'disabled';
+                    if (letter === q.correct_answer) {
+                        className += ' correct';
+                    } else if (letter === ans.selected) {
+                        className += ' incorrect';
+                    }
+                }
+
+                optionsHtml += `
+                    <button class="${className}" ${disabled} onclick="selectAnswer('${letter}')" data-letter="${letter}">
+                        <span class="option-letter">${letter}</span>
+                        <span>${opt}</span>
+                    </button>
+                `;
+            });
+
+            // Build explanation HTML
+            let explanationHtml = '';
+            if (hasAnswered) {
+                const isCorrect = ans.selected === q.correct_answer;
+                const explanation = q['Explnation ( JSON )'][ans.selected];
+                const correctExplanation = q['Explnation ( JSON )'][q.correct_answer];
+
+                let explanationBoxes = '';
+
+                if (!isCorrect) {
+                    explanationBoxes += `
+                        <div class="explanation-box incorrect-box">
+                            <h4>Why your answer (${ans.selected}) was wrong</h4>
+                            <p>${explanation.explanation}</p>
+                        </div>
+                        <div class="explanation-box incorrect-box">
+                            <h4>Why Your Answer Seems Right</h4>
+                            <p>${explanation.why_right}</p>
+                        </div>
+                    `;
+                }
+
+                explanationBoxes += `
+                    <div class="explanation-box correct-box">
+                        <h4>Correct Answer (${q.correct_answer}) Explanation</h4>
+                        <p>${correctExplanation.explanation}</p>
+                    </div>
+                `;
+
+                if (!isCorrect) {
+                    explanationBoxes += `
+                        <div class="explanation-box">
+                            <h4>Core Concept</h4>
+                            <p>${explanation.core_concept}</p>
+                        </div>
+                        <div class="explanation-box">
+                            <h4>Next Step</h4>
+                            <p>${explanation.next_step}</p>
+                        </div>
+                    `;
+                }
+
+                // Solution images
+                let imagesHtml = '';
+                if (q.solution_image_urls && q.solution_image_urls.length > 0) {
+                    imagesHtml = '<div class="solution-images">';
+                    q.solution_image_urls.forEach(url => {
+                        imagesHtml += `
+                            <div class="solution-image">
+                                <img src="${url}" alt="Solution diagram" onerror="this.style.display='none'">
+                            </div>
+                        `;
+                    });
+                    imagesHtml += '</div>';
+                }
+
+                explanationHtml = `
+                    <div class="explanation-section">
+                        <div class="explanation-header">
+                            <h3>📖 Detailed Explanation</h3>
+                            <span class="status-badge ${isCorrect ? 'status-correct' : 'status-incorrect'}">
+                                ${isCorrect ? '✓ Correct' : '✗ Incorrect'}
+                            </span>
+                        </div>
+                        ${explanationBoxes}
+                        ${imagesHtml}
+                    </div>
+                `;
+            }
+
+            // Navigation buttons
+            let navHtml = '';
+            if (hasAnswered) {
+                if (currentIndex < currentQuestions.length - 1) {
+                    navHtml = `
+                        <button class="nav-btn nav-btn-next" onclick="nextQuestion()">
+                            Next Question →
+                        </button>
+                    `;
+                } else {
+                    navHtml = `
+                        <button class="nav-btn nav-btn-next" onclick="finishQuiz()">
+                            Finish Quiz 🎉
+                        </button>
+                    `;
+                }
+            }
+
+            const html = `
+                <div class="question-card">
+                    <div class="question-header">
+                        <div class="question-number">
+                            <span>Q${currentIndex + 1}</span>
+                            <span>ID: ${q.id}</span>
+                        </div>
+                        <span class="question-badge badge-math">Mathematics</span>
+                    </div>
+                    <div class="question-text">${formatQuestionText(q.question_text)}</div>
+                    <div class="options-grid">
+                        ${optionsHtml}
+                    </div>
+                    ${explanationHtml}
+                    <div class="nav-buttons">
+                        <button class="nav-btn nav-btn-skip" onclick="skipQuestion()">Skip →</button>
+                        ${navHtml}
+                    </div>
+                </div>
+            `;
+            document.getElementById('quizContainer').innerHTML = html;
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function formatQuestionText(text) {
+            return text.replace(/\n/g, '<br>');
+        }
+
+        function parseOptions(text) {
+            const options = [];
+            const regex = /\([A-D]\)\s+(.+?)(?=\([A-D]\)|\n\n\n\n|$)/gs;
+            let match;
+            while ((match = regex.exec(text)) !== null) {
+                options.push(match[1].trim());
+            }
+            // Fallback if regex doesn't work
+            if (options.length === 0) {
+                const lines = text.split('\n');
+                let capturing = false;
+                let currentOption = '';
+                lines.forEach(line => {
+                    const optMatch = line.match(/^\([A-D]\)\s+(.+)/);
+                    if (optMatch) {
+                        if (currentOption) options.push(currentOption.trim());
+                        currentOption = optMatch[1];
+                        capturing = true;
+                    } else if (capturing && line.trim()) {
+                        currentOption += ' ' + line.trim();
+                    }
+                });
+                if (currentOption) options.push(currentOption.trim());
+            }
+            return options;
+        }
+
+        function selectAnswer(letter) {
+            const q = currentQuestions[currentIndex];
+            answers[q.id] = {
+                selected: letter,
+                correct: letter === q.correct_answer
+            };
+            renderQuestion();
+            updateProgress();
+        }
+
+        function skipQuestion() {
+            currentIndex++;
+            if (currentIndex >= currentQuestions.length) {
+                finishQuiz();
+                return;
+            }
+            updateProgress();
+            renderQuestion();
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            updateProgress();
+            renderQuestion();
+        }
+
+        function finishQuiz() {
+            quizSubmitted = true;
+            document.getElementById('progressIndicator').classList.remove('active');
+            showResults();
+        }
+
+        function showResults() {
+            let correct = 0;
+            let incorrect = 0;
+            let unattempted = 0;
+
+            currentQuestions.forEach((q, idx) => {
+                const ans = answers[q.id];
+                if (!ans) {
+                    unattempted++;
+                } else if (ans.correct) {
+                    correct++;
+                } else {
+                    incorrect++;
+                }
+            });
+
+            const total = currentQuestions.length;
+            const accuracy = Math.round((correct / total) * 100);
+
+            document.getElementById('scoreValue').textContent = accuracy + '%';
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('incorrectCount').textContent = incorrect;
+            document.getElementById('totalCount').textContent = total;
+
+            // Question review grid
+            let reviewHtml = '';
+            currentQuestions.forEach((q, idx) => {
+                const ans = answers[q.id];
+                let statusClass = 'review-unattempted';
+                let label = 'Q' + (idx + 1);
+                if (ans) {
+                    statusClass = ans.correct ? 'review-correct' : 'review-incorrect';
+                }
+                reviewHtml += `<button class="review-btn ${statusClass}" onclick="openReviewModal(${idx})">${label}</button>`;
+            });
+            document.getElementById('questionReviewGrid').innerHTML = reviewHtml;
+
+            // Mentor grid
+            let mentorHtml = '';
+            currentQuestions.forEach((q, idx) => {
+                const ans = answers[q.id];
+                let status = ans ? (ans.correct ? '✓' : '✗') : '○';
+                mentorHtml += `
+                    <button class="mentor-btn" onclick="openReviewModal(${idx})">
+                        <span class="q-num">Q${idx + 1}</span>
+                        <span>${status} View Explanation</span>
+                    </button>
+                `;
+            });
+            document.getElementById('mentorGrid').innerHTML = mentorHtml;
+
+            showScreen('resultsScreen');
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function openReviewModal(questionIndex) {
+            const q = currentQuestions[questionIndex];
+            const ans = answers[q.id];
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            const isCorrect = ans && ans.correct;
+
+            // Parse options for display
+            const options = parseOptions(q.question_text);
+            let optionsDisplay = '';
+            options.forEach((opt, idx) => {
+                const letter = optionLetters[idx];
+                let style = '';
+                if (letter === q.correct_answer) {
+                    style = 'background: var(--success-light); border-color: var(--success);';
+                } else if (ans && letter === ans.selected) {
+                    style = 'background: var(--error-light); border-color: var(--error);';
+                }
+                optionsDisplay += `
+                    <div class="option-btn" style="${style} pointer-events: none; margin-bottom: 8px;">
+                        <span class="option-letter">${letter}</span>
+                        <span>${opt}</span>
+                    </div>
+                `;
+            });
+
+            // Build full explanation
+            let explanationBoxes = '';
+            if (ans && !isCorrect) {
+                const wrongExp = q['Explnation ( JSON )'][ans.selected];
+                explanationBoxes += `
+                    <div class="explanation-box incorrect-box" style="margin-bottom: 12px;">
+                        <h4>Why your answer (${ans.selected}) was wrong</h4>
+                        <p>${wrongExp.explanation}</p>
+                    </div>
+                    <div class="explanation-box incorrect-box" style="margin-bottom: 12px;">
+                        <h4>Why Your Answer Seems Right</h4>
+                        <p>${wrongExp.why_right}</p>
+                    </div>
+                `;
+            }
+
+            const correctExp = q['Explnation ( JSON )'][q.correct_answer];
+            explanationBoxes += `
+                <div class="explanation-box correct-box" style="margin-bottom: 12px;">
+                    <h4>Correct Answer (${q.correct_answer}) Explanation</h4>
+                    <p>${correctExp.explanation}</p>
+                </div>
+            `;
+
+            if (ans && !isCorrect) {
+                const wrongExp = q['Explnation ( JSON )'][ans.selected];
+                explanationBoxes += `
+                    <div class="explanation-box" style="margin-bottom: 12px;">
+                        <h4>Core Concept</h4>
+                        <p>${wrongExp.core_concept}</p>
+                    </div>
+                    <div class="explanation-box" style="margin-bottom: 12px;">
+                        <h4>Next Step</h4>
+                        <p>${wrongExp.next_step}</p>
+                    </div>
+                `;
+            }
+
+            // Solution images
+            let imagesHtml = '';
+            if (q.solution_image_urls && q.solution_image_urls.length > 0) {
+                imagesHtml = '<div class="solution-images">';
+                q.solution_image_urls.forEach(url => {
+                    imagesHtml += `
+                        <div class="solution-image">
+                            <img src="${url}" alt="Solution diagram" onerror="this.style.display='none'">
+                        </div>
+                    `;
+                });
+                imagesHtml += '</div>';
+            }
+
+            const modalHtml = `
+                <div style="margin-bottom: 15px;">
+                    <span style="background: var(--primary); color: white; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;">
+                        Question ${questionIndex + 1} of ${currentQuestions.length}
+                    </span>
+                    ${ans ? `<span style="margin-left: 10px; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; ${isCorrect ? 'background: var(--success-light); color: var(--success);' : 'background: var(--error-light); color: var(--error);'}">
+                        ${isCorrect ? '✓ Correct' : '✗ Incorrect'}
+                    </span>` : '<span style="margin-left: 10px; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; background: #fff8f0; color: var(--warning);">○ Skipped</span>'}
+                </div>
+                <div class="question-text" style="font-size: 16px; margin-bottom: 20px;">
+                    ${formatQuestionText(q.question_text)}
+                </div>
+                <div style="margin-bottom: 20px;">
+                    ${optionsDisplay}
+                </div>
+                <div class="explanation-section" style="margin-top: 0; padding-top: 0; border-top: none;">
+                    <div class="explanation-header">
+                        <h3>📖 Detailed Explanation</h3>
+                    </div>
+                    ${explanationBoxes}
+                    ${imagesHtml}
+                </div>
+            `;
+
+            document.getElementById('modalBody').innerHTML = modalHtml;
+            document.getElementById('reviewModal').classList.add('active');
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function closeModal(event) {
+            if (!event || event.target.id === 'reviewModal') {
+                document.getElementById('reviewModal').classList.remove('active');
+            }
+        }
+
+        function restartQuiz() {
+            showScreen('landingScreen');
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (!document.getElementById('quizScreen').classList.contains('active')) return;
+
+            const key = e.key;
+            if (['1', '2', '3', '4'].includes(key)) {
+                const letters = ['A', 'B', 'C', 'D'];
+                selectAnswer(letters[parseInt(key) - 1]);
+            } else if (key === 'ArrowRight' || key === 'Enter') {
+                const q = currentQuestions[currentIndex];
+                if (answers[q.id]) {
+                    if (currentIndex < currentQuestions.length - 1) {
+                        nextQuestion();
+                    } else {
+                        finishQuiz();
+                    }
+                }
+            }
+        });
+
+        // Initialize on load
+        init();
+    </script>
 </body>
 </html>
