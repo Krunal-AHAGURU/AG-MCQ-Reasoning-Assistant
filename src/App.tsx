@@ -340,8 +340,8 @@ export default function App() {
                           🧑‍🏫
                         </div>
                         <div>
-                          <h3 className="text-xl font-bold text-text-dark">Student Logic Insight</h3>
-                          <p className="text-xs text-text-light font-medium uppercase tracking-widest">Mastery Walkthrough</p>
+                          <h3 className="text-xl font-bold text-text-dark">Insights</h3>
+                          <p className="text-xs text-text-light font-medium uppercase tracking-widest">let's Walkthrough</p>
                         </div>
                       </div>
                       <div className="flex gap-2">
@@ -539,13 +539,13 @@ export default function App() {
               </div>
 
               <div className="flex flex-col md:flex-row items-center justify-center gap-4 pb-12">
-                <button
+                {/* <button
                   onClick={exportToPDF}
                   className="w-full md:w-auto bg-off-white border-2 border-primary text-primary px-8 py-4 rounded-2xl font-bold text-base transition-all hover:bg-primary hover:text-white flex items-center gap-3 shadow-lg active:scale-95"
                 >
                   <Download className="w-5 h-5" />
                   Save Report as PDF
-                </button>
+                </button> */}
                 <button
                   onClick={() => setScreen('START')}
                   className="w-full md:w-auto bg-primary text-white px-12 py-5 rounded-2xl font-bold text-lg transition-all hover:bg-primary-dark hover:scale-[1.02] shadow-xl shadow-primary/30 active:scale-95 flex items-center gap-3"
