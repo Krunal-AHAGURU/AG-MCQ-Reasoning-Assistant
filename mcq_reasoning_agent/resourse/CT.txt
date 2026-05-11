@@ -1,0 +1,440 @@
+Course - 44, Chapter - 111, Test ID - 16710
+{"data": {"slides": [{"id": 16710, "display_order": 1, "slide_type": 1, "slide_main": {"name": "Q1", "questiontext": {"content_array": [{"content_type": 4, "content": "If \\(a={{2}^{3}}\\times {{3}^{2}}\\times {{5}^{4}}\\) and \\(b={{2}^{2}}\\times 3\\times {{5}^{3}}\\), then the HCF \\(\\left( a,b \\right)\\) is
+\n
+\n
+\n(A)    \\(600\\)
+\n
+\n(B)    \\(300\\)
+\n
+\n(C)    \\(3000\\)
+\n
+\n(D)    \\(1500\\)"}], "correct_answer": "D", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-08-11T06:35:43.367ZChap1_Q40.PNG"}], "solution_video": null}}}, {"id": 16689, "display_order": 2, "slide_type": 1, "slide_main": {"name": "Q2", "questiontext": {"content_array": [{"content_type": 4, "content": "Every positive odd integer is of the form
+\n
+\n(A)    \\(6q,\\,\\,6q+2,\\,\\,6q+4\\) 
+\n
+\n(B)    \\(6q+1,\\,\\,6q+3,\\,\\,6q+5\\) 
+\n
+\n(C)    \\(6q,\\,\\,6q+1,\\,\\,6q+2\\) 
+\n
+\n(D)    \\(6q+3,\\,\\,6q+4,\\,\\,6q+5\\) "}], "correct_answer": "B", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-08-01T14:37:25.883ZQ19.PNG"}], "solution_video": null}}}, {"id": 16679, "display_order": 3, "slide_type": 1, "slide_main": {"name": "Q3", "questiontext": {"content_array": [{"content_type": 4, "content": "Find the least number that is divisible by all the numbers from \\(1\\) to \\(10\\) (both inclusive)
+\n
+\n
+\n(A)    \\(10\\)        
+\n
+\n(B)    \\(100\\)    
+\n
+\n(C)    \\(504\\)    
+\n
+\n(D)    \\(2520\\)"}], "correct_answer": "D", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-08-14T07:01:46.978ZM10_Chap1_Q9.PNG"}], "solution_video": null}}}, {"id": 16806, "display_order": 4, "slide_type": 1, "slide_main": {"name": "Q4", "questiontext": {"content_array": [{"content_type": 4, "content": "The HCF and LCM of \\(12,\\,21\\) and \\(15\\) respectively are
+\n
+\n
+\n(A)    \\(3,\\,140\\)
+\n
+\n(B)    \\(12,\\,420\\)
+\n
+\n(C)    \\(3,\\,420\\)
+\n
+\n(D)    \\(420,\\,3\\)"}], "correct_answer": "C", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-08-13T07:34:34.944ZChap1_Q63.PNG"}], "solution_video": null}}}, {"id": 16840, "display_order": 5, "slide_type": 1, "slide_main": {"name": "Q5", "questiontext": {"content_array": [{"content_type": 4, "content": "Find the LCM of first \\(5\\) composite numbers
+\n
+\n
+\n(A)    \\(180\\) 
+\n
+\n(B)    \\(360\\) 
+\n
+\n(C)    \\(720\\) 
+\n
+\n(D)    \\(1080\\) "}], "correct_answer": "B", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-08-11T11:04:57.886ZChap1_Q97.PNG"}], "solution_video": null}}}, {"id": 16701, "display_order": 6, "slide_type": 1, "slide_main": {"name": "Q6", "questiontext": {"content_array": [{"content_type": 4, "content": "The decimal expansion of the rational number \\(\\dfrac{43}{2000}\\) will terminate after how many places of decimal?
+\n
+\n
+\n(A)    3 places
+\n
+\n(B)    2 places
+\n
+\n(C)    1 place
+\n
+\n(D)    none of these"}], "correct_answer": "D", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-07-25T08:38:50.741ZQ31.PNG"}], "solution_video": null}}}, {"id": 16809, "display_order": 7, "slide_type": 1, "slide_main": {"name": "Q7", "questiontext": {"content_array": [{"content_type": 4, "content": "The numbers \\(231\\) and \\(396\\) are
+\n
+\n
+\n(A)    both prime
+\n
+\n(B)    co-primes
+\n
+\n(C)    \\(231\\) prime, \\(396\\) composite        
+\n
+\n(D)    not co-primes"}], "correct_answer": "D", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-07-27T06:05:54.921ZQ66.PNG"}], "solution_video": null}}}, {"id": 16696, "display_order": 8, "slide_type": 1, "slide_main": {"name": "Q8", "questiontext": {"content_array": [{"content_type": 4, "content": "For positive integers \\(a\\) and \\(4\\), there exist unique integers \\(q\\) and \\(r\\) such that \\(a=4q+r\\) where \\(r\\) must satisfy
+\n
+\n(A)    \\(0\\le r < 4\\) 
+\n
+\n(B)    \\(1 < r < 4\\) 
+\n
+\n(C)    \\(0\\le r\\le 4\\) 
+\n
+\n(D)    \\(0 < r\\le 4\\) "}], "correct_answer": "A", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-07-25T08:08:07.769ZQ26.PNG"}], "solution_video": null}}}, {"id": 16714, "display_order": 9, "slide_type": 1, "slide_main": {"name": "Q9", "questiontext": {"content_array": [{"content_type": 4, "content": "The decimal expansion of \\(\\dfrac{51}{48}\\) will terminate after how many places of decimal?
+\n
+\n
+\n(A)    \\(4\\) 
+\n
+\n(B)    \\(2\\) 
+\n
+\n(C)    \\(3\\) 
+\n
+\n(D)    Will not terminate"}], "correct_answer": "A", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-08-12T14:57:46.003ZChap1_Q44.PNG"}], "solution_video": null}}}, {"id": 16834, "display_order": 10, "slide_type": 1, "slide_main": {"name": "Q10", "questiontext": {"content_array": [{"content_type": 4, "content": "If the HCF of \\(144\\) and \\(180\\) is expressed in the form \\(13\\,m-3\\), find the value of \\(m\\).
+\n
+\n
+\n(A)    \\(-3\\) 
+\n
+\n(B)    \\(1\\) 
+\n
+\n(C)    \\(2\\) 
+\n
+\n(D)    \\(3\\) "}], "correct_answer": "D", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-07-27T14:13:15.911ZQ91.PNG"}], "solution_video": null}}}]}}
+
+
+
+Course - 44, Chapter - 122, Test ID - 167411
+{"data": {"slides": [{"id": 167411, "display_order": 1, "slide_type": 1, "slide_main": {"name": "Q1", "questiontext": {"content_array": [{"content_type": 4, "content": "Two tangents inclined at an angle of \\(60^\\circ \\) are drawn to  circle of radius \\(4\\,cm\\). The length of each tangent is equal to
+\n
+\n(A)    \\(\\dfrac{2}{\\sqrt{3}}\\,cm\\)
+\n
+\n(B)    \\(\\dfrac{4}{\\sqrt{3}}\\,cm\\)
+\n
+\n(C)    \\(2\\sqrt{3}\\,cm\\)
+\n
+\n(D)    \\(4\\sqrt{3}\\,cm\\)"}], "correct_answer": "D", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-22T05:14:30.305ZM10_Term2_Circles_Q9.PNG"}, {"content_type": 1, "content": "
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-22T05:14:46.672ZM10_Term2_Circles_Q9_1.PNG"}], "solution_video": null}}}, {"id": 167457, "display_order": 2, "slide_type": 1, "slide_main": {"name": "Q2", "questiontext": {"content_array": [{"content_type": 4, "content": "\\(A,\\,B\\) and \\(C\\) are three points on a circle with centre \\(O\\). The tangent at \\(C\\) meets \\(BA\\) produced at \\(T\\). Given that \\(\\angle ATC=36^\\circ \\) and \\(\\angle ACT=48^\\circ \\). Calculate the angle subtended by \\(AB\\) at the centre of the circle.
+\n
+\n
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-30T17:17:04.809ZM10_Term2_Circles_Q15.PNG"}, {"content_type": 4, "content": "
+\n
+\n(A)    \\(54^\\circ \\)
+\n
+\n(B)    \\(72^\\circ \\)
+\n
+\n(C)    \\(96^\\circ \\)
+\n
+\n(D)    \\(84^\\circ \\)"}], "correct_answer": "C", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-04-04T16:30:05.622ZM10_Term2_Circles_Q15_1.PNG"}, {"content_type": 1, "content": "
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-30T17:18:59.489ZM10_Term2_Circles_Q15_2.PNG"}], "solution_video": null}}}, {"id": 167503, "display_order": 3, "slide_type": 1, "slide_main": {"name": "Q3", "questiontext": {"content_array": [{"content_type": 4, "content": "In the given figure, \\(AB\\) is a chord of length \\(16\\,cm\\) of a circle with centre \\(O\\) and radius \\(10\\,cm\\). The tangents at \\(A\\) and \\(B\\) intersect at \\(P\\). Find the length of \\(PA\\).
+\n
+\n
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T14:33:12.594ZM10_Term2_Circles_Q41_3.PNG"}, {"content_type": 4, "content": "
+\n
+\n(A)    \\(11.03\\,cm\\)
+\n
+\n(B)    \\(12.03\\,cm\\)
+\n
+\n(C)    \\(10.03\\,cm\\)
+\n
+\n(D)    \\(9.03\\,cm\\)"}], "correct_answer": "A", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T14:35:05.457ZM10_Term2_Circles_Q41.PNG"}, {"content_type": 1, "content": "
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T14:36:13.065ZM10_Term2_Circles_Q41_1.PNG"}, {"content_type": 1, "content": "
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T14:36:32.401ZM10_Term2_Circles_Q41_2.PNG"}], "solution_video": null}}}, {"id": 167516, "display_order": 4, "slide_type": 1, "slide_main": {"name": "Q4", "questiontext": {"content_array": [{"content_type": 4, "content": "In the given figure, \\(O\\) is the centre of the circle such that \\(\\angle BAC=80^\\circ \\) and \\(AC\\) is the tangent of the circle at point \\(C\\). Find the measure of \\(\\angle OBC\\).
+\n
+\n
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T19:02:42.751ZM10_Term2_Circles_Q54.PNG"}, {"content_type": 4, "content": "
+\n
+\n(A)    \\(50^\\circ \\)
+\n 
+\n(B)    \\(60^\\circ \\)
+\n 
+\n(C)    \\(30^\\circ \\)
+\n 
+\n(D)    \\(40^\\circ \\) "}], "correct_answer": "D", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T19:03:53.313ZM10_Term2_Circles_Q54_1.PNG"}], "solution_video": null}}}, {"id": 167478, "display_order": 5, "slide_type": 1, "slide_main": {"name": "Q5", "questiontext": {"content_array": [{"content_type": 4, "content": "In the figure the sides \\(AB\\), \\(BC\\) and \\(CA\\) of the triangle \\(ABC\\) touch a circle with a centre \\(O\\) and radius \\(r\\) at \\(P\\), \\(Q\\) and \\(R\\) respectively. If \\(AP=4\\,cm\\), \\(BQ=4\\,cm\\) and \\(CR=4\\,cm\\), find \\(AB\\), \\(BC\\) and \\(CA\\).
+\n
+\n
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T02:11:07.941ZM10_Term2_Circles_Q36.PNG"}, {"content_type": 4, "content": "
+\n
+\n(A)    \\(AB=8\\,cm\\), \\(BC=8\\,cm\\), \\(CA=8\\,cm\\)
+\n
+\n(B)    \\(AB=8\\,cm\\), \\(BC=7cm\\), \\(CA=9\\,cm\\)
+\n
+\n(C)    \\(AB=9\\,cm\\), \\(BC=9\\,cm\\), \\(CA=9\\,cm\\)
+\n
+\n(D)    \\(AB=8\\,cm\\), \\(BC=6\\,cm\\), \\(CA=10\\,cm\\)"}], "correct_answer": "A", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T02:13:05.596ZM10_Term2_Circles_Q36_1.PNG"}, {"content_type": 1, "content": "
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T02:13:33.779ZM10_Term2_Circles_Q36_2.PNG"}], "solution_video": null}}}, {"id": 167513, "display_order": 6, "slide_type": 1, "slide_main": {"name": "Q6", "questiontext": {"content_array": [{"content_type": 4, "content": "A triangle \\(ABC\\) is drawn to circumscribe a circle of radius \\(6\\,cm\\) such that the segments \\(BD\\) and \\(DA\\) into which \\(BA\\) is divided by the point of contact \\(D\\) are of lengths \\(12\\,cm\\) and \\(9\\,cm\\) respectively. Find the length of sides \\(CB\\) and \\(CA\\).
+\n
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T18:49:20.561ZM10_Term2_Circles_Q51.PNG"}, {"content_type": 4, "content": "
+\n
+\n(A)    \\(CB=6+\\dfrac{3\\sqrt{402}}{4}\\); \\(CA=3+\\dfrac{3\\sqrt{402}}{4}\\)
+\n
+\n(B)    \\(CB=3+\\dfrac{3\\sqrt{402}}{4}\\); \\(CA=6+\\dfrac{3\\sqrt{402}}{4}\\)
+\n
+\n(C)    \\(CB=2+\\dfrac{3\\sqrt{402}}{4}\\); \\(CA=3+\\dfrac{3\\sqrt{402}}{4}\\)
+\n
+\n(D)    \\(CB=6+\\dfrac{3\\sqrt{402}}{4}\\); \\(CA=9+\\dfrac{3\\sqrt{402}}{4}\\)"}], "correct_answer": "A", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T18:51:23.021ZM10_Term2_Circles_Q51_1.PNG"}, {"content_type": 1, "content": "
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T18:51:40.434ZM10_Term2_Circles_Q51_2.PNG"}, {"content_type": 1, "content": "
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T18:52:02.558ZM10_Term2_Circles_Q51_3.PNG"}, {"content_type": 1, "content": "
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-31T18:52:19.211ZM10_Term2_Circles_Q51_4.PNG"}], "solution_video": null}}}, {"id": 167509, "display_order": 7, "slide_type": 1, "slide_main": {"name": "Q7", "questiontext": {"content_array": [{"content_type": 4, "content": "A point \\(P\\) is at a distance of \\(37\\,cm\\) from the centre of a circle of radius \\(12\\,cm\\). Find the length of the tangent drawn from \\(P\\) to the circle.
+\n
+\n
+\n(A)    \\(25\\,cm\\)
+\n
+\n(B)    \\(30\\,cm\\)
+\n
+\n(C)    \\(35\\,cm\\)
+\n
+\n(D)    \\(33\\,cm\\)"}], "correct_answer": "C", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-09-20T11:50:59.819ZM10_Term2_Circles_Q47.PNG"}], "solution_video": null}}}, {"id": 167464, "display_order": 8, "slide_type": 1, "slide_main": {"name": "Q8", "questiontext": {"content_array": [{"content_type": 4, "content": "Find the distance between two parallel tangents of a circle with radius \\(6\\,cm\\).
+\n
+\n
+\n(A)    \\(12\\,cm\\)
+\n
+\n(B)    \\(6\\,cm\\)
+\n
+\n(C)    \\(10\\,cm\\)
+\n
+\n(D)    \\(9\\,cm\\)"}], "correct_answer": "A", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-04-04T16:41:55.232ZM10_Term2_Circles_Q22.PNG"}], "solution_video": null}}}, {"id": 167471, "display_order": 9, "slide_type": 1, "slide_main": {"name": "Q9", "questiontext": {"content_array": [{"content_type": 4, "content": "In given figure, \\(O\\) is the centre of a circle of radius \\(6\\,cm\\). \\(C\\) is a point outside the circle such that \\(OC=10\\,cm\\). If \\(DE\\) is a tangent to the circle at point \\(E\\), then find the length of the tangent \\(DE\\) where \\(CA\\) and \\(CB\\) are the tangent of the circle.
+\n
+\n
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-09-20T13:12:33.853ZM10_Term2_Circles_Q29.PNG"}, {"content_type": 4, "content": "
+\n
+\n(A)    \\(8\\,cm\\)
+\n
+\n(B)    \\(6\\,cm\\)
+\n
+\n(C)    \\(7\\,cm\\)
+\n
+\n(D)    \\(10\\,cm\\)"}], "correct_answer": "B", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-30T18:26:21.110ZM10_Term2_Circles_Q29_1.PNG"}, {"content_type": 1, "content": "
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-30T18:26:41.233ZM10_Term2_Circles_Q29_2.PNG"}], "solution_video": null}}}, {"id": 167403, "display_order": 10, "slide_type": 1, "slide_main": {"name": "Q10", "questiontext": {"content_array": [{"content_type": 4, "content": "If the angle between two radii of a circle is \\(140^\\circ \\), then the angle between the tangents at the ends of the radii is
+\n
+\n
+\n(A)    \\(90^\\circ \\)
+\n
+\n(B)    \\(40^\\circ \\)
+\n
+\n(C)    \\(50^\\circ \\)
+\n
+\n(D)    \\(70^\\circ \\)
+\n "}], "correct_answer": "B", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-22T03:33:19.130ZM10_Term2_Circles_Q1.PNG"}, {"content_type": 1, "content": "
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2022-03-22T03:33:50.079ZM10_Term2_Circles_Q1_1.PNG"}], "solution_video": null}}}]}}
+
+Course - 34, Chapter - 87, Test ID - 163031
+{"data": {"slides": [{"id": 163031, "display_order": 1, "slide_type": 1, "slide_main": {"name": "Q1", "questiontext": {"content_array": [{"content_type": 4, "content": "Predict the direction of the induced current in the metal rings 1 and 2 respectively, lying in the same plane where current \\(I\\) is increasing steadily.
+\n
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-10-03T16:29:33.707ZP12_Chpt6_EMI_Q1_Imge.PNG"}, {"content_type": 1, "content": "
+\n
+\n(A)    Clockwise, Anticlockwise
+\n
+\n(B)    Anticlockwise, Clockwise
+\n
+\n(C)    Clockwise, Clockwise
+\n
+\n(D)    Anticlockwise, Anticlockwise
+\n "}], "correct_answer": "A", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 4, "content": "For ring 1:
+\n
+\nAccording to the right-hand thumb rule, the magnetic field passing through the ring 1 is perpendicular and outwards from the plane of paper 
+\n
+\nAs current I is increasing steadily, the magnetic field also increases.
+\n
+\nNow according to \\(\\rm Lenz's\\) law, as the current is increasing in wire, the direction of induced current in ring 1 will be such that, it should oppose the increment of current in wire, for that lower face of ring 1 will be a north pole and the upper face will be south pole. If upper face is south then direction of current in ring 1 is clockwise.
+\n
+\nTherefore, to oppose the magnetic flux, the direction of induced current in ring 1 will be in the clockwise direction.
+\n
+\nFor ring 2:
+\n
+\nSimilarly,
+\n
+\nBy right-hand thumb rule:
+\n
+\nThe magnetic field passing through ring 2 is increasing steadily in the direction perpendicularly inwards the plane of paper.
+\n
+\nSimilarly using the above argument, the direction of induced current in ring 2 will be in the anticlockwise direction.
+\n
+\nHence the correct option is (A).
+\n
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-10-03T16:30:14.490ZP12_Chpt6_EMI_Q1.PNG"}], "solution_video": null}}}, {"id": 163032, "display_order": 2, "slide_type": 1, "slide_main": {"name": "Q2", "questiontext": {"content_array": [{"content_type": 4, "content": "A plot of magnetic flux \\((\\phi \\,)\\) versus current (I) is shown in the figure for two inductors A and B. Then the ratio of the inductance of A w.r.t B is
+\n
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-10-05T04:27:52.716ZP12_Chpt6_EMI_Q2_Qimg.PNG"}, {"content_type": 1, "content": "
+\n
+\n
+\n(A)    Less than one
+\n
+\n(B)    Greater than one
+\n
+\n(C)    Equal to one
+\n
+\n(D)    Cannot predict
+\n "}], "correct_answer": "B", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-10-03T17:03:01.630ZP12_Chpt6_EMI_Q2_Solu.PNG"}], "solution_video": null}}}, {"id": 163033, "display_order": 3, "slide_type": 1, "slide_main": {"name": "Q3", "questiontext": {"content_array": [{"content_type": 4, "content": "The magnetic flux through a loop is varying according to the relation \\(\\phi =(5{{t}^{3}}+2t-4)\\,\\,\\text{Weber}\\). Calculate the magnitude of induced emf through the coil at t = 2 s.
+\n
+\n(A)    62 volt
+\n
+\n(B)    56 volt
+\n
+\n(C)    60 volt
+\n
+\n(D)    58 volt
+\n "}], "correct_answer": "A", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-10-03T17:04:14.344ZP12_Chpt6_EMI_Q3_Solu.PNG"}], "solution_video": null}}}, {"id": 163034, "display_order": 4, "slide_type": 1, "slide_main": {"name": "Q4", "questiontext": {"content_array": [{"content_type": 1, "content": "A metal ring is held horizontally and a bar magnet is dropped through the ring with its length along the axis of the ring. The acceleration of the falling magnet is 
+\n
+\n(A)    Equal to g.
+\n
+\n(B)    Less than g.
+\n
+\n(C)    More than g.
+\n
+\n(D)    Either (A) or (C).
+\n
+\n "}], "correct_answer": "B", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-10-03T17:05:30.962ZP12_Chpt6_EMI_Q4_Solu.PNG"}, {"content_type": 1, "content": "
+\n
+\nWhen a magnet falls through the ring, magnetic flux linked with the ring changes and as result, an emf is induced in the coil which opposes the motion of the magnet.
+\n
+\nTherefore, the acceleration of the falling object becomes less than g.
+\n
+\nHence the correct option is (B).
+\n "}], "solution_video": null}}}, {"id": 163035, "display_order": 5, "slide_type": 1, "slide_main": {"name": "Q5", "questiontext": {"content_array": [{"content_type": 1, "content": "A 20 cm long conductor AB is moved with a speed of 10 m/s in a magnetic field of 1 mT as shown in the figure.
+\n
+\nThe emf generated is
+\n
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-10-03T17:06:24.402ZP12_Chpt6_EMI_Q5_Imge.PNG"}, {"content_type": 1, "content": "
+\n
+\n(A)    1 mV
+\n
+\n(B)    2 mV
+\n
+\n(C)    3 mV
+\n
+\n(D)    4 mV
+\n "}], "correct_answer": "B", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-10-03T17:07:04.210ZP12_Chpt6_EMI_Q5_Solu.PNG"}], "solution_video": null}}}, {"id": 163036, "display_order": 6, "slide_type": 1, "slide_main": {"name": "Q6", "questiontext": {"content_array": [{"content_type": 4, "content": "Calculate the approximate inductance of an air-core solenoid containing 400 turns if the length of the solenoid is 25 cm and its cross-sectional area is \\(4 cm^2\\).
+\n
+\n(A)    \\(3.2\\times {{10}^{-3}}\\text{  H}\\)
+\n
+\n(B)    \\(3.2\\times {{10}^{-4}}\\text{  H}\\)
+\n
+\n(C)    \\(3.2\\times {{10}^{-5}}\\text{  H}\\)
+\n
+\n(D)    \\(3.2\\times {{10}^{-6}}\\text{  H}\\)
+\n "}], "correct_answer": "B", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-10-03T17:09:55.468ZP12_Chpt6_EMI_Q6_Solu.PNG"}], "solution_video": null}}}, {"id": 163037, "display_order": 7, "slide_type": 1, "slide_main": {"name": "Q7", "questiontext": {"content_array": [{"content_type": 1, "content": "What inductance would be needed to store 2 kWh of energy in a coil carrying a current of 400 A. 
+\n
+\n(A)    90 H
+\n
+\n(B)    180 H
+\n
+\n(C)    360 H
+\n
+\n(D)    720 H 
+\n "}], "correct_answer": "A", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-10-05T04:37:17.347ZP12_Chpt6_EMI_Q7_Solu.PNG"}], "solution_video": null}}}, {"id": 163038, "display_order": 8, "slide_type": 1, "slide_main": {"name": "Q8", "questiontext": {"content_array": [{"content_type": 4, "content": "Two solenoids P and Q spaced close to each other and sharing the same cylindrical axis (i.e these two are coaxial) have 200 and 350 turns respectively. A current of 5 A in coil P produces an average flux of  \\(\\rm 300 \\ \\mu Wb\\) through each turn of P and a flux of  \\(\\rm 90 \\ \\mu Wb\\) through each turn of Q. What is the magnitude of the mutual inductance of the two solenoids? 
+\n
+\n
+\n(A)    \\(6.3\\times {{10}^{-6}}\\text{   H}\\)
+\n
+\n(B)    \\(6.3\\times {{10}^{-3}}\\text{   H}\\)
+\n
+\n(C)    \\(12\\times {{10}^{-3}}\\text{   H}\\)
+\n
+\n(D)    \\(12\\times {{10}^{-6}}\\text{   H}\\)
+\n "}], "correct_answer": "B", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-10-05T04:38:49.258ZP12_Chpt6_EMI_Q8_Solu.PNG"}], "solution_video": null}}}, {"id": 163039, "display_order": 9, "slide_type": 1, "slide_main": {"name": "Q9", "questiontext": {"content_array": [{"content_type": 4, "content": "A 100 turn coil of area \\(0.1\\,\\,{{m}^{2}}\\) rotates at half a revolution per second. It is placed in a uniform magnetic field of 0.01 T perpendicular to the axis of rotation of the coil. What is the magnitude of the maximum voltage generated in the coil?
+\n    
+\n
+\n(A)    0.314 V
+\n
+\n(B)    3.14 V
+\n
+\n(C)    31.4 V
+\n
+\n(D)    314 V
+\n "}], "correct_answer": "A", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-10-03T17:15:05.689ZP12_Chpt6_EMI_Q9_Solu.PNG"}], "solution_video": null}}}, {"id": 163040, "display_order": 10, "slide_type": 1, "slide_main": {"name": "Q10", "questiontext": {"content_array": [{"content_type": 4, "content": "A coil consists of 100 turns of a wire having a total resistance of  \\(5.0 \\Omega\\). Each turn is a square of side 20 cm and a uniform magnetic field directed perpendicular to the plane of the coil is turned on. If the field changes linearly from 0 to 0.5 T in 0. 80 s. What is the magnitude of induced current in the coil while the field is changing?
+\n
+\n(A)  0. 25 A
+\n
+\n(B)  0.5 A
+\n
+\n(C)  1 A
+\n
+\n(D)  2 A
+\n "}], "correct_answer": "B", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-10-03T17:16:45.678ZP12_Chpt6_EMI_Q10_Solu.PNG"}], "solution_video": null}}}]}}
+
+Course - 34, Chapter - 96, Test ID - 162437
+{"data": {"slides": [{"id": 162437, "display_order": 1, "slide_type": 1, "slide_main": {"name": "Q1", "questiontext": {"content_array": [{"content_type": 4, "content": "The electric force between two point charges when placed in free space is 10 N. If the same charges are placed in a medium of relative permittivity \\({{\\epsilon }_{r}}=6\\), the electric force between them will become
+\n
+\n
+\n(A)  60N
+\n
+\n(B)  10N
+\n
+\n(C) \\(\\dfrac{\\,3\\,}{5}\\) N
+\n
+\n(D) \\(\\dfrac{\\,5\\,}{3}\\) N"}], "correct_answer": "D", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-09-13T09:20:33.915ZP12_CBSE_Electric%20Charge_Q4_Solu.PNG"}], "solution_video": null}}}, {"id": 162457, "display_order": 2, "slide_type": 1, "slide_main": {"name": "Q2", "questiontext": {"content_array": [{"content_type": 4, "content": "Hydrochloric acid molecule has a dipole moment of \\(3.4\\times {{10}^{-30}}\\,C-m.\\)  Find out the maximum torque experienced by it in a uniform electric field of strength \\(5\\times {{10}^{6}}\\,N/C.\\)
+\n
+\n
+\n(A) \\(17\\times {{10}^{-24}}\\,N-m.\\)
+\n
+\n(B) \\(17\\times {{10}^{-23}}\\,N-m.\\)
+\n
+\n(C) \\(8.5\\times {{10}^{-24}}N-m.\\)
+\n
+\n(D) \\(8.5\\times {{10}^{-22}}N-m.\\)
+\n "}], "correct_answer": "A", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-09-13T09:50:31.465ZP12_CBSE_Electric%20Charge_Q7_Solu.PNG"}], "solution_video": null}}}, {"id": 162439, "display_order": 3, "slide_type": 1, "slide_main": {"name": "Q3", "questiontext": {"content_array": [{"content_type": 1, "content": "The flux of electric field through the closed surface S shown in the figure is:
+\n
+\n"}, {"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-09-13T09:34:10.403ZP12_CBSE_Electric%20Charge_Q5_Qimg.PNG"}, {"content_type": 4, "content": "
+\n
+\n(A)    \\(\\dfrac{4q}{{{\\epsilon }_{0}}}\\)   
+\n
+\n(B)    0     
+\n
+\n(C)    \\(\\dfrac{-4q}{{{\\epsilon }_{o}}}\\)     
+\n
+\n(D)    \\(\\dfrac{2q}{{{\\epsilon }_{o}}}\\)
+\n "}], "correct_answer": "B", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-09-13T09:35:27.719ZP12_CBSE_Electric%20Charge_Q5_Solu.PNG"}], "solution_video": null}}}, {"id": 162442, "display_order": 4, "slide_type": 1, "slide_main": {"name": "Q4", "questiontext": {"content_array": [{"content_type": 4, "content": "The sum of the two point charges is  \\(7 \\ \\mu C\\). They repel each other with a force of  \\(1 \\ N\\) when kept \\(30 \\ cm\\) apart in free space. Calculate the value of each charge
+\n
+\n
+\n(A)    3.5 \\(\\mu C\\) and 3.5 \\(\\mu C\\)
+\n
+\n(B)    2 \\(\\mu C\\) and 5 \\(\\mu C\\)
+\n
+\n(C)    3 \\(\\mu C\\) and 4 \\(\\mu C\\)
+\n
+\n(D)    2.5 \\(\\mu C\\) and 4.5 \\(\\mu C\\)"}], "correct_answer": "B", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-09-13T09:41:09.515ZP12_CBSE_Electric%20Charge_Q6_Solu.PNG"}], "solution_video": null}}}, {"id": 162433, "display_order": 5, "slide_type": 1, "slide_main": {"name": "Q5", "questiontext": {"content_array": [{"content_type": 4, "content": "Two protons in a nucleus are separated by a distance of 1 fermi \\((1fermi={{10}^{-15}}m)\\). Find out the magnitude of electric force between them.
+\n
+\n
+\n(A)    230 N
+\n
+\n(B)    2.30 kN
+\n
+\n(C)    23.0 kN
+\n
+\n(D)    23.0 N
+\n "}], "correct_answer": "A", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-09-13T09:12:28.636ZP12_CBSE_Electric%20Charge_Q1_Solu.PNG"}], "solution_video": null}}}, {"id": 162435, "display_order": 6, "slide_type": 1, "slide_main": {"name": "Q6", "questiontext": {"content_array": [{"content_type": 4, "content": "A uniformly charged conducting sphere of 2.5 m diameter has a surface charge density of \\(100 \\mu C/m^2\\).  Find the charge on the sphere.
+\n
+\n
+\n(A)    \\(1.96\\,\\,\\text{mC}\\)
+\n
+\n(B)    \\(19.6\\,\\,\\text{mC}\\)
+\n
+\n(C)    \\(1.96\\,\\,\\mu \\text{C}\\)
+\n
+\n(D)    \\(19.6\\,\\,\\mu \\text{C}\\)
+\n "}], "correct_answer": "A", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-09-13T09:18:09.289ZP12_CBSE_Electric%20Charge_Q3_Solu.PNG"}], "solution_video": null}}}, {"id": 162458, "display_order": 7, "slide_type": 1, "slide_main": {"name": "Q7", "questiontext": {"content_array": [{"content_type": 4, "content": "If \\({{\\vec{E}}_{1}}\\) is the electric field due to a short dipole at a point on the axial line of dipole and \\({{\\vec{E}}_{2}}\\) is the electric field on the equatorial line at the same distance of the same dipole, then 
+\n
+\n
+\n(A)    \\({{\\vec{E}}_{1}}={{\\vec{E}}_{2}}\\)
+\n
+\n(B)    \\({{\\vec{E}}_{1}}=-{{\\vec{E}}_{2}}\\)
+\n
+\n(C)    \\({{\\vec{E}}_{1}}=-2{{\\vec{E}}_{2}}\\)
+\n
+\n(D)    \\({{\\vec{E}}_{1}}=2{{\\vec{E}}_{2}}\\)
+\n
+\n "}], "correct_answer": "C", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-09-14T07:55:35.897ZP12_CBSE_Electric%20Charge_Q8_Solu.PNG"}], "solution_video": null}}}, {"id": 162459, "display_order": 8, "slide_type": 1, "slide_main": {"name": "Q8", "questiontext": {"content_array": [{"content_type": 4, "content": "Consider a uniform electric field \\(\\vec{E}=3\\times {{10}^{3}}\\,\\hat{i}\\,\\,N{{C}^{-1}}\\).  Find the flux of this field through a square of  side 10 cm whose plane is parallel to the yz plane?
+\n
+\n
+\n(A)    Zero    
+\n
+\n(B)    \\(-3\\,N{{m}^{2}}/C\\)
+\n
+\n(C)    \\(30\\,N{{m}^{2}}/C\\)
+\n
+\n(D)    \\(0.3\\,N{{m}^{2}}/C\\)"}], "correct_answer": "C", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-09-13T10:22:31.616ZP12_CBSE_Electric%20Charge_Q9_Solu.PNG"}], "solution_video": null}}}, {"id": 162434, "display_order": 9, "slide_type": 1, "slide_main": {"name": "Q9", "questiontext": {"content_array": [{"content_type": 4, "content": "Two charged particles are placed at a separation of 1.6 mm. Find out the minimum possible electric force exerted by them on each other.
+\n
+\n(A)    \\(9\\times {{10}^{-24}}N\\)
+\n
+\n(B)    \\(9\\times {{10}^{-23}}N\\)
+\n
+\n(C)    \\(9\\times {{10}^{-25}}N\\)
+\n
+\n(D)    \\(9\\times {{10}^{-22}}N\\)
+\n "}], "correct_answer": "B", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-09-13T09:14:51.115ZP12_CBSE_Electric%20Charge_Q2_Solu.PNG"}], "solution_video": null}}}, {"id": 162460, "display_order": 10, "slide_type": 1, "slide_main": {"name": "Q10", "questiontext": {"content_array": [{"content_type": 4, "content": "Two point charges separated by a distance d repel each other with a force of 3 N. If the separation between them is reduced to \\(\\dfrac{d}{3}\\) the force of repulsion between the two will become
+\n
+\n
+\n(A) 1 N
+\n
+\n(B) 3 N
+\n
+\n(C) 9 N
+\n
+\n(D) 27 N"}], "correct_answer": "D", "no_of_options": 4}, "solution": {"content_array": [{"content_type": 2, "content": "https://s3.ap-south-1.amazonaws.com/resources.cbse-app.ahaguru.com/2021-09-13T10:28:35.313ZP12_CBSE_Electric%20Charge_Q10_Solu.PNG"}], "solution_video": null}}}]}}
